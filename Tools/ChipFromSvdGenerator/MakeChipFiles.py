@@ -80,8 +80,8 @@ def parseRegister(register, baseAddress, prefix, ext):
             noActionIfZeroBits = Ft.clearBitsFromRange(msb,lsb,noActionIfZeroBits)
         if "zeroTo" in access: #if zeroToSet or zeroToClear then writing a 1 is a no action
             noActionIfOneBits = Ft.setBitsFromRange(msb,lsb,noActionIfOneBits)
-    
-    size = Ft.getKey(ext,['size'])    
+
+    size = Ft.getKey(ext,['size'])
     if size is not None:
         register.size = size
     elif register.size is None:
@@ -92,6 +92,15 @@ def parseRegister(register, baseAddress, prefix, ext):
         regType = "unsigned short"
     if register.size is 32:
         regType = "unsigned"
+
+    """
+    regType = "std::uint32_t"
+    if register.size is not None:
+        if register.size is 8:
+            regType = "std::uint8_t"
+        elif register.size is 16:
+            regType = "std::uint16_t"
+    """
     out = "    namespace %s{    ///<%s\n" % (Ft.formatNamespace("%s_%s" % (prefix, register.name)),Ft.formatComment(register.description))
     out += "        using Addr = Register::Address<0x%08x,0x%08x,0x%08x,%s>;\n" % (baseAddress + register.address_offset,noActionIfZeroBits,noActionIfOneBits,regType)
     out += fieldOut 
@@ -136,6 +145,7 @@ def parseFile(company,file):
     if not posixpath.exists(subdir):
         os.makedirs(subdir)
     chipText = "#pragma once \n"
+    chipText += "#include <cstdint>\n"
     incDir = subdir[10:]
     if Ft.getKey(extention,["kvasir","io"]):
         parseIo(extention,device,subdir)
