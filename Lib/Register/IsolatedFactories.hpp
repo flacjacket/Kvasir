@@ -20,11 +20,13 @@
 
 #include <type_traits>
 
-namespace Kvasir{
-namespace Register{
-    template<typename T>
-    constexpr std::enable_if_t<Detail::IsWriteLiteral<T>::value> isolated(T){
-
+namespace Kvasir
+{
+namespace Register
+{
+    template <typename T>
+    constexpr std::enable_if_t<Detail::IsWriteLiteral<T>::value> isolated(T)
+    {
     }
-}
-}
+} // namespace Register
+} // namespace Kvasir

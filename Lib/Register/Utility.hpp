@@ -27,7 +27,8 @@ namespace Register{
     constexpr unsigned maskFromRange(unsigned high, unsigned low, Is...args){
         return maskFromRange(high,low) | maskFromRange(args...);
     }
-    namespace Detail{
+    namespace Detail
+    {
         using namespace MPL;
 
         constexpr int maskStartsAt(unsigned mask, unsigned bitNum = 0U) {
@@ -38,38 +39,37 @@ namespace Register{
             return i == (i & -i);
         }
 
-        constexpr unsigned orAllOf(){
-            return 0;
-        }
-        constexpr unsigned orAllOf(unsigned l){
-            return l;
-        }
+        constexpr unsigned orAllOf() { return 0; }
+        constexpr unsigned orAllOf(unsigned l) { return l; }
 
-        template<typename... Ts>
-        constexpr unsigned orAllOf(unsigned l, unsigned r, Ts... args){
+        template <typename... Ts>
+        constexpr unsigned orAllOf(unsigned l, unsigned r, Ts... args)
+        {
             return l | r | orAllOf(args...);
         }
 
-
-        template<typename T>
+        template <typename T>
         struct ValueToUnsigned;
-        template<typename T, T I>
-        struct ValueToUnsigned<MPL::Value<T,I>> : MPL::Unsigned<unsigned(I)>{};
+        template <typename T, T I>
+        struct ValueToUnsigned<MPL::Value<T, I>> : MPL::Unsigned<unsigned(I)>
+        {
+        };
 
-
-        template<typename T>
+        template <typename T>
         struct GetFieldType;
-        template<typename TAddress, unsigned Mask, typename TAccess, typename TFieldType, typename TAction>
-        struct GetFieldType<Action<FieldLocation<TAddress,Mask,TAccess,TFieldType>,TAction>> {
+        template <typename TAddress, unsigned Mask, typename TAccess, typename TFieldType,
+                  typename TAction>
+        struct GetFieldType<Action<FieldLocation<TAddress, Mask, TAccess, TFieldType>, TAction>>
+        {
             using Type = TFieldType;
         };
-        template<typename TAddress, unsigned Mask, typename TAccess, typename TFieldType>
-        struct GetFieldType<FieldLocation<TAddress,Mask,TAccess,TFieldType>>{
+        template <typename TAddress, unsigned Mask, typename TAccess, typename TFieldType>
+        struct GetFieldType<FieldLocation<TAddress, Mask, TAccess, TFieldType>>
+        {
             using Type = TFieldType;
         };
-        template<typename T>
+        template <typename T>
         using GetFieldTypeT = typename GetFieldType<T>::Type;
-
 
         template<typename T>
         struct IsWriteLiteral : std::false_type{};
@@ -122,60 +122,85 @@ namespace Register{
         template<typename TReadLoc, typename TWriteLoc>
         struct GetAddress<FieldLocationPair<TReadLoc,TWriteLoc>> {
             static constexpr unsigned value = TReadLoc::value;
-            static unsigned read(){
-                volatile unsigned& reg = *reinterpret_cast<volatile unsigned*>(value);
+            static unsigned read()
+            {
+                volatile unsigned & reg = *reinterpret_cast<volatile unsigned *>(value);
                 return reg;
             }
-            static void write(unsigned i){
-                volatile unsigned& reg = *reinterpret_cast<volatile unsigned*>(value);
+            static void write(unsigned i)
+            {
+                volatile unsigned & reg = *reinterpret_cast<volatile unsigned *>(value);
                 reg = i;
             }
             using type = brigand::uint32_t<value>;
         };
-        template<typename TFieldLocation, typename TAction>
-        struct GetAddress<Action<TFieldLocation,TAction>> : GetAddress<TFieldLocation> {};
+        template <typename TFieldLocation, typename TAction>
+        struct GetAddress<Action<TFieldLocation, TAction>> : GetAddress<TFieldLocation>
+        {
+        };
 
-        template<typename T>
+        template <typename T>
         struct GetFieldLocation;
-        template<typename TLocation, typename TAction>
-        struct GetFieldLocation<Action<TLocation,TAction>>{
+        template <typename TLocation, typename TAction>
+        struct GetFieldLocation<Action<TLocation, TAction>>
+        {
             using type = TLocation;
         };
 
-        //predecate retuning result of left < right for RegisterOptions
-        template<typename TLeft, typename TRight>
+        // predecate retuning result of left < right for RegisterOptions
+        template <typename TLeft, typename TRight>
         struct RegisterActionLess;
-        template<typename T1, typename U1, typename T2, typename U2>
-        struct RegisterActionLess< Register::Action<T1,U1>, Register::Action<T2,U2> > : Bool<(GetAddress<T1>::value < GetAddress<T2>::value)>{};
+        template <typename T1, typename U1, typename T2, typename U2>
+        struct RegisterActionLess<Register::Action<T1, U1>, Register::Action<T2, U2>>
+            : Bool<(GetAddress<T1>::value < GetAddress<T2>::value)>
+        {
+        };
         using RegisterActionLessP = Template<RegisterActionLess>;
 
-        //predicate returns true if action is a read
-        template<typename T>
-        struct IsReadPred : std::false_type {};
-        template<typename A>
-        struct IsReadPred< Register::Action<A,ReadAction> > : std::true_type{};
+        // predicate returns true if action is a read
+        template <typename T>
+        struct IsReadPred : std::false_type
+        {
+        };
+        template <typename A>
+        struct IsReadPred<Register::Action<A, ReadAction>> : std::true_type
+        {
+        };
 
-        template<typename T>
-        struct IsNotReadPred : std::integral_constant<bool,(!IsReadPred<T>::type::value)>{};
-        
-        //predicate returns true if action is a read
-        template<typename T>
-        struct IsRuntimeWritePred : std::false_type {};
-        template<typename A>
-        struct IsRuntimeWritePred< Register::Action<A, WriteAction> > : std::true_type {};
-        
-        template<typename T>
-        struct IsNotRuntimeWritePred : std::integral_constant<bool, (!IsRuntimeWritePred<T>::type::value)> {};
+        template <typename T>
+        struct IsNotReadPred : std::integral_constant<bool, (!IsReadPred<T>::type::value)>
+        {
+        };
 
-        template<typename T>
+        // predicate returns true if action is a read
+        template <typename T>
+        struct IsRuntimeWritePred : std::false_type
+        {
+        };
+        template <typename A>
+        struct IsRuntimeWritePred<Register::Action<A, WriteAction>> : std::true_type
+        {
+        };
+
+        template <typename T>
+        struct IsNotRuntimeWritePred
+            : std::integral_constant<bool, (!IsRuntimeWritePred<T>::type::value)>
+        {
+        };
+
+        template <typename T>
         struct GetMask;
-        //from FieldLocations
-        template<typename Address, unsigned Mask, typename TAccess, typename ResultType>
-        struct GetMask<FieldLocation<Address,Mask,TAccess,ResultType>> : Value<unsigned,Mask>{};
-        //from Action
-        template<typename TFieldLocation, typename TAction>
-        struct GetMask<Action<TFieldLocation,TAction>> : GetMask<TFieldLocation>{};
+        // from FieldLocations
+        template <typename Address, unsigned Mask, typename TAccess, typename ResultType>
+        struct GetMask<FieldLocation<Address, Mask, TAccess, ResultType>> : Value<unsigned, Mask>
+        {
+        };
+        // from Action
+        template <typename TFieldLocation, typename TAction>
+        struct GetMask<Action<TFieldLocation, TAction>> : GetMask<TFieldLocation>
+        {
+        };
 
-    }
-}
-}
+    } // namespace Detail
+} // namespace Register
+} // namespace Kvasir

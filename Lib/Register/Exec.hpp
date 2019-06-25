@@ -111,11 +111,11 @@ namespace Register
         {
             static_assert((Data & (~Mask)) == 0, "bad mask");
         };
-    }
+    } // namespace Detail
 
     template <typename T, typename U>
     struct ExecuteSeam : Detail::RegisterExec<T>
     {
     };
-}
-}
+} // namespace Register
+} // namespace Kvasir

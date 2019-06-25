@@ -24,10 +24,8 @@
 #include "Types.hpp"
 #include "Utility.hpp"
 #include <utility>
-namespace Kvasir
-{
 
-namespace Register
+namespace Kvasir::Register
 {
 
     namespace Detail
@@ -132,16 +130,17 @@ namespace Register
                 Us...>>
             : MergeRegisterActions<
                   brigand::list<Ts...>,
-                  brigand::list<
-                      IndexedAction<Action<FieldLocation<TAddress,
-                                                         (Mask1 | Mask2), // merge
-                                                         TAccess1>, // dont care, plausibility check
-                                                                    // has already been done
-                                           TActionTemplate<(Value1 | Value2)> // merge
-                                           // TODO implement register type here
-                                           >,
-                                    TInputs1..., TInputs2...>, // concatenate
-                      Us...>                                   // pass through rest
+                  brigand::list<IndexedAction<Action<FieldLocation<TAddress,
+                                                                   (Mask1 | Mask2), // merge
+                                                                   TAccess1>,       // dont care,
+                                                                              // plausibility check
+                                                                              // has already been
+                                                                              // done
+                                                     TActionTemplate<(Value1 | Value2)> // merge
+                                                     // TODO implement register type here
+                                                     >,
+                                              TInputs1..., TInputs2...>, // concatenate
+                                Us...>                                   // pass through rest
                   >
         {
         };
@@ -193,11 +192,12 @@ namespace Register
         template <typename... Ts>
         struct MergeActionSteps<brigand::list<Ts...>>
         {
-            using type = brigand::list<MergeRegisterActionsT<
-                brigand::sort<brigand::flatten<Ts>,
-                              Detail::IndexedActionLess<brigand::_1, brigand::_2>>
-                // SortT<brigand::flatten<Ts>, MPL::Template<Detail::IndexedActionLess>>
-                >...>;
+            using type =
+                brigand::list<MergeRegisterActionsT<brigand::sort<
+                    brigand::flatten<Ts>, Detail::IndexedActionLess<brigand::_1, brigand::_2>>
+                                                    // SortT<brigand::flatten<Ts>,
+                                                    // MPL::Template<Detail::IndexedActionLess>>
+                                                    >...>;
         };
 
         template <typename T>
@@ -382,9 +382,10 @@ namespace Register
                                                           brigand::uint32_t<A>>::value>::type
                 filterReturns(ReturnType & ret, unsigned in)
             {
-                ret.value_[sizeof...(TRetAddresses)-brigand::size<
-                    brigand::find<brigand::list<TRetAddresses...>,
-                                  std::is_same<brigand::uint32_t<A>, brigand::_1>>>::value] |= in;
+                ret.value_[sizeof...(TRetAddresses) -
+                           brigand::size<brigand::find<
+                               brigand::list<TRetAddresses...>,
+                               std::is_same<brigand::uint32_t<A>, brigand::_1>>>::value] |= in;
             }
             template <unsigned A>
             DEBUG_OPTIMIZE void filterReturns(...)
@@ -455,14 +456,15 @@ namespace Register
                              brigand::transform<l, brigand::quote<ArgToApplyIsPlausible>>>::value>;
             static constexpr int value = type::value;
         };
-    }
+    } // namespace Detail
 
     // if apply contains reads return a FieldTuple
     template <typename... Args>
     DEBUG_OPTIMIZE inline
         typename std::enable_if<(brigand::size<Detail::GetReadsT<brigand::list<Args...>>>::value !=
                                  0),
-                                Detail::GetReturnType<Args...>>::type apply(Args... args)
+                                Detail::GetReturnType<Args...>>::type
+        apply(Args... args)
     {
         static_assert(Detail::ArgsToApplyArePlausible<Args...>::value,
                       "one of the supplied arguments is not supported");
@@ -485,7 +487,7 @@ namespace Register
     // if apply does not contain reads return is void
     template <typename... Args>
     DEBUG_OPTIMIZE typename std::enable_if<Detail::NoReadsRuntimeWrites<Args...>::value>::type
-        apply(Args... args)
+    apply(Args... args)
     {
         static_assert(Detail::ArgsToApplyArePlausible<Args...>::value,
                       "one of the supplied arguments is not supported");
@@ -504,8 +506,8 @@ namespace Register
 
     // if apply does not contain reads or runtime writes we can speed things up
     template <typename... Args>
-    DEBUG_OPTIMIZE
-        typename std::enable_if<Detail::AllCompileTime<Args...>::value>::type apply(Args...)
+    DEBUG_OPTIMIZE typename std::enable_if<Detail::AllCompileTime<Args...>::value>::type
+    apply(Args...)
     {
         static_assert(Detail::ArgsToApplyArePlausible<Args...>::value,
                       "one of the supplied arguments is not supported");
@@ -529,5 +531,4 @@ namespace Register
     {
         return apply(Action<TField, ReadAction>{}) == Value;
     }
-}
-}
+} // namespace Kvasir::Register
