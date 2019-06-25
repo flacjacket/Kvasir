@@ -1,7 +1,7 @@
 #pragma once 
 #include <Register/Utility.hpp>
 namespace Kvasir {
-//Product name title=UM10375 Chapter title=LPC13xx Flash memory				programming firmware Modification date=4/20/2011 Major revision=2 Minor revision=1 
+//Product name title=UM10375 Chapter title=LPC13xx Flash memory                programming firmware Modification date=4/20/2011 Major revision=2 Minor revision=1 
     namespace FmcFlashcfg{    ///<Flash configuration register
         using Addr = Register::Address<0x4003c010,0x00000000,0x00000000,unsigned>;
         ///Flash memory access time. FLASHTIM +1 is equal to the number of system clocks used for flash access.

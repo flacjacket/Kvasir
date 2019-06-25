@@ -41,16 +41,16 @@ namespace Kvasir {
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(1,1),Register::Access<Register::AccessType::readWrite,Register::ReadActionType::normal,Register::ModifiedWriteValueType::oneToClear>,unsigned> rfr{}; 
         ///Tx Software ResetWhen Tx_RST is set, all the bytes in the transmit FIFO and Tx internal state machine are cleared.0 = Writing 0 to this bit has no effect.1 = Writing 1 to this bit will reset the Tx internal state machine and pointers.Note: This bit will auto clear and takes at least 3 UART engine clock cycles.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(2,2),Register::Access<Register::AccessType::readWrite,Register::ReadActionType::normal,Register::ModifiedWriteValueType::oneToClear>,unsigned> tfr{}; 
-        ///Word Length SelectRFITL	INTR_RDA Tigger Level(Bytes)	0000	01	0001	04	0010	08	0011	14	
+        ///Word Length SelectRFITL    INTR_RDA Tigger Level(Bytes)    0000    01    0001    04    0010    08    0011    14    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(7,4),Register::Access<Register::AccessType::readWrite,Register::ReadActionType::normal,Register::ModifiedWriteValueType::oneToSet>,unsigned> rfitl{}; 
         ///Receiver Disable register.The receiver is disabled or not (set 1 is disable receiver)1: Disable Receiver0: Enable ReceiverNote: This field is used for RS-485 Normal Multi-drop mode. It should be programmed before RS-485 enable function in UA_FUN_SEL. FUN_SEL is programmed.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(8,8),Register::Access<Register::AccessType::readWrite,Register::ReadActionType::normal,Register::ModifiedWriteValueType::oneToSet>,unsigned> rxDis{}; 
-        ///Word Length SelectRTS_Tri_Lev	Trigger Level(Bytes)	0000	01	0001	04	0010	08	0011	14	
+        ///Word Length SelectRTS_Tri_Lev    Trigger Level(Bytes)    0000    01    0001    04    0010    08    0011    14    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(19,16),Register::Access<Register::AccessType::readWrite,Register::ReadActionType::normal,Register::ModifiedWriteValueType::oneToSet>,unsigned> rtsTriLev{}; 
     }
     namespace Uart1UaLcr{    ///<UART0 Line Control Register.
         using Addr = Register::Address<0x4015000c,0xffffffff,0x00000000,unsigned>;
-        ///Word Length SelectWLS[1:0]	Character length	00	5 bits	01	6 bits	10	7 bits	11	8 bits	
+        ///Word Length SelectWLS[1:0]    Character length    00    5 bits    01    6 bits    10    7 bits    11    8 bits    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(1,0),Register::Access<Register::AccessType::readWrite,Register::ReadActionType::normal,Register::ModifiedWriteValueType::oneToSet>,unsigned> wls{}; 
         ///Number of "STOP bit"0= One "STOP bit" is generated in the transmitted data1= One and a half "STOP bit" is generated in the transmitted data when 5-bit word length is selected;Two "STOP bit" is generated when 6-, 7- and 8-bit word length is selected.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(2,2),Register::Access<Register::AccessType::readWrite,Register::ReadActionType::normal,Register::ModifiedWriteValueType::oneToSet>,unsigned> nsb{}; 
@@ -152,9 +152,9 @@ namespace Kvasir {
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(15,8),Register::Access<Register::AccessType::readWrite,Register::ReadActionType::normal,Register::ModifiedWriteValueType::oneToSet>,unsigned> brdHighbyte{}; 
         ///Divider XThe baud rate divider M = X+1.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(27,24),Register::Access<Register::AccessType::readWrite,Register::ReadActionType::normal,Register::ModifiedWriteValueType::oneToSet>,unsigned> dividerX{}; 
-        ///Divider X equal 10 = Divider M = X (the equation of M = X+1, but Divider_X[27:24] must > 8)1 = Divider M = 1 (the equation of M = 1, but BRD[15:0] must > 3).Mode	DIV_X_EN 	DIV_X_ONE 	DIVIDER X 	BRD 	Baud rate equation 	0 	Disable 	0 	B	A	UART_CLK / [16 * (A+2)]	1 	Enable 	0 	B	A	UART_CLK/[(B+1)*(A+2)],B must >= 8	2 	Enable 	1	Don't Care	A	UART_CLK / (A+2), A must >=3	
+        ///Divider X equal 10 = Divider M = X (the equation of M = X+1, but Divider_X[27:24] must > 8)1 = Divider M = 1 (the equation of M = 1, but BRD[15:0] must > 3).Mode    DIV_X_EN     DIV_X_ONE     DIVIDER X     BRD     Baud rate equation     0     Disable     0     B    A    UART_CLK / [16 * (A+2)]    1     Enable     0     B    A    UART_CLK/[(B+1)*(A+2)],B must >= 8    2     Enable     1    Don't Care    A    UART_CLK / (A+2), A must >=3    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(28,28),Register::Access<Register::AccessType::readWrite,Register::ReadActionType::normal,Register::ModifiedWriteValueType::oneToSet>,unsigned> divXOne{}; 
-        ///Divider X EnableThe BRD = Baud Rate Divider, and the baud rate equation is Baud Rate = Clock / [ M * (BRD + 2) ] ; The default value of M is 16.0 = Disable divider X (the equation of M = 16)1 = Enable divider X (the equation of M = X+1, but Divider_X[27:24 must > 8).NOTE: When in IrDA mode, this bit must disable.Mode	DIV_X_EN 	DIV_X_ONE 	DIVIDER X 	BRD 	Baud rate equation 	0 	Disable 	0 	B	A	UART_CLK / [16 * (A+2)]	1 	Enable 	0 	B	A	UART_CLK/[(B+1)*(A+2)],B must >= 8	2 	Enable 	1	Don't Care	A	UART_CLK / (A+2), A must >=3	
+        ///Divider X EnableThe BRD = Baud Rate Divider, and the baud rate equation is Baud Rate = Clock / [ M * (BRD + 2) ] ; The default value of M is 16.0 = Disable divider X (the equation of M = 16)1 = Enable divider X (the equation of M = X+1, but Divider_X[27:24 must > 8).NOTE: When in IrDA mode, this bit must disable.Mode    DIV_X_EN     DIV_X_ONE     DIVIDER X     BRD     Baud rate equation     0     Disable     0     B    A    UART_CLK / [16 * (A+2)]    1     Enable     0     B    A    UART_CLK/[(B+1)*(A+2)],B must >= 8    2     Enable     1    Don't Care    A    UART_CLK / (A+2), A must >=3    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(29,29),Register::Access<Register::AccessType::readWrite,Register::ReadActionType::normal,Register::ModifiedWriteValueType::oneToSet>,unsigned> divXEn{}; 
     }
     namespace Uart1UaIrcr{    ///<UART0 IrDA Control Register.

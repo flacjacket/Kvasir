@@ -21,7 +21,7 @@ namespace Kvasir {
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(6,4),Register::ReadWriteAccess,unsigned> csr1{}; 
         ///PWM Timer 2 Clock Source Selection (PWM timer 2 for group A and PWM timer 6 for group B)Select clock input for PWM timer.(Table is the same as CSR3)
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(10,8),Register::ReadWriteAccess,unsigned> csr2{}; 
-        ///PWM Timer 3 Clock Source Selection (PWM timer 3 for group A and PWM timer 7 for group B)Select clock input for PWM timer.CSR3 [14:12]	Input clock divided by	100	1	011	16	010	8	001	4	000	2	
+        ///PWM Timer 3 Clock Source Selection (PWM timer 3 for group A and PWM timer 7 for group B)Select clock input for PWM timer.CSR3 [14:12]    Input clock divided by    100    1    011    16    010    8    001    4    000    2    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(14,12),Register::ReadWriteAccess,unsigned> csr3{}; 
     }
     namespace PwmbPcr{    ///<PWM Control Register

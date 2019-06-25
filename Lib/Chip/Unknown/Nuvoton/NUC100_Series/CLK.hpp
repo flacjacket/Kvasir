@@ -160,7 +160,7 @@ namespace Kvasir {
     }
     namespace ClkPllcon{    ///<PLL Control Register
         using Addr = Register::Address<0x50000220,0xfff00000,0x00000000,unsigned>;
-        ///PLL Feedback Divider Control PinsRefer to the formulas below the table.FOUT = FIN x NF/NR x 1/NOConstrain:1. 3.2MHz < FIN < 150MHz2. 800KHz < FIN/(2xNR) < 8MHz3. 100MHz < FCO = FINxNF/NR < 200MHz, 120M < FCO is preferred.Symbol	Description	FOUT	Output Clock Frequency	FIN	Input (Reference) Clock Frequency	NR	Input Divider (IN_DV + 2)	NF	Feedback Divider (FB_DV + 2)	NO	OUT_DV = "00":NO = 1OUT_DV = "01":NO = 2OUT_DV = "10":NO = 2OUT_DV = "11":NO = 4	
+        ///PLL Feedback Divider Control PinsRefer to the formulas below the table.FOUT = FIN x NF/NR x 1/NOConstrain:1. 3.2MHz < FIN < 150MHz2. 800KHz < FIN/(2xNR) < 8MHz3. 100MHz < FCO = FINxNF/NR < 200MHz, 120M < FCO is preferred.Symbol    Description    FOUT    Output Clock Frequency    FIN    Input (Reference) Clock Frequency    NR    Input Divider (IN_DV + 2)    NF    Feedback Divider (FB_DV + 2)    NO    OUT_DV = "00":NO = 1OUT_DV = "01":NO = 2OUT_DV = "10":NO = 2OUT_DV = "11":NO = 4    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(8,0),Register::ReadWriteAccess,unsigned> fbDv{}; 
         ///PLL Input Divider Control PinsRefer to the formulas below the table.(Table is the same as FB_DV).
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(13,9),Register::ReadWriteAccess,unsigned> inDv{}; 

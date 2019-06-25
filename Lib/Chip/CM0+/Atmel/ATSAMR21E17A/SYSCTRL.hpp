@@ -158,11 +158,11 @@ namespace Kvasir {
         }
         ///Lock Time
         enum class LtimeVal {
-            v0x0=0x00000000,     ///<Default	No time-out
-            v0x4=0x00000004,     ///<8MS	Time-out if no lock within 8 ms
-            v0x5=0x00000005,     ///<9MS	Time-out if no lock within 9 ms
-            v0x6=0x00000006,     ///<10MS	Time-out if no lock within 10 ms
-            v0x7=0x00000007,     ///<11MS	Time-out if no lock within 11 ms
+            v0x0=0x00000000,     ///<Default    No time-out
+            v0x4=0x00000004,     ///<8MS    Time-out if no lock within 8 ms
+            v0x5=0x00000005,     ///<9MS    Time-out if no lock within 9 ms
+            v0x6=0x00000006,     ///<10MS    Time-out if no lock within 10 ms
+            v0x7=0x00000007,     ///<11MS    Time-out if no lock within 11 ms
         };
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(10,8),Register::ReadWriteAccess,LtimeVal> ltime{}; 
         namespace LtimeValC{

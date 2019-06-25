@@ -8,7 +8,7 @@ namespace Kvasir {
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(0,0),Register::ReadWriteAccess,unsigned> exten{}; 
         ///EBI data width 16 bitThis bit defines if the data bus is 8-bit or 16-bit. 1: EBI data width is 16 bit0: EBI data width is 8 bit
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(1,1),Register::ReadWriteAccess,unsigned> extbw16{}; 
-        ///External Output Clock DividerThe frequency of EBI output clock is controlled by MCLKDIV as follows table:MCLKDIV	Output clock (MCLK)	000	HCLK/1	001	HCLK/2	010	HCLK/4	011	HCLK/8	100	HCLK/16	101	HCLK/32	11X	default	Notice: Default value of output clock is HCLK/1
+        ///External Output Clock DividerThe frequency of EBI output clock is controlled by MCLKDIV as follows table:MCLKDIV    Output clock (MCLK)    000    HCLK/1    001    HCLK/2    010    HCLK/4    011    HCLK/8    100    HCLK/16    101    HCLK/32    11X    default    Notice: Default value of output clock is HCLK/1
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(10,8),Register::ReadWriteAccess,unsigned> mclkdiv{}; 
         ///Expand Time of ALEThe ALE width (tALE) to latch the address can be controlled by ExttALE.tALE = (ExttALE+1)*MCLK
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(18,16),Register::ReadWriteAccess,unsigned> exttale{}; 

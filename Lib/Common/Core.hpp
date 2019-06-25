@@ -18,12 +18,12 @@ limitations under the License.
 #include "Mpl/Utility.hpp"
 
 namespace Kvasir{
-	namespace Startup{
-		template<typename T, typename... Ts>
-		struct FirstInitStep{
-			static_assert(MPL::AlwaysFalse<T>::value,"You must include a Core");
-		};
-	}
+    namespace Startup{
+        template<typename T, typename... Ts>
+        struct FirstInitStep{
+            static_assert(MPL::AlwaysFalse<T>::value,"You must include a Core");
+        };
+    }
 }
 
 //*****************************************************************************

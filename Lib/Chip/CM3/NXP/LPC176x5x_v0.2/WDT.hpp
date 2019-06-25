@@ -65,7 +65,7 @@ namespace Kvasir {
         ///If this bit is set to one writing to this register does not affect bit 0. The clock source can only be changed by first clearing this bit, then writing the new value of bit 0.
         enum class LockVal {
             unlocked=0x00000000,     ///<This bit is set to 0 on any reset. It cannot be cleared by software.
-            locked=0x00000001,     ///<Software can set this bit to 1 at any time. Once WDLOCK is set, the bits of this register										cannot be modified.
+            locked=0x00000001,     ///<Software can set this bit to 1 at any time. Once WDLOCK is set, the bits of this register                                        cannot be modified.
         };
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(31,31),Register::ReadWriteAccess,LockVal> lock{}; 
         namespace LockValC{

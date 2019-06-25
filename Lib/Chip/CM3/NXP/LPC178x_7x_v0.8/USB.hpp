@@ -2032,7 +2032,7 @@ namespace Kvasir {
         using Addr = Register::Address<0x2008cff8,0x00000000,0x00000000,unsigned>;
         ///Reserved. Read value is undefined, only zero should be written.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(0,0),Register::ReadWriteAccess,unsigned> reserved{}; 
-        ///Device clock on. The usbclk input to the device controller is active	.
+        ///Device clock on. The usbclk input to the device controller is active    .
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(1,1),Register::ReadWriteAccess,unsigned> devClkOn{}; 
         ///Reserved. Read value is undefined, only zero should be written.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(2,2),Register::ReadWriteAccess,unsigned> reserved{}; 

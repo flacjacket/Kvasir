@@ -14,23 +14,23 @@ limitations under the License.
 #include "Types.hpp"
 
 namespace Kvasir {
-	namespace MPL {
-		namespace IntegralConstants{
-			constexpr Unsigned<0> _0{};
-			constexpr Unsigned<1> _1{};
-			constexpr Unsigned<2> _2{};
-			constexpr Unsigned<3> _3{};
-			constexpr Unsigned<4> _4{};
-			constexpr Unsigned<5> _5{};
-			constexpr Unsigned<6> _6{};
-			constexpr Unsigned<7> _7{};
-			constexpr Unsigned<8> _8{};
-			constexpr Unsigned<9> _9{};
+    namespace MPL {
+        namespace IntegralConstants{
+            constexpr Unsigned<0> _0{};
+            constexpr Unsigned<1> _1{};
+            constexpr Unsigned<2> _2{};
+            constexpr Unsigned<3> _3{};
+            constexpr Unsigned<4> _4{};
+            constexpr Unsigned<5> _5{};
+            constexpr Unsigned<6> _6{};
+            constexpr Unsigned<7> _7{};
+            constexpr Unsigned<8> _8{};
+            constexpr Unsigned<9> _9{};
 
-			template<unsigned L, unsigned R>
-			constexpr inline Unsigned<(L*10 + R)> operator ,(Unsigned<L>, Unsigned<R> ) {
-				return{};
-			}
-		}
-	}
+            template<unsigned L, unsigned R>
+            constexpr inline Unsigned<(L*10 + R)> operator ,(Unsigned<L>, Unsigned<R> ) {
+                return{};
+            }
+        }
+    }
 }

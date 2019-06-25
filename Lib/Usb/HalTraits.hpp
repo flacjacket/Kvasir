@@ -5,7 +5,7 @@ namespace Kvasir
 {
 namespace Usb
 {
-	template<typename TDevice, typename...>		//called with device and Kvasir::Tag::User
-	struct GetHal;
+    template<typename TDevice, typename...>        //called with device and Kvasir::Tag::User
+    struct GetHal;
 }
 }

@@ -11,9 +11,9 @@ namespace Kvasir{
         template<int Pin>
         struct MakeAction<Action::Input,Register::PinLocation<0,Pin>> {
             using Type = brigand::list<Register::Action<Register::FieldLocation<Register::Address<0x5000051C,0xFFFFFFFF>,(1<<Pin)>,Register::WriteLiteralAction<(1<<Pin)>>, 
-		  //We add this extra action so that the input buffer will be connected when you set the pin as an input.
-		Register::Action<Register::FieldLocation<Register::Address<0x50000700+4*Pin,0x00000000>,(1<<1)>,Register::WriteLiteralAction<0>>>;
-	};
+          //We add this extra action so that the input buffer will be connected when you set the pin as an input.
+        Register::Action<Register::FieldLocation<Register::Address<0x50000700+4*Pin,0x00000000>,(1<<1)>,Register::WriteLiteralAction<0>>>;
+    };
         template<int Pin>
         struct MakeAction<Action::Output,Register::PinLocation<0,Pin>> :
             Register::Action<Register::FieldLocation<Register::Address<0x50000518,0xFFFFFFFF>,(1<<Pin)>,Register::WriteLiteralAction<(1<<Pin)>>{};

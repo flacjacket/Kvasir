@@ -10,7 +10,7 @@ namespace Usb
 {
     namespace Cdc
     {
-	    using std::move;
+        using std::move;
         template <typename TSettings, typename TDevice>
         struct Host
         {
@@ -26,7 +26,7 @@ namespace Usb
             };
             static Data & getData() { return TSettings::template StoragePolicy<Host>::get(); }
             // return true if expecting a packet
-			template<typename T>
+            template<typename T>
             static bool onSetupReceived(T & t)
             {
                 auto rt = t.getRequest();
@@ -38,15 +38,15 @@ namespace Usb
                     getData().lineCoding_.unsafeToBuffer(p.unsafeToBufPointer());
                     p.unsafeSetSize(7);
                     p.setEndpoint(Endpoint{1});
-					p.makeData1();
-					t.pushPacket(std::move(p));
+                    p.makeData1();
+                    t.pushPacket(std::move(p));
                     return true;
                 }
                 case SetupPacket::Request::setLineCoding:
                 {
-					auto p = t.popPacket();
-					getData().lineCoding_.unsafeFromBuffer(p.unsafeToBufPointer());
-					TDevice::AllocatorType::deallocate(std::move(p));
+                    auto p = t.popPacket();
+                    getData().lineCoding_.unsafeFromBuffer(p.unsafeToBufPointer());
+                    TDevice::AllocatorType::deallocate(std::move(p));
                     return true;
                 }
                 case SetupPacket::Request::setControlLineState:
@@ -57,27 +57,27 @@ namespace Usb
                     return false;
                 }
             }
-	        static void onIn(typename TDevice::PacketType && p)
-	        {
-		        auto p_ =  TSettings::BufferPolicy::pop(move(p));
-		        if (p_.getSize() == 0) {
-			        TDevice::AllocatorType::deallocate(std::move(p_));
-		        }
-		        else {
-			        TDevice::sendPacket(std::move(p_));
-		        }
-	        }
-	        static void onOut(typename TDevice::PacketType && p)
-	        {
-		        TSettings::BufferPolicy::push(move(p));
-	        }
-	        static void onSof()
-	        {
-		        if (!TSettings::BufferPolicy::empty())
-		        {
-			        onIn(TDevice::AllocatorType::allocate());
-		        }
-	        }
+            static void onIn(typename TDevice::PacketType && p)
+            {
+                auto p_ =  TSettings::BufferPolicy::pop(move(p));
+                if (p_.getSize() == 0) {
+                    TDevice::AllocatorType::deallocate(std::move(p_));
+                }
+                else {
+                    TDevice::sendPacket(std::move(p_));
+                }
+            }
+            static void onOut(typename TDevice::PacketType && p)
+            {
+                TSettings::BufferPolicy::push(move(p));
+            }
+            static void onSof()
+            {
+                if (!TSettings::BufferPolicy::empty())
+                {
+                    onIn(TDevice::AllocatorType::allocate());
+                }
+            }
         };
 
         template <typename THost>

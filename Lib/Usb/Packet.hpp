@@ -17,7 +17,7 @@ namespace Usb
 
         void pushBack(uint8_t data) { buf_[size_++] = data; }
     };
-	template <typename TPacketImpl>
+    template <typename TPacketImpl>
     class Packet
     {
         using PointerType = typename TPacketImpl::PointerType;
@@ -36,8 +36,8 @@ namespace Usb
             return Packet(pp);
         }
         uint8_t * unsafeToBufPointer() { return packet_->buf_; }
-		static Packet unsafeConstructFromPacketPointer(PointerType p) { return Packet(p); }
-		void unsafeFromPacketPointer(PointerType p) { packet_ = p; }
+        static Packet unsafeConstructFromPacketPointer(PointerType p) { return Packet(p); }
+        void unsafeFromPacketPointer(PointerType p) { packet_ = p; }
         PointerType unsafeToPacketPointer() { return packet_; }
         void unsafeSetSize(int i) { packet_->size_ = i; }
         uint8_t getSize() { return packet_->size_; }
@@ -54,16 +54,16 @@ namespace Usb
         void makeData1() { packet_->endpoint_ |= 0x80; }
         void makeData0() { packet_->endpoint_ &= ~0x80; }
         Endpoint getEndpoint() { return Endpoint{static_cast<uint8_t>(packet_->endpoint_ & 0x1F)}; }
-		void setEndpoint(const Endpoint ep) { packet_->endpoint_ &= ~0x1F; packet_->endpoint_ |= (ep.value_ & 0x1F); }
+        void setEndpoint(const Endpoint ep) { packet_->endpoint_ &= ~0x1F; packet_->endpoint_ |= (ep.value_ & 0x1F); }
         void pushBack(uint8_t data) { packet_->pushBack(data); }
-	    uint8_t* begin()
-	    {
-		    return &packet_->buf_[0];
-	    }
-	    uint8_t* end()
-	    {
-		    return &packet_->buf_[packet_->size_];
-	    }
+        uint8_t* begin()
+        {
+            return &packet_->buf_[0];
+        }
+        uint8_t* end()
+        {
+            return &packet_->buf_[packet_->size_];
+        }
     };
 }
 }

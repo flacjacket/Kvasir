@@ -291,7 +291,7 @@ namespace Kvasir {
             constexpr Register::FieldValue<decltype(ctm)::Type,CtmVal::falllingedge> falllingedge{};
             constexpr Register::FieldValue<decltype(ctm)::Type,CtmVal::risingfallingedge> risingfallingedge{};
         }
-        ///Count Input Select. When bits 1:0 in this register are not 00, these bits select which CAP pin is sampled for clocking.						Note: If Counter mode is selected in the TnCTCR, the 3 bits for that input in the Capture Control Register (TnCCR) must be programmed as 000.					
+        ///Count Input Select. When bits 1:0 in this register are not 00, these bits select which CAP pin is sampled for clocking.                        Note: If Counter mode is selected in the TnCTCR, the 3 bits for that input in the Capture Control Register (TnCCR) must be programmed as 000.                    
         enum class CisVal {
             ct32bCap0=0x00000000,     ///<CT32Bn_CAP0
         };

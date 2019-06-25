@@ -1,7 +1,7 @@
 #pragma once 
 #include <Register/Utility.hpp>
 namespace Kvasir {
-//				Group interrupt 0/1 (GINT0/1) 
+//                Group interrupt 0/1 (GINT0/1) 
     namespace Gint0Ctrl{    ///<GPIO grouped interrupt control register
         using Addr = Register::Address<0x400a8000,0x00000000,0x00000000,unsigned>;
         ///Group interrupt status. This bit is cleared by writing a one to it. Writing zero has no effect.

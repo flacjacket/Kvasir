@@ -4,7 +4,7 @@ namespace Kvasir {
 //Product name title=UM10375 Chapter title=LPC13xx Windowed WatchDog Timer (WWDT) Modification date=4/19/2011 Major revision=2 Minor revision=1 
     namespace WwdtMod{    ///<Watchdog mode register. This register contains the basic mode and status of the Watchdog Timer.
         using Addr = Register::Address<0x40004000,0x00000000,0x00000000,unsigned>;
-        ///Watchdog enable bit. This bit is Set Only. Remark: Setting this bit to one also locks the watchdog clock source. Once the watchdog timer is enabled, the watchdog timer clock source cannot be changed. If the watchdog timer is needed in Deep-sleep mode, the watchdog clock source must be changed to watchdog oscillator before setting this bit to one.							
+        ///Watchdog enable bit. This bit is Set Only. Remark: Setting this bit to one also locks the watchdog clock source. Once the watchdog timer is enabled, the watchdog timer clock source cannot be changed. If the watchdog timer is needed in Deep-sleep mode, the watchdog clock source must be changed to watchdog oscillator before setting this bit to one.                            
         enum class WdenVal {
             stop=0x00000000,     ///<The watchdog timer is stopped.
             run=0x00000001,     ///<The watchdog timer is running.

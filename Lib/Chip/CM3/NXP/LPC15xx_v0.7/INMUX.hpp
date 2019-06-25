@@ -4,21 +4,21 @@ namespace Kvasir {
 //Input multiplexing (INMUX) 
     namespace InmuxFreqmeasRef{    ///<Clock selection for frequency measurement function reference clock
         using Addr = Register::Address<0x40014160,0x00000000,0x00000000,unsigned>;
-        ///Clock source number (decimal value) for frequency measure function target clock: 0	 = System oscilator (MAIN_OSC) 1 = 	IRC 2	 = WDOSC 3	 = 32KHZOSC 4	 = USB_FTOGGLE 5	 = PIO0_5 6	 = PIO0_19 7	 = PIO0_30 8 = PIO1_27
+        ///Clock source number (decimal value) for frequency measure function target clock: 0     = System oscilator (MAIN_OSC) 1 =     IRC 2     = WDOSC 3     = 32KHZOSC 4     = USB_FTOGGLE 5     = PIO0_5 6     = PIO0_19 7     = PIO0_30 8 = PIO1_27
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(3,0),Register::ReadWriteAccess,unsigned> clkin{}; 
         ///Reserved.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(31,4),Register::ReadWriteAccess,unsigned> reserved{}; 
     }
     namespace InmuxFreqmeasTarget{    ///<Clock selection for frequency measurement function target clock
         using Addr = Register::Address<0x40014164,0x00000000,0x00000000,unsigned>;
-        ///Clock source number (decimal value) for frequency measure function target clock: 0	 = System oscillator (MAIN_OSC) 1 = 	IRC 2	 = WDOSC 3	 = 32KHZOSC 4	 = USB_FTOGGLE 5	 = PIO0_5 6	 = PIO0_19 7	 = PIO0_30 8 = PIO1_27
+        ///Clock source number (decimal value) for frequency measure function target clock: 0     = System oscillator (MAIN_OSC) 1 =     IRC 2     = WDOSC 3     = 32KHZOSC 4     = USB_FTOGGLE 5     = PIO0_5 6     = PIO0_19 7     = PIO0_30 8 = PIO1_27
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(3,0),Register::ReadWriteAccess,unsigned> clkin{}; 
         ///Reserved.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(31,4),Register::ReadWriteAccess,unsigned> reserved{}; 
     }
     namespace InmuxSct0Inmux0{    ///<Pinmux register for SCT0 input 0
         using Addr = Register::Address<0x40014000,0x00000000,0x00000000,unsigned>;
-        ///Input number (decimal value) to SCT0 inputs 0 to 6.  0 = 	PIO0_2 (external pin) 1	 = PIO0_3 (external pin) 2	 = PIO0_17 (external pin) 3	 = PIO0_30 (external pin) 4	 = PIO1_6 (external pin) 5	 = PIO1_7 (external pin) 6	 = PIO1_12 (external pin) 7 = 	PIO1_13 (external pin) 8	 = SCT1_OUT4 (large SCT1 output 4) 9 = 	SCT2_OUT4 (companion small SCT2 output 4) 10 = 	SCT2_OUT5 (companion small SCT2 output 5) 11	 = ADC0_THCMP_IRQ () 12	 = ADC1_THCMP_IRQ () 13	 = COMP0_OUT (One output from each analog comparator) 14	 = COMP1_OUT 15	 = COMP2_OUT 16	 = COMP3_OUT 17	 = SCTIPU_ABORT 18	 = SCTIPU_SAMPLE0 19	 = SCTIPU_SAMPLE1 20 = 	SCTIPU_SAMPLE2 21	 = SCTIPU_SAMPLE3 22 = 	DEBUG_HALTED (from ARM Cortex CoreSight Debugger)
+        ///Input number (decimal value) to SCT0 inputs 0 to 6.  0 =     PIO0_2 (external pin) 1     = PIO0_3 (external pin) 2     = PIO0_17 (external pin) 3     = PIO0_30 (external pin) 4     = PIO1_6 (external pin) 5     = PIO1_7 (external pin) 6     = PIO1_12 (external pin) 7 =     PIO1_13 (external pin) 8     = SCT1_OUT4 (large SCT1 output 4) 9 =     SCT2_OUT4 (companion small SCT2 output 4) 10 =     SCT2_OUT5 (companion small SCT2 output 5) 11     = ADC0_THCMP_IRQ () 12     = ADC1_THCMP_IRQ () 13     = COMP0_OUT (One output from each analog comparator) 14     = COMP1_OUT 15     = COMP2_OUT 16     = COMP3_OUT 17     = SCTIPU_ABORT 18     = SCTIPU_SAMPLE0 19     = SCTIPU_SAMPLE1 20 =     SCTIPU_SAMPLE2 21     = SCTIPU_SAMPLE3 22 =     DEBUG_HALTED (from ARM Cortex CoreSight Debugger)
         enum class InpnVal {
             pio02=0x00000000,     ///<PIO0_2 (external pin)
             pio03=0x00000001,     ///<PIO0_3 (external pin)
@@ -75,7 +75,7 @@ namespace Kvasir {
     }
     namespace InmuxSct0Inmux1{    ///<Pinmux register for SCT0 input 0
         using Addr = Register::Address<0x40014004,0x00000000,0x00000000,unsigned>;
-        ///Input number (decimal value) to SCT0 inputs 0 to 6.  0 = 	PIO0_2 (external pin) 1	 = PIO0_3 (external pin) 2	 = PIO0_17 (external pin) 3	 = PIO0_30 (external pin) 4	 = PIO1_6 (external pin) 5	 = PIO1_7 (external pin) 6	 = PIO1_12 (external pin) 7 = 	PIO1_13 (external pin) 8	 = SCT1_OUT4 (large SCT1 output 4) 9 = 	SCT2_OUT4 (companion small SCT2 output 4) 10 = 	SCT2_OUT5 (companion small SCT2 output 5) 11	 = ADC0_THCMP_IRQ () 12	 = ADC1_THCMP_IRQ () 13	 = COMP0_OUT (One output from each analog comparator) 14	 = COMP1_OUT 15	 = COMP2_OUT 16	 = COMP3_OUT 17	 = SCTIPU_ABORT 18	 = SCTIPU_SAMPLE0 19	 = SCTIPU_SAMPLE1 20 = 	SCTIPU_SAMPLE2 21	 = SCTIPU_SAMPLE3 22 = 	DEBUG_HALTED (from ARM Cortex CoreSight Debugger)
+        ///Input number (decimal value) to SCT0 inputs 0 to 6.  0 =     PIO0_2 (external pin) 1     = PIO0_3 (external pin) 2     = PIO0_17 (external pin) 3     = PIO0_30 (external pin) 4     = PIO1_6 (external pin) 5     = PIO1_7 (external pin) 6     = PIO1_12 (external pin) 7 =     PIO1_13 (external pin) 8     = SCT1_OUT4 (large SCT1 output 4) 9 =     SCT2_OUT4 (companion small SCT2 output 4) 10 =     SCT2_OUT5 (companion small SCT2 output 5) 11     = ADC0_THCMP_IRQ () 12     = ADC1_THCMP_IRQ () 13     = COMP0_OUT (One output from each analog comparator) 14     = COMP1_OUT 15     = COMP2_OUT 16     = COMP3_OUT 17     = SCTIPU_ABORT 18     = SCTIPU_SAMPLE0 19     = SCTIPU_SAMPLE1 20 =     SCTIPU_SAMPLE2 21     = SCTIPU_SAMPLE3 22 =     DEBUG_HALTED (from ARM Cortex CoreSight Debugger)
         enum class InpnVal {
             pio02=0x00000000,     ///<PIO0_2 (external pin)
             pio03=0x00000001,     ///<PIO0_3 (external pin)
@@ -132,7 +132,7 @@ namespace Kvasir {
     }
     namespace InmuxSct0Inmux2{    ///<Pinmux register for SCT0 input 0
         using Addr = Register::Address<0x40014008,0x00000000,0x00000000,unsigned>;
-        ///Input number (decimal value) to SCT0 inputs 0 to 6.  0 = 	PIO0_2 (external pin) 1	 = PIO0_3 (external pin) 2	 = PIO0_17 (external pin) 3	 = PIO0_30 (external pin) 4	 = PIO1_6 (external pin) 5	 = PIO1_7 (external pin) 6	 = PIO1_12 (external pin) 7 = 	PIO1_13 (external pin) 8	 = SCT1_OUT4 (large SCT1 output 4) 9 = 	SCT2_OUT4 (companion small SCT2 output 4) 10 = 	SCT2_OUT5 (companion small SCT2 output 5) 11	 = ADC0_THCMP_IRQ () 12	 = ADC1_THCMP_IRQ () 13	 = COMP0_OUT (One output from each analog comparator) 14	 = COMP1_OUT 15	 = COMP2_OUT 16	 = COMP3_OUT 17	 = SCTIPU_ABORT 18	 = SCTIPU_SAMPLE0 19	 = SCTIPU_SAMPLE1 20 = 	SCTIPU_SAMPLE2 21	 = SCTIPU_SAMPLE3 22 = 	DEBUG_HALTED (from ARM Cortex CoreSight Debugger)
+        ///Input number (decimal value) to SCT0 inputs 0 to 6.  0 =     PIO0_2 (external pin) 1     = PIO0_3 (external pin) 2     = PIO0_17 (external pin) 3     = PIO0_30 (external pin) 4     = PIO1_6 (external pin) 5     = PIO1_7 (external pin) 6     = PIO1_12 (external pin) 7 =     PIO1_13 (external pin) 8     = SCT1_OUT4 (large SCT1 output 4) 9 =     SCT2_OUT4 (companion small SCT2 output 4) 10 =     SCT2_OUT5 (companion small SCT2 output 5) 11     = ADC0_THCMP_IRQ () 12     = ADC1_THCMP_IRQ () 13     = COMP0_OUT (One output from each analog comparator) 14     = COMP1_OUT 15     = COMP2_OUT 16     = COMP3_OUT 17     = SCTIPU_ABORT 18     = SCTIPU_SAMPLE0 19     = SCTIPU_SAMPLE1 20 =     SCTIPU_SAMPLE2 21     = SCTIPU_SAMPLE3 22 =     DEBUG_HALTED (from ARM Cortex CoreSight Debugger)
         enum class InpnVal {
             pio02=0x00000000,     ///<PIO0_2 (external pin)
             pio03=0x00000001,     ///<PIO0_3 (external pin)
@@ -189,7 +189,7 @@ namespace Kvasir {
     }
     namespace InmuxSct0Inmux3{    ///<Pinmux register for SCT0 input 0
         using Addr = Register::Address<0x4001400c,0x00000000,0x00000000,unsigned>;
-        ///Input number (decimal value) to SCT0 inputs 0 to 6.  0 = 	PIO0_2 (external pin) 1	 = PIO0_3 (external pin) 2	 = PIO0_17 (external pin) 3	 = PIO0_30 (external pin) 4	 = PIO1_6 (external pin) 5	 = PIO1_7 (external pin) 6	 = PIO1_12 (external pin) 7 = 	PIO1_13 (external pin) 8	 = SCT1_OUT4 (large SCT1 output 4) 9 = 	SCT2_OUT4 (companion small SCT2 output 4) 10 = 	SCT2_OUT5 (companion small SCT2 output 5) 11	 = ADC0_THCMP_IRQ () 12	 = ADC1_THCMP_IRQ () 13	 = COMP0_OUT (One output from each analog comparator) 14	 = COMP1_OUT 15	 = COMP2_OUT 16	 = COMP3_OUT 17	 = SCTIPU_ABORT 18	 = SCTIPU_SAMPLE0 19	 = SCTIPU_SAMPLE1 20 = 	SCTIPU_SAMPLE2 21	 = SCTIPU_SAMPLE3 22 = 	DEBUG_HALTED (from ARM Cortex CoreSight Debugger)
+        ///Input number (decimal value) to SCT0 inputs 0 to 6.  0 =     PIO0_2 (external pin) 1     = PIO0_3 (external pin) 2     = PIO0_17 (external pin) 3     = PIO0_30 (external pin) 4     = PIO1_6 (external pin) 5     = PIO1_7 (external pin) 6     = PIO1_12 (external pin) 7 =     PIO1_13 (external pin) 8     = SCT1_OUT4 (large SCT1 output 4) 9 =     SCT2_OUT4 (companion small SCT2 output 4) 10 =     SCT2_OUT5 (companion small SCT2 output 5) 11     = ADC0_THCMP_IRQ () 12     = ADC1_THCMP_IRQ () 13     = COMP0_OUT (One output from each analog comparator) 14     = COMP1_OUT 15     = COMP2_OUT 16     = COMP3_OUT 17     = SCTIPU_ABORT 18     = SCTIPU_SAMPLE0 19     = SCTIPU_SAMPLE1 20 =     SCTIPU_SAMPLE2 21     = SCTIPU_SAMPLE3 22 =     DEBUG_HALTED (from ARM Cortex CoreSight Debugger)
         enum class InpnVal {
             pio02=0x00000000,     ///<PIO0_2 (external pin)
             pio03=0x00000001,     ///<PIO0_3 (external pin)
@@ -246,7 +246,7 @@ namespace Kvasir {
     }
     namespace InmuxSct0Inmux4{    ///<Pinmux register for SCT0 input 0
         using Addr = Register::Address<0x40014010,0x00000000,0x00000000,unsigned>;
-        ///Input number (decimal value) to SCT0 inputs 0 to 6.  0 = 	PIO0_2 (external pin) 1	 = PIO0_3 (external pin) 2	 = PIO0_17 (external pin) 3	 = PIO0_30 (external pin) 4	 = PIO1_6 (external pin) 5	 = PIO1_7 (external pin) 6	 = PIO1_12 (external pin) 7 = 	PIO1_13 (external pin) 8	 = SCT1_OUT4 (large SCT1 output 4) 9 = 	SCT2_OUT4 (companion small SCT2 output 4) 10 = 	SCT2_OUT5 (companion small SCT2 output 5) 11	 = ADC0_THCMP_IRQ () 12	 = ADC1_THCMP_IRQ () 13	 = COMP0_OUT (One output from each analog comparator) 14	 = COMP1_OUT 15	 = COMP2_OUT 16	 = COMP3_OUT 17	 = SCTIPU_ABORT 18	 = SCTIPU_SAMPLE0 19	 = SCTIPU_SAMPLE1 20 = 	SCTIPU_SAMPLE2 21	 = SCTIPU_SAMPLE3 22 = 	DEBUG_HALTED (from ARM Cortex CoreSight Debugger)
+        ///Input number (decimal value) to SCT0 inputs 0 to 6.  0 =     PIO0_2 (external pin) 1     = PIO0_3 (external pin) 2     = PIO0_17 (external pin) 3     = PIO0_30 (external pin) 4     = PIO1_6 (external pin) 5     = PIO1_7 (external pin) 6     = PIO1_12 (external pin) 7 =     PIO1_13 (external pin) 8     = SCT1_OUT4 (large SCT1 output 4) 9 =     SCT2_OUT4 (companion small SCT2 output 4) 10 =     SCT2_OUT5 (companion small SCT2 output 5) 11     = ADC0_THCMP_IRQ () 12     = ADC1_THCMP_IRQ () 13     = COMP0_OUT (One output from each analog comparator) 14     = COMP1_OUT 15     = COMP2_OUT 16     = COMP3_OUT 17     = SCTIPU_ABORT 18     = SCTIPU_SAMPLE0 19     = SCTIPU_SAMPLE1 20 =     SCTIPU_SAMPLE2 21     = SCTIPU_SAMPLE3 22 =     DEBUG_HALTED (from ARM Cortex CoreSight Debugger)
         enum class InpnVal {
             pio02=0x00000000,     ///<PIO0_2 (external pin)
             pio03=0x00000001,     ///<PIO0_3 (external pin)
@@ -303,7 +303,7 @@ namespace Kvasir {
     }
     namespace InmuxSct0Inmux5{    ///<Pinmux register for SCT0 input 0
         using Addr = Register::Address<0x40014014,0x00000000,0x00000000,unsigned>;
-        ///Input number (decimal value) to SCT0 inputs 0 to 6.  0 = 	PIO0_2 (external pin) 1	 = PIO0_3 (external pin) 2	 = PIO0_17 (external pin) 3	 = PIO0_30 (external pin) 4	 = PIO1_6 (external pin) 5	 = PIO1_7 (external pin) 6	 = PIO1_12 (external pin) 7 = 	PIO1_13 (external pin) 8	 = SCT1_OUT4 (large SCT1 output 4) 9 = 	SCT2_OUT4 (companion small SCT2 output 4) 10 = 	SCT2_OUT5 (companion small SCT2 output 5) 11	 = ADC0_THCMP_IRQ () 12	 = ADC1_THCMP_IRQ () 13	 = COMP0_OUT (One output from each analog comparator) 14	 = COMP1_OUT 15	 = COMP2_OUT 16	 = COMP3_OUT 17	 = SCTIPU_ABORT 18	 = SCTIPU_SAMPLE0 19	 = SCTIPU_SAMPLE1 20 = 	SCTIPU_SAMPLE2 21	 = SCTIPU_SAMPLE3 22 = 	DEBUG_HALTED (from ARM Cortex CoreSight Debugger)
+        ///Input number (decimal value) to SCT0 inputs 0 to 6.  0 =     PIO0_2 (external pin) 1     = PIO0_3 (external pin) 2     = PIO0_17 (external pin) 3     = PIO0_30 (external pin) 4     = PIO1_6 (external pin) 5     = PIO1_7 (external pin) 6     = PIO1_12 (external pin) 7 =     PIO1_13 (external pin) 8     = SCT1_OUT4 (large SCT1 output 4) 9 =     SCT2_OUT4 (companion small SCT2 output 4) 10 =     SCT2_OUT5 (companion small SCT2 output 5) 11     = ADC0_THCMP_IRQ () 12     = ADC1_THCMP_IRQ () 13     = COMP0_OUT (One output from each analog comparator) 14     = COMP1_OUT 15     = COMP2_OUT 16     = COMP3_OUT 17     = SCTIPU_ABORT 18     = SCTIPU_SAMPLE0 19     = SCTIPU_SAMPLE1 20 =     SCTIPU_SAMPLE2 21     = SCTIPU_SAMPLE3 22 =     DEBUG_HALTED (from ARM Cortex CoreSight Debugger)
         enum class InpnVal {
             pio02=0x00000000,     ///<PIO0_2 (external pin)
             pio03=0x00000001,     ///<PIO0_3 (external pin)
@@ -360,7 +360,7 @@ namespace Kvasir {
     }
     namespace InmuxSct0Inmux6{    ///<Pinmux register for SCT0 input 0
         using Addr = Register::Address<0x40014018,0x00000000,0x00000000,unsigned>;
-        ///Input number (decimal value) to SCT0 inputs 0 to 6.  0 = 	PIO0_2 (external pin) 1	 = PIO0_3 (external pin) 2	 = PIO0_17 (external pin) 3	 = PIO0_30 (external pin) 4	 = PIO1_6 (external pin) 5	 = PIO1_7 (external pin) 6	 = PIO1_12 (external pin) 7 = 	PIO1_13 (external pin) 8	 = SCT1_OUT4 (large SCT1 output 4) 9 = 	SCT2_OUT4 (companion small SCT2 output 4) 10 = 	SCT2_OUT5 (companion small SCT2 output 5) 11	 = ADC0_THCMP_IRQ () 12	 = ADC1_THCMP_IRQ () 13	 = COMP0_OUT (One output from each analog comparator) 14	 = COMP1_OUT 15	 = COMP2_OUT 16	 = COMP3_OUT 17	 = SCTIPU_ABORT 18	 = SCTIPU_SAMPLE0 19	 = SCTIPU_SAMPLE1 20 = 	SCTIPU_SAMPLE2 21	 = SCTIPU_SAMPLE3 22 = 	DEBUG_HALTED (from ARM Cortex CoreSight Debugger)
+        ///Input number (decimal value) to SCT0 inputs 0 to 6.  0 =     PIO0_2 (external pin) 1     = PIO0_3 (external pin) 2     = PIO0_17 (external pin) 3     = PIO0_30 (external pin) 4     = PIO1_6 (external pin) 5     = PIO1_7 (external pin) 6     = PIO1_12 (external pin) 7 =     PIO1_13 (external pin) 8     = SCT1_OUT4 (large SCT1 output 4) 9 =     SCT2_OUT4 (companion small SCT2 output 4) 10 =     SCT2_OUT5 (companion small SCT2 output 5) 11     = ADC0_THCMP_IRQ () 12     = ADC1_THCMP_IRQ () 13     = COMP0_OUT (One output from each analog comparator) 14     = COMP1_OUT 15     = COMP2_OUT 16     = COMP3_OUT 17     = SCTIPU_ABORT 18     = SCTIPU_SAMPLE0 19     = SCTIPU_SAMPLE1 20 =     SCTIPU_SAMPLE2 21     = SCTIPU_SAMPLE3 22 =     DEBUG_HALTED (from ARM Cortex CoreSight Debugger)
         enum class InpnVal {
             pio02=0x00000000,     ///<PIO0_2 (external pin)
             pio03=0x00000001,     ///<PIO0_3 (external pin)
@@ -417,91 +417,91 @@ namespace Kvasir {
     }
     namespace InmuxSct1Inmux0{    ///<Pinmux register for SCT1 input 0
         using Addr = Register::Address<0x40014020,0x00000000,0x00000000,unsigned>;
-        ///Input number (decimal value) to SCT1 inputs 0 to 6.  0	 = PIO0_15 (external pin) 1	 = PIO0_16 (external pin) 2	 = PIO0_21 (external pin) 3	 = PIO0_31 (external pin) 4	 = PIO1_4 (external pin) 5 = PIO1_5 (external pin) 6	 = PIO1_15 (external pin) 7	 = PIO1_16 (external pin) 8	 = SCT0_OUT4 (large SCT0 output 4) 9	 = SCT3_OUT4 (small companion SCT3 output 4) 10 = 	SCT3_OUT5 (small companion SCT3 output 5) 11 = 	ADC0_THCMP_IRQ 12	 = ADC1_THCMP_IRQ 13	 = COMP0_OUT (One output from each analog comparator) 14	 = COMP1_OUT 15	 = COMP2_OUT 16 = A	COMP3_OUT 17	 = SCTIPU_ABORT 18	 = SCTIPU_SAMPLE0 19	 = SCTIPU_SAMPLE1 20	 = SCTIPU_SAMPLE2 21	 = SCTIPU_SAMPLE3 22	 = DEBUG_HALTED DEBUG_HALTED (from ARM Cortex CoreSight Debugger)
+        ///Input number (decimal value) to SCT1 inputs 0 to 6.  0     = PIO0_15 (external pin) 1     = PIO0_16 (external pin) 2     = PIO0_21 (external pin) 3     = PIO0_31 (external pin) 4     = PIO1_4 (external pin) 5 = PIO1_5 (external pin) 6     = PIO1_15 (external pin) 7     = PIO1_16 (external pin) 8     = SCT0_OUT4 (large SCT0 output 4) 9     = SCT3_OUT4 (small companion SCT3 output 4) 10 =     SCT3_OUT5 (small companion SCT3 output 5) 11 =     ADC0_THCMP_IRQ 12     = ADC1_THCMP_IRQ 13     = COMP0_OUT (One output from each analog comparator) 14     = COMP1_OUT 15     = COMP2_OUT 16 = A    COMP3_OUT 17     = SCTIPU_ABORT 18     = SCTIPU_SAMPLE0 19     = SCTIPU_SAMPLE1 20     = SCTIPU_SAMPLE2 21     = SCTIPU_SAMPLE3 22     = DEBUG_HALTED DEBUG_HALTED (from ARM Cortex CoreSight Debugger)
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(4,0),Register::ReadWriteAccess,unsigned> inpN{}; 
         ///Reserved.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(31,5),Register::ReadWriteAccess,unsigned> reserved{}; 
     }
     namespace InmuxSct1Inmux1{    ///<Pinmux register for SCT1 input 0
         using Addr = Register::Address<0x40014024,0x00000000,0x00000000,unsigned>;
-        ///Input number (decimal value) to SCT1 inputs 0 to 6.  0	 = PIO0_15 (external pin) 1	 = PIO0_16 (external pin) 2	 = PIO0_21 (external pin) 3	 = PIO0_31 (external pin) 4	 = PIO1_4 (external pin) 5 = PIO1_5 (external pin) 6	 = PIO1_15 (external pin) 7	 = PIO1_16 (external pin) 8	 = SCT0_OUT4 (large SCT0 output 4) 9	 = SCT3_OUT4 (small companion SCT3 output 4) 10 = 	SCT3_OUT5 (small companion SCT3 output 5) 11 = 	ADC0_THCMP_IRQ 12	 = ADC1_THCMP_IRQ 13	 = COMP0_OUT (One output from each analog comparator) 14	 = COMP1_OUT 15	 = COMP2_OUT 16 = A	COMP3_OUT 17	 = SCTIPU_ABORT 18	 = SCTIPU_SAMPLE0 19	 = SCTIPU_SAMPLE1 20	 = SCTIPU_SAMPLE2 21	 = SCTIPU_SAMPLE3 22	 = DEBUG_HALTED DEBUG_HALTED (from ARM Cortex CoreSight Debugger)
+        ///Input number (decimal value) to SCT1 inputs 0 to 6.  0     = PIO0_15 (external pin) 1     = PIO0_16 (external pin) 2     = PIO0_21 (external pin) 3     = PIO0_31 (external pin) 4     = PIO1_4 (external pin) 5 = PIO1_5 (external pin) 6     = PIO1_15 (external pin) 7     = PIO1_16 (external pin) 8     = SCT0_OUT4 (large SCT0 output 4) 9     = SCT3_OUT4 (small companion SCT3 output 4) 10 =     SCT3_OUT5 (small companion SCT3 output 5) 11 =     ADC0_THCMP_IRQ 12     = ADC1_THCMP_IRQ 13     = COMP0_OUT (One output from each analog comparator) 14     = COMP1_OUT 15     = COMP2_OUT 16 = A    COMP3_OUT 17     = SCTIPU_ABORT 18     = SCTIPU_SAMPLE0 19     = SCTIPU_SAMPLE1 20     = SCTIPU_SAMPLE2 21     = SCTIPU_SAMPLE3 22     = DEBUG_HALTED DEBUG_HALTED (from ARM Cortex CoreSight Debugger)
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(4,0),Register::ReadWriteAccess,unsigned> inpN{}; 
         ///Reserved.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(31,5),Register::ReadWriteAccess,unsigned> reserved{}; 
     }
     namespace InmuxSct1Inmux2{    ///<Pinmux register for SCT1 input 0
         using Addr = Register::Address<0x40014028,0x00000000,0x00000000,unsigned>;
-        ///Input number (decimal value) to SCT1 inputs 0 to 6.  0	 = PIO0_15 (external pin) 1	 = PIO0_16 (external pin) 2	 = PIO0_21 (external pin) 3	 = PIO0_31 (external pin) 4	 = PIO1_4 (external pin) 5 = PIO1_5 (external pin) 6	 = PIO1_15 (external pin) 7	 = PIO1_16 (external pin) 8	 = SCT0_OUT4 (large SCT0 output 4) 9	 = SCT3_OUT4 (small companion SCT3 output 4) 10 = 	SCT3_OUT5 (small companion SCT3 output 5) 11 = 	ADC0_THCMP_IRQ 12	 = ADC1_THCMP_IRQ 13	 = COMP0_OUT (One output from each analog comparator) 14	 = COMP1_OUT 15	 = COMP2_OUT 16 = A	COMP3_OUT 17	 = SCTIPU_ABORT 18	 = SCTIPU_SAMPLE0 19	 = SCTIPU_SAMPLE1 20	 = SCTIPU_SAMPLE2 21	 = SCTIPU_SAMPLE3 22	 = DEBUG_HALTED DEBUG_HALTED (from ARM Cortex CoreSight Debugger)
+        ///Input number (decimal value) to SCT1 inputs 0 to 6.  0     = PIO0_15 (external pin) 1     = PIO0_16 (external pin) 2     = PIO0_21 (external pin) 3     = PIO0_31 (external pin) 4     = PIO1_4 (external pin) 5 = PIO1_5 (external pin) 6     = PIO1_15 (external pin) 7     = PIO1_16 (external pin) 8     = SCT0_OUT4 (large SCT0 output 4) 9     = SCT3_OUT4 (small companion SCT3 output 4) 10 =     SCT3_OUT5 (small companion SCT3 output 5) 11 =     ADC0_THCMP_IRQ 12     = ADC1_THCMP_IRQ 13     = COMP0_OUT (One output from each analog comparator) 14     = COMP1_OUT 15     = COMP2_OUT 16 = A    COMP3_OUT 17     = SCTIPU_ABORT 18     = SCTIPU_SAMPLE0 19     = SCTIPU_SAMPLE1 20     = SCTIPU_SAMPLE2 21     = SCTIPU_SAMPLE3 22     = DEBUG_HALTED DEBUG_HALTED (from ARM Cortex CoreSight Debugger)
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(4,0),Register::ReadWriteAccess,unsigned> inpN{}; 
         ///Reserved.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(31,5),Register::ReadWriteAccess,unsigned> reserved{}; 
     }
     namespace InmuxSct1Inmux3{    ///<Pinmux register for SCT1 input 0
         using Addr = Register::Address<0x4001402c,0x00000000,0x00000000,unsigned>;
-        ///Input number (decimal value) to SCT1 inputs 0 to 6.  0	 = PIO0_15 (external pin) 1	 = PIO0_16 (external pin) 2	 = PIO0_21 (external pin) 3	 = PIO0_31 (external pin) 4	 = PIO1_4 (external pin) 5 = PIO1_5 (external pin) 6	 = PIO1_15 (external pin) 7	 = PIO1_16 (external pin) 8	 = SCT0_OUT4 (large SCT0 output 4) 9	 = SCT3_OUT4 (small companion SCT3 output 4) 10 = 	SCT3_OUT5 (small companion SCT3 output 5) 11 = 	ADC0_THCMP_IRQ 12	 = ADC1_THCMP_IRQ 13	 = COMP0_OUT (One output from each analog comparator) 14	 = COMP1_OUT 15	 = COMP2_OUT 16 = A	COMP3_OUT 17	 = SCTIPU_ABORT 18	 = SCTIPU_SAMPLE0 19	 = SCTIPU_SAMPLE1 20	 = SCTIPU_SAMPLE2 21	 = SCTIPU_SAMPLE3 22	 = DEBUG_HALTED DEBUG_HALTED (from ARM Cortex CoreSight Debugger)
+        ///Input number (decimal value) to SCT1 inputs 0 to 6.  0     = PIO0_15 (external pin) 1     = PIO0_16 (external pin) 2     = PIO0_21 (external pin) 3     = PIO0_31 (external pin) 4     = PIO1_4 (external pin) 5 = PIO1_5 (external pin) 6     = PIO1_15 (external pin) 7     = PIO1_16 (external pin) 8     = SCT0_OUT4 (large SCT0 output 4) 9     = SCT3_OUT4 (small companion SCT3 output 4) 10 =     SCT3_OUT5 (small companion SCT3 output 5) 11 =     ADC0_THCMP_IRQ 12     = ADC1_THCMP_IRQ 13     = COMP0_OUT (One output from each analog comparator) 14     = COMP1_OUT 15     = COMP2_OUT 16 = A    COMP3_OUT 17     = SCTIPU_ABORT 18     = SCTIPU_SAMPLE0 19     = SCTIPU_SAMPLE1 20     = SCTIPU_SAMPLE2 21     = SCTIPU_SAMPLE3 22     = DEBUG_HALTED DEBUG_HALTED (from ARM Cortex CoreSight Debugger)
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(4,0),Register::ReadWriteAccess,unsigned> inpN{}; 
         ///Reserved.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(31,5),Register::ReadWriteAccess,unsigned> reserved{}; 
     }
     namespace InmuxSct1Inmux4{    ///<Pinmux register for SCT1 input 0
         using Addr = Register::Address<0x40014030,0x00000000,0x00000000,unsigned>;
-        ///Input number (decimal value) to SCT1 inputs 0 to 6.  0	 = PIO0_15 (external pin) 1	 = PIO0_16 (external pin) 2	 = PIO0_21 (external pin) 3	 = PIO0_31 (external pin) 4	 = PIO1_4 (external pin) 5 = PIO1_5 (external pin) 6	 = PIO1_15 (external pin) 7	 = PIO1_16 (external pin) 8	 = SCT0_OUT4 (large SCT0 output 4) 9	 = SCT3_OUT4 (small companion SCT3 output 4) 10 = 	SCT3_OUT5 (small companion SCT3 output 5) 11 = 	ADC0_THCMP_IRQ 12	 = ADC1_THCMP_IRQ 13	 = COMP0_OUT (One output from each analog comparator) 14	 = COMP1_OUT 15	 = COMP2_OUT 16 = A	COMP3_OUT 17	 = SCTIPU_ABORT 18	 = SCTIPU_SAMPLE0 19	 = SCTIPU_SAMPLE1 20	 = SCTIPU_SAMPLE2 21	 = SCTIPU_SAMPLE3 22	 = DEBUG_HALTED DEBUG_HALTED (from ARM Cortex CoreSight Debugger)
+        ///Input number (decimal value) to SCT1 inputs 0 to 6.  0     = PIO0_15 (external pin) 1     = PIO0_16 (external pin) 2     = PIO0_21 (external pin) 3     = PIO0_31 (external pin) 4     = PIO1_4 (external pin) 5 = PIO1_5 (external pin) 6     = PIO1_15 (external pin) 7     = PIO1_16 (external pin) 8     = SCT0_OUT4 (large SCT0 output 4) 9     = SCT3_OUT4 (small companion SCT3 output 4) 10 =     SCT3_OUT5 (small companion SCT3 output 5) 11 =     ADC0_THCMP_IRQ 12     = ADC1_THCMP_IRQ 13     = COMP0_OUT (One output from each analog comparator) 14     = COMP1_OUT 15     = COMP2_OUT 16 = A    COMP3_OUT 17     = SCTIPU_ABORT 18     = SCTIPU_SAMPLE0 19     = SCTIPU_SAMPLE1 20     = SCTIPU_SAMPLE2 21     = SCTIPU_SAMPLE3 22     = DEBUG_HALTED DEBUG_HALTED (from ARM Cortex CoreSight Debugger)
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(4,0),Register::ReadWriteAccess,unsigned> inpN{}; 
         ///Reserved.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(31,5),Register::ReadWriteAccess,unsigned> reserved{}; 
     }
     namespace InmuxSct1Inmux5{    ///<Pinmux register for SCT1 input 0
         using Addr = Register::Address<0x40014034,0x00000000,0x00000000,unsigned>;
-        ///Input number (decimal value) to SCT1 inputs 0 to 6.  0	 = PIO0_15 (external pin) 1	 = PIO0_16 (external pin) 2	 = PIO0_21 (external pin) 3	 = PIO0_31 (external pin) 4	 = PIO1_4 (external pin) 5 = PIO1_5 (external pin) 6	 = PIO1_15 (external pin) 7	 = PIO1_16 (external pin) 8	 = SCT0_OUT4 (large SCT0 output 4) 9	 = SCT3_OUT4 (small companion SCT3 output 4) 10 = 	SCT3_OUT5 (small companion SCT3 output 5) 11 = 	ADC0_THCMP_IRQ 12	 = ADC1_THCMP_IRQ 13	 = COMP0_OUT (One output from each analog comparator) 14	 = COMP1_OUT 15	 = COMP2_OUT 16 = A	COMP3_OUT 17	 = SCTIPU_ABORT 18	 = SCTIPU_SAMPLE0 19	 = SCTIPU_SAMPLE1 20	 = SCTIPU_SAMPLE2 21	 = SCTIPU_SAMPLE3 22	 = DEBUG_HALTED DEBUG_HALTED (from ARM Cortex CoreSight Debugger)
+        ///Input number (decimal value) to SCT1 inputs 0 to 6.  0     = PIO0_15 (external pin) 1     = PIO0_16 (external pin) 2     = PIO0_21 (external pin) 3     = PIO0_31 (external pin) 4     = PIO1_4 (external pin) 5 = PIO1_5 (external pin) 6     = PIO1_15 (external pin) 7     = PIO1_16 (external pin) 8     = SCT0_OUT4 (large SCT0 output 4) 9     = SCT3_OUT4 (small companion SCT3 output 4) 10 =     SCT3_OUT5 (small companion SCT3 output 5) 11 =     ADC0_THCMP_IRQ 12     = ADC1_THCMP_IRQ 13     = COMP0_OUT (One output from each analog comparator) 14     = COMP1_OUT 15     = COMP2_OUT 16 = A    COMP3_OUT 17     = SCTIPU_ABORT 18     = SCTIPU_SAMPLE0 19     = SCTIPU_SAMPLE1 20     = SCTIPU_SAMPLE2 21     = SCTIPU_SAMPLE3 22     = DEBUG_HALTED DEBUG_HALTED (from ARM Cortex CoreSight Debugger)
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(4,0),Register::ReadWriteAccess,unsigned> inpN{}; 
         ///Reserved.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(31,5),Register::ReadWriteAccess,unsigned> reserved{}; 
     }
     namespace InmuxSct1Inmux6{    ///<Pinmux register for SCT1 input 0
         using Addr = Register::Address<0x40014038,0x00000000,0x00000000,unsigned>;
-        ///Input number (decimal value) to SCT1 inputs 0 to 6.  0	 = PIO0_15 (external pin) 1	 = PIO0_16 (external pin) 2	 = PIO0_21 (external pin) 3	 = PIO0_31 (external pin) 4	 = PIO1_4 (external pin) 5 = PIO1_5 (external pin) 6	 = PIO1_15 (external pin) 7	 = PIO1_16 (external pin) 8	 = SCT0_OUT4 (large SCT0 output 4) 9	 = SCT3_OUT4 (small companion SCT3 output 4) 10 = 	SCT3_OUT5 (small companion SCT3 output 5) 11 = 	ADC0_THCMP_IRQ 12	 = ADC1_THCMP_IRQ 13	 = COMP0_OUT (One output from each analog comparator) 14	 = COMP1_OUT 15	 = COMP2_OUT 16 = A	COMP3_OUT 17	 = SCTIPU_ABORT 18	 = SCTIPU_SAMPLE0 19	 = SCTIPU_SAMPLE1 20	 = SCTIPU_SAMPLE2 21	 = SCTIPU_SAMPLE3 22	 = DEBUG_HALTED DEBUG_HALTED (from ARM Cortex CoreSight Debugger)
+        ///Input number (decimal value) to SCT1 inputs 0 to 6.  0     = PIO0_15 (external pin) 1     = PIO0_16 (external pin) 2     = PIO0_21 (external pin) 3     = PIO0_31 (external pin) 4     = PIO1_4 (external pin) 5 = PIO1_5 (external pin) 6     = PIO1_15 (external pin) 7     = PIO1_16 (external pin) 8     = SCT0_OUT4 (large SCT0 output 4) 9     = SCT3_OUT4 (small companion SCT3 output 4) 10 =     SCT3_OUT5 (small companion SCT3 output 5) 11 =     ADC0_THCMP_IRQ 12     = ADC1_THCMP_IRQ 13     = COMP0_OUT (One output from each analog comparator) 14     = COMP1_OUT 15     = COMP2_OUT 16 = A    COMP3_OUT 17     = SCTIPU_ABORT 18     = SCTIPU_SAMPLE0 19     = SCTIPU_SAMPLE1 20     = SCTIPU_SAMPLE2 21     = SCTIPU_SAMPLE3 22     = DEBUG_HALTED DEBUG_HALTED (from ARM Cortex CoreSight Debugger)
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(4,0),Register::ReadWriteAccess,unsigned> inpN{}; 
         ///Reserved.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(31,5),Register::ReadWriteAccess,unsigned> reserved{}; 
     }
     namespace InmuxSct2Inmux0{    ///<Pinmux register for SCT2 input 0
         using Addr = Register::Address<0x40014040,0x00000000,0x00000000,unsigned>;
-        ///Input number (decimal value) to SCT2 inputs 0 to 2.  0	 = P0_4 (external pin) 1	 = P0_27 (external pin) 2	 = P1_18 (external pin) 3	 = P1_19 (external pin) 4	 = SCT0_OUT4 5	= SCT0_OUT5 6	= SCT0_OUT7 7 = 	SCT0_OUT8 8	 = ADC0_THCMP_IRQ 9	= ADC1_THCMP_IRQ 10	 = COMP0_OUT (One output from each analog comparator) 11	 = COMP1_OUT 12	 = COMP2_OUT 13	 = COMP3_OUT 14	 = SCTIPU_ABORT 15	 = SCTIPU_SAMPLE0 16	 = SCTIPU_SAMPLE1 17	 = SCTIPU_SAMPLE2 18	 = SCTIPU_SAMPLE3 19	 = USB_FRAME_TOGGLE 20	 = DEBUG_HALTED
+        ///Input number (decimal value) to SCT2 inputs 0 to 2.  0     = P0_4 (external pin) 1     = P0_27 (external pin) 2     = P1_18 (external pin) 3     = P1_19 (external pin) 4     = SCT0_OUT4 5    = SCT0_OUT5 6    = SCT0_OUT7 7 =     SCT0_OUT8 8     = ADC0_THCMP_IRQ 9    = ADC1_THCMP_IRQ 10     = COMP0_OUT (One output from each analog comparator) 11     = COMP1_OUT 12     = COMP2_OUT 13     = COMP3_OUT 14     = SCTIPU_ABORT 15     = SCTIPU_SAMPLE0 16     = SCTIPU_SAMPLE1 17     = SCTIPU_SAMPLE2 18     = SCTIPU_SAMPLE3 19     = USB_FRAME_TOGGLE 20     = DEBUG_HALTED
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(4,0),Register::ReadWriteAccess,unsigned> inpN{}; 
         ///Reserved.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(31,5),Register::ReadWriteAccess,unsigned> reserved{}; 
     }
     namespace InmuxSct2Inmux1{    ///<Pinmux register for SCT2 input 0
         using Addr = Register::Address<0x40014044,0x00000000,0x00000000,unsigned>;
-        ///Input number (decimal value) to SCT2 inputs 0 to 2.  0	 = P0_4 (external pin) 1	 = P0_27 (external pin) 2	 = P1_18 (external pin) 3	 = P1_19 (external pin) 4	 = SCT0_OUT4 5	= SCT0_OUT5 6	= SCT0_OUT7 7 = 	SCT0_OUT8 8	 = ADC0_THCMP_IRQ 9	= ADC1_THCMP_IRQ 10	 = COMP0_OUT (One output from each analog comparator) 11	 = COMP1_OUT 12	 = COMP2_OUT 13	 = COMP3_OUT 14	 = SCTIPU_ABORT 15	 = SCTIPU_SAMPLE0 16	 = SCTIPU_SAMPLE1 17	 = SCTIPU_SAMPLE2 18	 = SCTIPU_SAMPLE3 19	 = USB_FRAME_TOGGLE 20	 = DEBUG_HALTED
+        ///Input number (decimal value) to SCT2 inputs 0 to 2.  0     = P0_4 (external pin) 1     = P0_27 (external pin) 2     = P1_18 (external pin) 3     = P1_19 (external pin) 4     = SCT0_OUT4 5    = SCT0_OUT5 6    = SCT0_OUT7 7 =     SCT0_OUT8 8     = ADC0_THCMP_IRQ 9    = ADC1_THCMP_IRQ 10     = COMP0_OUT (One output from each analog comparator) 11     = COMP1_OUT 12     = COMP2_OUT 13     = COMP3_OUT 14     = SCTIPU_ABORT 15     = SCTIPU_SAMPLE0 16     = SCTIPU_SAMPLE1 17     = SCTIPU_SAMPLE2 18     = SCTIPU_SAMPLE3 19     = USB_FRAME_TOGGLE 20     = DEBUG_HALTED
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(4,0),Register::ReadWriteAccess,unsigned> inpN{}; 
         ///Reserved.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(31,5),Register::ReadWriteAccess,unsigned> reserved{}; 
     }
     namespace InmuxSct2Inmux2{    ///<Pinmux register for SCT2 input 0
         using Addr = Register::Address<0x40014048,0x00000000,0x00000000,unsigned>;
-        ///Input number (decimal value) to SCT2 inputs 0 to 2.  0	 = P0_4 (external pin) 1	 = P0_27 (external pin) 2	 = P1_18 (external pin) 3	 = P1_19 (external pin) 4	 = SCT0_OUT4 5	= SCT0_OUT5 6	= SCT0_OUT7 7 = 	SCT0_OUT8 8	 = ADC0_THCMP_IRQ 9	= ADC1_THCMP_IRQ 10	 = COMP0_OUT (One output from each analog comparator) 11	 = COMP1_OUT 12	 = COMP2_OUT 13	 = COMP3_OUT 14	 = SCTIPU_ABORT 15	 = SCTIPU_SAMPLE0 16	 = SCTIPU_SAMPLE1 17	 = SCTIPU_SAMPLE2 18	 = SCTIPU_SAMPLE3 19	 = USB_FRAME_TOGGLE 20	 = DEBUG_HALTED
+        ///Input number (decimal value) to SCT2 inputs 0 to 2.  0     = P0_4 (external pin) 1     = P0_27 (external pin) 2     = P1_18 (external pin) 3     = P1_19 (external pin) 4     = SCT0_OUT4 5    = SCT0_OUT5 6    = SCT0_OUT7 7 =     SCT0_OUT8 8     = ADC0_THCMP_IRQ 9    = ADC1_THCMP_IRQ 10     = COMP0_OUT (One output from each analog comparator) 11     = COMP1_OUT 12     = COMP2_OUT 13     = COMP3_OUT 14     = SCTIPU_ABORT 15     = SCTIPU_SAMPLE0 16     = SCTIPU_SAMPLE1 17     = SCTIPU_SAMPLE2 18     = SCTIPU_SAMPLE3 19     = USB_FRAME_TOGGLE 20     = DEBUG_HALTED
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(4,0),Register::ReadWriteAccess,unsigned> inpN{}; 
         ///Reserved.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(31,5),Register::ReadWriteAccess,unsigned> reserved{}; 
     }
     namespace InmuxSct3Inmux0{    ///<Pinmux register for SCT3 input 0
         using Addr = Register::Address<0x40014060,0x00000000,0x00000000,unsigned>;
-        ///Input number (decimal value) to SCT3 inputs 0 to 2.   0	 = PIO0_7 1	 = PIO1_11 2	 = PIO1_21 3	 = PIO1_22 4	 = SCT1_OUT4 5	 = SCT1_OUT5 6	 = SCT1_OUT7 7	 = SCT1_OUT8 8	 = ADC0_THCMP_IRQ 9	 = ADC1_THCMP_IRQ 10	 = COMP0_OUT 11	 = COMP1_OUT 12	 = COMP2_OUT 13	 = COMP3_OUT 14	 = SCTIPU_ABORT3 15	 = SCTIPU_SAMPLE0 16	 = SCTIPU_SAMPLE1 17	 = SCTIPU_SAMPLE2 18	 = SCTIPU_SAMPLE3 19	 = USB_FRAME_TOGGLE 20	 = DEBUG_HALTED
+        ///Input number (decimal value) to SCT3 inputs 0 to 2.   0     = PIO0_7 1     = PIO1_11 2     = PIO1_21 3     = PIO1_22 4     = SCT1_OUT4 5     = SCT1_OUT5 6     = SCT1_OUT7 7     = SCT1_OUT8 8     = ADC0_THCMP_IRQ 9     = ADC1_THCMP_IRQ 10     = COMP0_OUT 11     = COMP1_OUT 12     = COMP2_OUT 13     = COMP3_OUT 14     = SCTIPU_ABORT3 15     = SCTIPU_SAMPLE0 16     = SCTIPU_SAMPLE1 17     = SCTIPU_SAMPLE2 18     = SCTIPU_SAMPLE3 19     = USB_FRAME_TOGGLE 20     = DEBUG_HALTED
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(4,0),Register::ReadWriteAccess,unsigned> inpN{}; 
         ///Reserved.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(31,5),Register::ReadWriteAccess,unsigned> reserved{}; 
     }
     namespace InmuxSct3Inmux1{    ///<Pinmux register for SCT3 input 0
         using Addr = Register::Address<0x40014064,0x00000000,0x00000000,unsigned>;
-        ///Input number (decimal value) to SCT3 inputs 0 to 2.   0	 = PIO0_7 1	 = PIO1_11 2	 = PIO1_21 3	 = PIO1_22 4	 = SCT1_OUT4 5	 = SCT1_OUT5 6	 = SCT1_OUT7 7	 = SCT1_OUT8 8	 = ADC0_THCMP_IRQ 9	 = ADC1_THCMP_IRQ 10	 = COMP0_OUT 11	 = COMP1_OUT 12	 = COMP2_OUT 13	 = COMP3_OUT 14	 = SCTIPU_ABORT3 15	 = SCTIPU_SAMPLE0 16	 = SCTIPU_SAMPLE1 17	 = SCTIPU_SAMPLE2 18	 = SCTIPU_SAMPLE3 19	 = USB_FRAME_TOGGLE 20	 = DEBUG_HALTED
+        ///Input number (decimal value) to SCT3 inputs 0 to 2.   0     = PIO0_7 1     = PIO1_11 2     = PIO1_21 3     = PIO1_22 4     = SCT1_OUT4 5     = SCT1_OUT5 6     = SCT1_OUT7 7     = SCT1_OUT8 8     = ADC0_THCMP_IRQ 9     = ADC1_THCMP_IRQ 10     = COMP0_OUT 11     = COMP1_OUT 12     = COMP2_OUT 13     = COMP3_OUT 14     = SCTIPU_ABORT3 15     = SCTIPU_SAMPLE0 16     = SCTIPU_SAMPLE1 17     = SCTIPU_SAMPLE2 18     = SCTIPU_SAMPLE3 19     = USB_FRAME_TOGGLE 20     = DEBUG_HALTED
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(4,0),Register::ReadWriteAccess,unsigned> inpN{}; 
         ///Reserved.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(31,5),Register::ReadWriteAccess,unsigned> reserved{}; 
     }
     namespace InmuxSct3Inmux2{    ///<Pinmux register for SCT3 input 0
         using Addr = Register::Address<0x40014068,0x00000000,0x00000000,unsigned>;
-        ///Input number (decimal value) to SCT3 inputs 0 to 2.   0	 = PIO0_7 1	 = PIO1_11 2	 = PIO1_21 3	 = PIO1_22 4	 = SCT1_OUT4 5	 = SCT1_OUT5 6	 = SCT1_OUT7 7	 = SCT1_OUT8 8	 = ADC0_THCMP_IRQ 9	 = ADC1_THCMP_IRQ 10	 = COMP0_OUT 11	 = COMP1_OUT 12	 = COMP2_OUT 13	 = COMP3_OUT 14	 = SCTIPU_ABORT3 15	 = SCTIPU_SAMPLE0 16	 = SCTIPU_SAMPLE1 17	 = SCTIPU_SAMPLE2 18	 = SCTIPU_SAMPLE3 19	 = USB_FRAME_TOGGLE 20	 = DEBUG_HALTED
+        ///Input number (decimal value) to SCT3 inputs 0 to 2.   0     = PIO0_7 1     = PIO1_11 2     = PIO1_21 3     = PIO1_22 4     = SCT1_OUT4 5     = SCT1_OUT5 6     = SCT1_OUT7 7     = SCT1_OUT8 8     = ADC0_THCMP_IRQ 9     = ADC1_THCMP_IRQ 10     = COMP0_OUT 11     = COMP1_OUT 12     = COMP2_OUT 13     = COMP3_OUT 14     = SCTIPU_ABORT3 15     = SCTIPU_SAMPLE0 16     = SCTIPU_SAMPLE1 17     = SCTIPU_SAMPLE2 18     = SCTIPU_SAMPLE3 19     = USB_FRAME_TOGGLE 20     = DEBUG_HALTED
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(4,0),Register::ReadWriteAccess,unsigned> inpN{}; 
         ///Reserved.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(31,5),Register::ReadWriteAccess,unsigned> reserved{}; 
@@ -564,126 +564,126 @@ namespace Kvasir {
     }
     namespace InmuxDmaItrigInmux0{    ///<Trigger input for DMA channel 0 select register.
         using Addr = Register::Address<0x400140e0,0x00000000,0x00000000,unsigned>;
-        ///Trigger input number (decimal value) to DMA channel n.   0	 = ADC0_SEQA_IRQ 1 = 	ADC0_SEQB_IRQ 2	 = ADC1_SEQA_IRQ 3 = 	ADC1_SEQB_IRQ 4	 = SCT0_DMA0 5	 = SCT0_DMA1 6	 = SCT1_DMA0 7 = 	SCT1_DMA1 8 = 	SCT2_DMA0 9 = 	SCT2_DMA1 10	 = SCT3_DMA0 11	 = SCT3_DMA1 12	 = COMP0_OUT (One output from each analog comparator) 13	 = COMP1_OUT 14	 = COMP2_OUT 15 = 	COMP3_OUT 16	 = SDMA_TRIGOUT_A 17	 = SDMA_TRIGOUT_B 18	 = SDMA_TRIGOUT_C 19 = 	SDMA_TRIGOUT_D
+        ///Trigger input number (decimal value) to DMA channel n.   0     = ADC0_SEQA_IRQ 1 =     ADC0_SEQB_IRQ 2     = ADC1_SEQA_IRQ 3 =     ADC1_SEQB_IRQ 4     = SCT0_DMA0 5     = SCT0_DMA1 6     = SCT1_DMA0 7 =     SCT1_DMA1 8 =     SCT2_DMA0 9 =     SCT2_DMA1 10     = SCT3_DMA0 11     = SCT3_DMA1 12     = COMP0_OUT (One output from each analog comparator) 13     = COMP1_OUT 14     = COMP2_OUT 15 =     COMP3_OUT 16     = SDMA_TRIGOUT_A 17     = SDMA_TRIGOUT_B 18     = SDMA_TRIGOUT_C 19 =     SDMA_TRIGOUT_D
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(4,0),Register::ReadWriteAccess,unsigned> inpN{}; 
         ///Reserved.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(31,5),Register::ReadWriteAccess,unsigned> reserved{}; 
     }
     namespace InmuxDmaItrigInmux1{    ///<Trigger input for DMA channel 0 select register.
         using Addr = Register::Address<0x400140e4,0x00000000,0x00000000,unsigned>;
-        ///Trigger input number (decimal value) to DMA channel n.   0	 = ADC0_SEQA_IRQ 1 = 	ADC0_SEQB_IRQ 2	 = ADC1_SEQA_IRQ 3 = 	ADC1_SEQB_IRQ 4	 = SCT0_DMA0 5	 = SCT0_DMA1 6	 = SCT1_DMA0 7 = 	SCT1_DMA1 8 = 	SCT2_DMA0 9 = 	SCT2_DMA1 10	 = SCT3_DMA0 11	 = SCT3_DMA1 12	 = COMP0_OUT (One output from each analog comparator) 13	 = COMP1_OUT 14	 = COMP2_OUT 15 = 	COMP3_OUT 16	 = SDMA_TRIGOUT_A 17	 = SDMA_TRIGOUT_B 18	 = SDMA_TRIGOUT_C 19 = 	SDMA_TRIGOUT_D
+        ///Trigger input number (decimal value) to DMA channel n.   0     = ADC0_SEQA_IRQ 1 =     ADC0_SEQB_IRQ 2     = ADC1_SEQA_IRQ 3 =     ADC1_SEQB_IRQ 4     = SCT0_DMA0 5     = SCT0_DMA1 6     = SCT1_DMA0 7 =     SCT1_DMA1 8 =     SCT2_DMA0 9 =     SCT2_DMA1 10     = SCT3_DMA0 11     = SCT3_DMA1 12     = COMP0_OUT (One output from each analog comparator) 13     = COMP1_OUT 14     = COMP2_OUT 15 =     COMP3_OUT 16     = SDMA_TRIGOUT_A 17     = SDMA_TRIGOUT_B 18     = SDMA_TRIGOUT_C 19 =     SDMA_TRIGOUT_D
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(4,0),Register::ReadWriteAccess,unsigned> inpN{}; 
         ///Reserved.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(31,5),Register::ReadWriteAccess,unsigned> reserved{}; 
     }
     namespace InmuxDmaItrigInmux2{    ///<Trigger input for DMA channel 0 select register.
         using Addr = Register::Address<0x400140e8,0x00000000,0x00000000,unsigned>;
-        ///Trigger input number (decimal value) to DMA channel n.   0	 = ADC0_SEQA_IRQ 1 = 	ADC0_SEQB_IRQ 2	 = ADC1_SEQA_IRQ 3 = 	ADC1_SEQB_IRQ 4	 = SCT0_DMA0 5	 = SCT0_DMA1 6	 = SCT1_DMA0 7 = 	SCT1_DMA1 8 = 	SCT2_DMA0 9 = 	SCT2_DMA1 10	 = SCT3_DMA0 11	 = SCT3_DMA1 12	 = COMP0_OUT (One output from each analog comparator) 13	 = COMP1_OUT 14	 = COMP2_OUT 15 = 	COMP3_OUT 16	 = SDMA_TRIGOUT_A 17	 = SDMA_TRIGOUT_B 18	 = SDMA_TRIGOUT_C 19 = 	SDMA_TRIGOUT_D
+        ///Trigger input number (decimal value) to DMA channel n.   0     = ADC0_SEQA_IRQ 1 =     ADC0_SEQB_IRQ 2     = ADC1_SEQA_IRQ 3 =     ADC1_SEQB_IRQ 4     = SCT0_DMA0 5     = SCT0_DMA1 6     = SCT1_DMA0 7 =     SCT1_DMA1 8 =     SCT2_DMA0 9 =     SCT2_DMA1 10     = SCT3_DMA0 11     = SCT3_DMA1 12     = COMP0_OUT (One output from each analog comparator) 13     = COMP1_OUT 14     = COMP2_OUT 15 =     COMP3_OUT 16     = SDMA_TRIGOUT_A 17     = SDMA_TRIGOUT_B 18     = SDMA_TRIGOUT_C 19 =     SDMA_TRIGOUT_D
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(4,0),Register::ReadWriteAccess,unsigned> inpN{}; 
         ///Reserved.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(31,5),Register::ReadWriteAccess,unsigned> reserved{}; 
     }
     namespace InmuxDmaItrigInmux3{    ///<Trigger input for DMA channel 0 select register.
         using Addr = Register::Address<0x400140ec,0x00000000,0x00000000,unsigned>;
-        ///Trigger input number (decimal value) to DMA channel n.   0	 = ADC0_SEQA_IRQ 1 = 	ADC0_SEQB_IRQ 2	 = ADC1_SEQA_IRQ 3 = 	ADC1_SEQB_IRQ 4	 = SCT0_DMA0 5	 = SCT0_DMA1 6	 = SCT1_DMA0 7 = 	SCT1_DMA1 8 = 	SCT2_DMA0 9 = 	SCT2_DMA1 10	 = SCT3_DMA0 11	 = SCT3_DMA1 12	 = COMP0_OUT (One output from each analog comparator) 13	 = COMP1_OUT 14	 = COMP2_OUT 15 = 	COMP3_OUT 16	 = SDMA_TRIGOUT_A 17	 = SDMA_TRIGOUT_B 18	 = SDMA_TRIGOUT_C 19 = 	SDMA_TRIGOUT_D
+        ///Trigger input number (decimal value) to DMA channel n.   0     = ADC0_SEQA_IRQ 1 =     ADC0_SEQB_IRQ 2     = ADC1_SEQA_IRQ 3 =     ADC1_SEQB_IRQ 4     = SCT0_DMA0 5     = SCT0_DMA1 6     = SCT1_DMA0 7 =     SCT1_DMA1 8 =     SCT2_DMA0 9 =     SCT2_DMA1 10     = SCT3_DMA0 11     = SCT3_DMA1 12     = COMP0_OUT (One output from each analog comparator) 13     = COMP1_OUT 14     = COMP2_OUT 15 =     COMP3_OUT 16     = SDMA_TRIGOUT_A 17     = SDMA_TRIGOUT_B 18     = SDMA_TRIGOUT_C 19 =     SDMA_TRIGOUT_D
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(4,0),Register::ReadWriteAccess,unsigned> inpN{}; 
         ///Reserved.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(31,5),Register::ReadWriteAccess,unsigned> reserved{}; 
     }
     namespace InmuxDmaItrigInmux4{    ///<Trigger input for DMA channel 0 select register.
         using Addr = Register::Address<0x400140f0,0x00000000,0x00000000,unsigned>;
-        ///Trigger input number (decimal value) to DMA channel n.   0	 = ADC0_SEQA_IRQ 1 = 	ADC0_SEQB_IRQ 2	 = ADC1_SEQA_IRQ 3 = 	ADC1_SEQB_IRQ 4	 = SCT0_DMA0 5	 = SCT0_DMA1 6	 = SCT1_DMA0 7 = 	SCT1_DMA1 8 = 	SCT2_DMA0 9 = 	SCT2_DMA1 10	 = SCT3_DMA0 11	 = SCT3_DMA1 12	 = COMP0_OUT (One output from each analog comparator) 13	 = COMP1_OUT 14	 = COMP2_OUT 15 = 	COMP3_OUT 16	 = SDMA_TRIGOUT_A 17	 = SDMA_TRIGOUT_B 18	 = SDMA_TRIGOUT_C 19 = 	SDMA_TRIGOUT_D
+        ///Trigger input number (decimal value) to DMA channel n.   0     = ADC0_SEQA_IRQ 1 =     ADC0_SEQB_IRQ 2     = ADC1_SEQA_IRQ 3 =     ADC1_SEQB_IRQ 4     = SCT0_DMA0 5     = SCT0_DMA1 6     = SCT1_DMA0 7 =     SCT1_DMA1 8 =     SCT2_DMA0 9 =     SCT2_DMA1 10     = SCT3_DMA0 11     = SCT3_DMA1 12     = COMP0_OUT (One output from each analog comparator) 13     = COMP1_OUT 14     = COMP2_OUT 15 =     COMP3_OUT 16     = SDMA_TRIGOUT_A 17     = SDMA_TRIGOUT_B 18     = SDMA_TRIGOUT_C 19 =     SDMA_TRIGOUT_D
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(4,0),Register::ReadWriteAccess,unsigned> inpN{}; 
         ///Reserved.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(31,5),Register::ReadWriteAccess,unsigned> reserved{}; 
     }
     namespace InmuxDmaItrigInmux5{    ///<Trigger input for DMA channel 0 select register.
         using Addr = Register::Address<0x400140f4,0x00000000,0x00000000,unsigned>;
-        ///Trigger input number (decimal value) to DMA channel n.   0	 = ADC0_SEQA_IRQ 1 = 	ADC0_SEQB_IRQ 2	 = ADC1_SEQA_IRQ 3 = 	ADC1_SEQB_IRQ 4	 = SCT0_DMA0 5	 = SCT0_DMA1 6	 = SCT1_DMA0 7 = 	SCT1_DMA1 8 = 	SCT2_DMA0 9 = 	SCT2_DMA1 10	 = SCT3_DMA0 11	 = SCT3_DMA1 12	 = COMP0_OUT (One output from each analog comparator) 13	 = COMP1_OUT 14	 = COMP2_OUT 15 = 	COMP3_OUT 16	 = SDMA_TRIGOUT_A 17	 = SDMA_TRIGOUT_B 18	 = SDMA_TRIGOUT_C 19 = 	SDMA_TRIGOUT_D
+        ///Trigger input number (decimal value) to DMA channel n.   0     = ADC0_SEQA_IRQ 1 =     ADC0_SEQB_IRQ 2     = ADC1_SEQA_IRQ 3 =     ADC1_SEQB_IRQ 4     = SCT0_DMA0 5     = SCT0_DMA1 6     = SCT1_DMA0 7 =     SCT1_DMA1 8 =     SCT2_DMA0 9 =     SCT2_DMA1 10     = SCT3_DMA0 11     = SCT3_DMA1 12     = COMP0_OUT (One output from each analog comparator) 13     = COMP1_OUT 14     = COMP2_OUT 15 =     COMP3_OUT 16     = SDMA_TRIGOUT_A 17     = SDMA_TRIGOUT_B 18     = SDMA_TRIGOUT_C 19 =     SDMA_TRIGOUT_D
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(4,0),Register::ReadWriteAccess,unsigned> inpN{}; 
         ///Reserved.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(31,5),Register::ReadWriteAccess,unsigned> reserved{}; 
     }
     namespace InmuxDmaItrigInmux6{    ///<Trigger input for DMA channel 0 select register.
         using Addr = Register::Address<0x400140f8,0x00000000,0x00000000,unsigned>;
-        ///Trigger input number (decimal value) to DMA channel n.   0	 = ADC0_SEQA_IRQ 1 = 	ADC0_SEQB_IRQ 2	 = ADC1_SEQA_IRQ 3 = 	ADC1_SEQB_IRQ 4	 = SCT0_DMA0 5	 = SCT0_DMA1 6	 = SCT1_DMA0 7 = 	SCT1_DMA1 8 = 	SCT2_DMA0 9 = 	SCT2_DMA1 10	 = SCT3_DMA0 11	 = SCT3_DMA1 12	 = COMP0_OUT (One output from each analog comparator) 13	 = COMP1_OUT 14	 = COMP2_OUT 15 = 	COMP3_OUT 16	 = SDMA_TRIGOUT_A 17	 = SDMA_TRIGOUT_B 18	 = SDMA_TRIGOUT_C 19 = 	SDMA_TRIGOUT_D
+        ///Trigger input number (decimal value) to DMA channel n.   0     = ADC0_SEQA_IRQ 1 =     ADC0_SEQB_IRQ 2     = ADC1_SEQA_IRQ 3 =     ADC1_SEQB_IRQ 4     = SCT0_DMA0 5     = SCT0_DMA1 6     = SCT1_DMA0 7 =     SCT1_DMA1 8 =     SCT2_DMA0 9 =     SCT2_DMA1 10     = SCT3_DMA0 11     = SCT3_DMA1 12     = COMP0_OUT (One output from each analog comparator) 13     = COMP1_OUT 14     = COMP2_OUT 15 =     COMP3_OUT 16     = SDMA_TRIGOUT_A 17     = SDMA_TRIGOUT_B 18     = SDMA_TRIGOUT_C 19 =     SDMA_TRIGOUT_D
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(4,0),Register::ReadWriteAccess,unsigned> inpN{}; 
         ///Reserved.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(31,5),Register::ReadWriteAccess,unsigned> reserved{}; 
     }
     namespace InmuxDmaItrigInmux7{    ///<Trigger input for DMA channel 0 select register.
         using Addr = Register::Address<0x400140fc,0x00000000,0x00000000,unsigned>;
-        ///Trigger input number (decimal value) to DMA channel n.   0	 = ADC0_SEQA_IRQ 1 = 	ADC0_SEQB_IRQ 2	 = ADC1_SEQA_IRQ 3 = 	ADC1_SEQB_IRQ 4	 = SCT0_DMA0 5	 = SCT0_DMA1 6	 = SCT1_DMA0 7 = 	SCT1_DMA1 8 = 	SCT2_DMA0 9 = 	SCT2_DMA1 10	 = SCT3_DMA0 11	 = SCT3_DMA1 12	 = COMP0_OUT (One output from each analog comparator) 13	 = COMP1_OUT 14	 = COMP2_OUT 15 = 	COMP3_OUT 16	 = SDMA_TRIGOUT_A 17	 = SDMA_TRIGOUT_B 18	 = SDMA_TRIGOUT_C 19 = 	SDMA_TRIGOUT_D
+        ///Trigger input number (decimal value) to DMA channel n.   0     = ADC0_SEQA_IRQ 1 =     ADC0_SEQB_IRQ 2     = ADC1_SEQA_IRQ 3 =     ADC1_SEQB_IRQ 4     = SCT0_DMA0 5     = SCT0_DMA1 6     = SCT1_DMA0 7 =     SCT1_DMA1 8 =     SCT2_DMA0 9 =     SCT2_DMA1 10     = SCT3_DMA0 11     = SCT3_DMA1 12     = COMP0_OUT (One output from each analog comparator) 13     = COMP1_OUT 14     = COMP2_OUT 15 =     COMP3_OUT 16     = SDMA_TRIGOUT_A 17     = SDMA_TRIGOUT_B 18     = SDMA_TRIGOUT_C 19 =     SDMA_TRIGOUT_D
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(4,0),Register::ReadWriteAccess,unsigned> inpN{}; 
         ///Reserved.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(31,5),Register::ReadWriteAccess,unsigned> reserved{}; 
     }
     namespace InmuxDmaItrigInmux8{    ///<Trigger input for DMA channel 0 select register.
         using Addr = Register::Address<0x40014100,0x00000000,0x00000000,unsigned>;
-        ///Trigger input number (decimal value) to DMA channel n.   0	 = ADC0_SEQA_IRQ 1 = 	ADC0_SEQB_IRQ 2	 = ADC1_SEQA_IRQ 3 = 	ADC1_SEQB_IRQ 4	 = SCT0_DMA0 5	 = SCT0_DMA1 6	 = SCT1_DMA0 7 = 	SCT1_DMA1 8 = 	SCT2_DMA0 9 = 	SCT2_DMA1 10	 = SCT3_DMA0 11	 = SCT3_DMA1 12	 = COMP0_OUT (One output from each analog comparator) 13	 = COMP1_OUT 14	 = COMP2_OUT 15 = 	COMP3_OUT 16	 = SDMA_TRIGOUT_A 17	 = SDMA_TRIGOUT_B 18	 = SDMA_TRIGOUT_C 19 = 	SDMA_TRIGOUT_D
+        ///Trigger input number (decimal value) to DMA channel n.   0     = ADC0_SEQA_IRQ 1 =     ADC0_SEQB_IRQ 2     = ADC1_SEQA_IRQ 3 =     ADC1_SEQB_IRQ 4     = SCT0_DMA0 5     = SCT0_DMA1 6     = SCT1_DMA0 7 =     SCT1_DMA1 8 =     SCT2_DMA0 9 =     SCT2_DMA1 10     = SCT3_DMA0 11     = SCT3_DMA1 12     = COMP0_OUT (One output from each analog comparator) 13     = COMP1_OUT 14     = COMP2_OUT 15 =     COMP3_OUT 16     = SDMA_TRIGOUT_A 17     = SDMA_TRIGOUT_B 18     = SDMA_TRIGOUT_C 19 =     SDMA_TRIGOUT_D
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(4,0),Register::ReadWriteAccess,unsigned> inpN{}; 
         ///Reserved.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(31,5),Register::ReadWriteAccess,unsigned> reserved{}; 
     }
     namespace InmuxDmaItrigInmux9{    ///<Trigger input for DMA channel 0 select register.
         using Addr = Register::Address<0x40014104,0x00000000,0x00000000,unsigned>;
-        ///Trigger input number (decimal value) to DMA channel n.   0	 = ADC0_SEQA_IRQ 1 = 	ADC0_SEQB_IRQ 2	 = ADC1_SEQA_IRQ 3 = 	ADC1_SEQB_IRQ 4	 = SCT0_DMA0 5	 = SCT0_DMA1 6	 = SCT1_DMA0 7 = 	SCT1_DMA1 8 = 	SCT2_DMA0 9 = 	SCT2_DMA1 10	 = SCT3_DMA0 11	 = SCT3_DMA1 12	 = COMP0_OUT (One output from each analog comparator) 13	 = COMP1_OUT 14	 = COMP2_OUT 15 = 	COMP3_OUT 16	 = SDMA_TRIGOUT_A 17	 = SDMA_TRIGOUT_B 18	 = SDMA_TRIGOUT_C 19 = 	SDMA_TRIGOUT_D
+        ///Trigger input number (decimal value) to DMA channel n.   0     = ADC0_SEQA_IRQ 1 =     ADC0_SEQB_IRQ 2     = ADC1_SEQA_IRQ 3 =     ADC1_SEQB_IRQ 4     = SCT0_DMA0 5     = SCT0_DMA1 6     = SCT1_DMA0 7 =     SCT1_DMA1 8 =     SCT2_DMA0 9 =     SCT2_DMA1 10     = SCT3_DMA0 11     = SCT3_DMA1 12     = COMP0_OUT (One output from each analog comparator) 13     = COMP1_OUT 14     = COMP2_OUT 15 =     COMP3_OUT 16     = SDMA_TRIGOUT_A 17     = SDMA_TRIGOUT_B 18     = SDMA_TRIGOUT_C 19 =     SDMA_TRIGOUT_D
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(4,0),Register::ReadWriteAccess,unsigned> inpN{}; 
         ///Reserved.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(31,5),Register::ReadWriteAccess,unsigned> reserved{}; 
     }
     namespace InmuxDmaItrigInmux10{    ///<Trigger input for DMA channel 0 select register.
         using Addr = Register::Address<0x40014108,0x00000000,0x00000000,unsigned>;
-        ///Trigger input number (decimal value) to DMA channel n.   0	 = ADC0_SEQA_IRQ 1 = 	ADC0_SEQB_IRQ 2	 = ADC1_SEQA_IRQ 3 = 	ADC1_SEQB_IRQ 4	 = SCT0_DMA0 5	 = SCT0_DMA1 6	 = SCT1_DMA0 7 = 	SCT1_DMA1 8 = 	SCT2_DMA0 9 = 	SCT2_DMA1 10	 = SCT3_DMA0 11	 = SCT3_DMA1 12	 = COMP0_OUT (One output from each analog comparator) 13	 = COMP1_OUT 14	 = COMP2_OUT 15 = 	COMP3_OUT 16	 = SDMA_TRIGOUT_A 17	 = SDMA_TRIGOUT_B 18	 = SDMA_TRIGOUT_C 19 = 	SDMA_TRIGOUT_D
+        ///Trigger input number (decimal value) to DMA channel n.   0     = ADC0_SEQA_IRQ 1 =     ADC0_SEQB_IRQ 2     = ADC1_SEQA_IRQ 3 =     ADC1_SEQB_IRQ 4     = SCT0_DMA0 5     = SCT0_DMA1 6     = SCT1_DMA0 7 =     SCT1_DMA1 8 =     SCT2_DMA0 9 =     SCT2_DMA1 10     = SCT3_DMA0 11     = SCT3_DMA1 12     = COMP0_OUT (One output from each analog comparator) 13     = COMP1_OUT 14     = COMP2_OUT 15 =     COMP3_OUT 16     = SDMA_TRIGOUT_A 17     = SDMA_TRIGOUT_B 18     = SDMA_TRIGOUT_C 19 =     SDMA_TRIGOUT_D
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(4,0),Register::ReadWriteAccess,unsigned> inpN{}; 
         ///Reserved.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(31,5),Register::ReadWriteAccess,unsigned> reserved{}; 
     }
     namespace InmuxDmaItrigInmux11{    ///<Trigger input for DMA channel 0 select register.
         using Addr = Register::Address<0x4001410c,0x00000000,0x00000000,unsigned>;
-        ///Trigger input number (decimal value) to DMA channel n.   0	 = ADC0_SEQA_IRQ 1 = 	ADC0_SEQB_IRQ 2	 = ADC1_SEQA_IRQ 3 = 	ADC1_SEQB_IRQ 4	 = SCT0_DMA0 5	 = SCT0_DMA1 6	 = SCT1_DMA0 7 = 	SCT1_DMA1 8 = 	SCT2_DMA0 9 = 	SCT2_DMA1 10	 = SCT3_DMA0 11	 = SCT3_DMA1 12	 = COMP0_OUT (One output from each analog comparator) 13	 = COMP1_OUT 14	 = COMP2_OUT 15 = 	COMP3_OUT 16	 = SDMA_TRIGOUT_A 17	 = SDMA_TRIGOUT_B 18	 = SDMA_TRIGOUT_C 19 = 	SDMA_TRIGOUT_D
+        ///Trigger input number (decimal value) to DMA channel n.   0     = ADC0_SEQA_IRQ 1 =     ADC0_SEQB_IRQ 2     = ADC1_SEQA_IRQ 3 =     ADC1_SEQB_IRQ 4     = SCT0_DMA0 5     = SCT0_DMA1 6     = SCT1_DMA0 7 =     SCT1_DMA1 8 =     SCT2_DMA0 9 =     SCT2_DMA1 10     = SCT3_DMA0 11     = SCT3_DMA1 12     = COMP0_OUT (One output from each analog comparator) 13     = COMP1_OUT 14     = COMP2_OUT 15 =     COMP3_OUT 16     = SDMA_TRIGOUT_A 17     = SDMA_TRIGOUT_B 18     = SDMA_TRIGOUT_C 19 =     SDMA_TRIGOUT_D
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(4,0),Register::ReadWriteAccess,unsigned> inpN{}; 
         ///Reserved.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(31,5),Register::ReadWriteAccess,unsigned> reserved{}; 
     }
     namespace InmuxDmaItrigInmux12{    ///<Trigger input for DMA channel 0 select register.
         using Addr = Register::Address<0x40014110,0x00000000,0x00000000,unsigned>;
-        ///Trigger input number (decimal value) to DMA channel n.   0	 = ADC0_SEQA_IRQ 1 = 	ADC0_SEQB_IRQ 2	 = ADC1_SEQA_IRQ 3 = 	ADC1_SEQB_IRQ 4	 = SCT0_DMA0 5	 = SCT0_DMA1 6	 = SCT1_DMA0 7 = 	SCT1_DMA1 8 = 	SCT2_DMA0 9 = 	SCT2_DMA1 10	 = SCT3_DMA0 11	 = SCT3_DMA1 12	 = COMP0_OUT (One output from each analog comparator) 13	 = COMP1_OUT 14	 = COMP2_OUT 15 = 	COMP3_OUT 16	 = SDMA_TRIGOUT_A 17	 = SDMA_TRIGOUT_B 18	 = SDMA_TRIGOUT_C 19 = 	SDMA_TRIGOUT_D
+        ///Trigger input number (decimal value) to DMA channel n.   0     = ADC0_SEQA_IRQ 1 =     ADC0_SEQB_IRQ 2     = ADC1_SEQA_IRQ 3 =     ADC1_SEQB_IRQ 4     = SCT0_DMA0 5     = SCT0_DMA1 6     = SCT1_DMA0 7 =     SCT1_DMA1 8 =     SCT2_DMA0 9 =     SCT2_DMA1 10     = SCT3_DMA0 11     = SCT3_DMA1 12     = COMP0_OUT (One output from each analog comparator) 13     = COMP1_OUT 14     = COMP2_OUT 15 =     COMP3_OUT 16     = SDMA_TRIGOUT_A 17     = SDMA_TRIGOUT_B 18     = SDMA_TRIGOUT_C 19 =     SDMA_TRIGOUT_D
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(4,0),Register::ReadWriteAccess,unsigned> inpN{}; 
         ///Reserved.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(31,5),Register::ReadWriteAccess,unsigned> reserved{}; 
     }
     namespace InmuxDmaItrigInmux13{    ///<Trigger input for DMA channel 0 select register.
         using Addr = Register::Address<0x40014114,0x00000000,0x00000000,unsigned>;
-        ///Trigger input number (decimal value) to DMA channel n.   0	 = ADC0_SEQA_IRQ 1 = 	ADC0_SEQB_IRQ 2	 = ADC1_SEQA_IRQ 3 = 	ADC1_SEQB_IRQ 4	 = SCT0_DMA0 5	 = SCT0_DMA1 6	 = SCT1_DMA0 7 = 	SCT1_DMA1 8 = 	SCT2_DMA0 9 = 	SCT2_DMA1 10	 = SCT3_DMA0 11	 = SCT3_DMA1 12	 = COMP0_OUT (One output from each analog comparator) 13	 = COMP1_OUT 14	 = COMP2_OUT 15 = 	COMP3_OUT 16	 = SDMA_TRIGOUT_A 17	 = SDMA_TRIGOUT_B 18	 = SDMA_TRIGOUT_C 19 = 	SDMA_TRIGOUT_D
+        ///Trigger input number (decimal value) to DMA channel n.   0     = ADC0_SEQA_IRQ 1 =     ADC0_SEQB_IRQ 2     = ADC1_SEQA_IRQ 3 =     ADC1_SEQB_IRQ 4     = SCT0_DMA0 5     = SCT0_DMA1 6     = SCT1_DMA0 7 =     SCT1_DMA1 8 =     SCT2_DMA0 9 =     SCT2_DMA1 10     = SCT3_DMA0 11     = SCT3_DMA1 12     = COMP0_OUT (One output from each analog comparator) 13     = COMP1_OUT 14     = COMP2_OUT 15 =     COMP3_OUT 16     = SDMA_TRIGOUT_A 17     = SDMA_TRIGOUT_B 18     = SDMA_TRIGOUT_C 19 =     SDMA_TRIGOUT_D
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(4,0),Register::ReadWriteAccess,unsigned> inpN{}; 
         ///Reserved.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(31,5),Register::ReadWriteAccess,unsigned> reserved{}; 
     }
     namespace InmuxDmaItrigInmux14{    ///<Trigger input for DMA channel 0 select register.
         using Addr = Register::Address<0x40014118,0x00000000,0x00000000,unsigned>;
-        ///Trigger input number (decimal value) to DMA channel n.   0	 = ADC0_SEQA_IRQ 1 = 	ADC0_SEQB_IRQ 2	 = ADC1_SEQA_IRQ 3 = 	ADC1_SEQB_IRQ 4	 = SCT0_DMA0 5	 = SCT0_DMA1 6	 = SCT1_DMA0 7 = 	SCT1_DMA1 8 = 	SCT2_DMA0 9 = 	SCT2_DMA1 10	 = SCT3_DMA0 11	 = SCT3_DMA1 12	 = COMP0_OUT (One output from each analog comparator) 13	 = COMP1_OUT 14	 = COMP2_OUT 15 = 	COMP3_OUT 16	 = SDMA_TRIGOUT_A 17	 = SDMA_TRIGOUT_B 18	 = SDMA_TRIGOUT_C 19 = 	SDMA_TRIGOUT_D
+        ///Trigger input number (decimal value) to DMA channel n.   0     = ADC0_SEQA_IRQ 1 =     ADC0_SEQB_IRQ 2     = ADC1_SEQA_IRQ 3 =     ADC1_SEQB_IRQ 4     = SCT0_DMA0 5     = SCT0_DMA1 6     = SCT1_DMA0 7 =     SCT1_DMA1 8 =     SCT2_DMA0 9 =     SCT2_DMA1 10     = SCT3_DMA0 11     = SCT3_DMA1 12     = COMP0_OUT (One output from each analog comparator) 13     = COMP1_OUT 14     = COMP2_OUT 15 =     COMP3_OUT 16     = SDMA_TRIGOUT_A 17     = SDMA_TRIGOUT_B 18     = SDMA_TRIGOUT_C 19 =     SDMA_TRIGOUT_D
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(4,0),Register::ReadWriteAccess,unsigned> inpN{}; 
         ///Reserved.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(31,5),Register::ReadWriteAccess,unsigned> reserved{}; 
     }
     namespace InmuxDmaItrigInmux15{    ///<Trigger input for DMA channel 0 select register.
         using Addr = Register::Address<0x4001411c,0x00000000,0x00000000,unsigned>;
-        ///Trigger input number (decimal value) to DMA channel n.   0	 = ADC0_SEQA_IRQ 1 = 	ADC0_SEQB_IRQ 2	 = ADC1_SEQA_IRQ 3 = 	ADC1_SEQB_IRQ 4	 = SCT0_DMA0 5	 = SCT0_DMA1 6	 = SCT1_DMA0 7 = 	SCT1_DMA1 8 = 	SCT2_DMA0 9 = 	SCT2_DMA1 10	 = SCT3_DMA0 11	 = SCT3_DMA1 12	 = COMP0_OUT (One output from each analog comparator) 13	 = COMP1_OUT 14	 = COMP2_OUT 15 = 	COMP3_OUT 16	 = SDMA_TRIGOUT_A 17	 = SDMA_TRIGOUT_B 18	 = SDMA_TRIGOUT_C 19 = 	SDMA_TRIGOUT_D
+        ///Trigger input number (decimal value) to DMA channel n.   0     = ADC0_SEQA_IRQ 1 =     ADC0_SEQB_IRQ 2     = ADC1_SEQA_IRQ 3 =     ADC1_SEQB_IRQ 4     = SCT0_DMA0 5     = SCT0_DMA1 6     = SCT1_DMA0 7 =     SCT1_DMA1 8 =     SCT2_DMA0 9 =     SCT2_DMA1 10     = SCT3_DMA0 11     = SCT3_DMA1 12     = COMP0_OUT (One output from each analog comparator) 13     = COMP1_OUT 14     = COMP2_OUT 15 =     COMP3_OUT 16     = SDMA_TRIGOUT_A 17     = SDMA_TRIGOUT_B 18     = SDMA_TRIGOUT_C 19 =     SDMA_TRIGOUT_D
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(4,0),Register::ReadWriteAccess,unsigned> inpN{}; 
         ///Reserved.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(31,5),Register::ReadWriteAccess,unsigned> reserved{}; 
     }
     namespace InmuxDmaItrigInmux16{    ///<Trigger input for DMA channel 0 select register.
         using Addr = Register::Address<0x40014120,0x00000000,0x00000000,unsigned>;
-        ///Trigger input number (decimal value) to DMA channel n.   0	 = ADC0_SEQA_IRQ 1 = 	ADC0_SEQB_IRQ 2	 = ADC1_SEQA_IRQ 3 = 	ADC1_SEQB_IRQ 4	 = SCT0_DMA0 5	 = SCT0_DMA1 6	 = SCT1_DMA0 7 = 	SCT1_DMA1 8 = 	SCT2_DMA0 9 = 	SCT2_DMA1 10	 = SCT3_DMA0 11	 = SCT3_DMA1 12	 = COMP0_OUT (One output from each analog comparator) 13	 = COMP1_OUT 14	 = COMP2_OUT 15 = 	COMP3_OUT 16	 = SDMA_TRIGOUT_A 17	 = SDMA_TRIGOUT_B 18	 = SDMA_TRIGOUT_C 19 = 	SDMA_TRIGOUT_D
+        ///Trigger input number (decimal value) to DMA channel n.   0     = ADC0_SEQA_IRQ 1 =     ADC0_SEQB_IRQ 2     = ADC1_SEQA_IRQ 3 =     ADC1_SEQB_IRQ 4     = SCT0_DMA0 5     = SCT0_DMA1 6     = SCT1_DMA0 7 =     SCT1_DMA1 8 =     SCT2_DMA0 9 =     SCT2_DMA1 10     = SCT3_DMA0 11     = SCT3_DMA1 12     = COMP0_OUT (One output from each analog comparator) 13     = COMP1_OUT 14     = COMP2_OUT 15 =     COMP3_OUT 16     = SDMA_TRIGOUT_A 17     = SDMA_TRIGOUT_B 18     = SDMA_TRIGOUT_C 19 =     SDMA_TRIGOUT_D
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(4,0),Register::ReadWriteAccess,unsigned> inpN{}; 
         ///Reserved.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(31,5),Register::ReadWriteAccess,unsigned> reserved{}; 
     }
     namespace InmuxDmaItrigInmux17{    ///<Trigger input for DMA channel 0 select register.
         using Addr = Register::Address<0x40014124,0x00000000,0x00000000,unsigned>;
-        ///Trigger input number (decimal value) to DMA channel n.   0	 = ADC0_SEQA_IRQ 1 = 	ADC0_SEQB_IRQ 2	 = ADC1_SEQA_IRQ 3 = 	ADC1_SEQB_IRQ 4	 = SCT0_DMA0 5	 = SCT0_DMA1 6	 = SCT1_DMA0 7 = 	SCT1_DMA1 8 = 	SCT2_DMA0 9 = 	SCT2_DMA1 10	 = SCT3_DMA0 11	 = SCT3_DMA1 12	 = COMP0_OUT (One output from each analog comparator) 13	 = COMP1_OUT 14	 = COMP2_OUT 15 = 	COMP3_OUT 16	 = SDMA_TRIGOUT_A 17	 = SDMA_TRIGOUT_B 18	 = SDMA_TRIGOUT_C 19 = 	SDMA_TRIGOUT_D
+        ///Trigger input number (decimal value) to DMA channel n.   0     = ADC0_SEQA_IRQ 1 =     ADC0_SEQB_IRQ 2     = ADC1_SEQA_IRQ 3 =     ADC1_SEQB_IRQ 4     = SCT0_DMA0 5     = SCT0_DMA1 6     = SCT1_DMA0 7 =     SCT1_DMA1 8 =     SCT2_DMA0 9 =     SCT2_DMA1 10     = SCT3_DMA0 11     = SCT3_DMA1 12     = COMP0_OUT (One output from each analog comparator) 13     = COMP1_OUT 14     = COMP2_OUT 15 =     COMP3_OUT 16     = SDMA_TRIGOUT_A 17     = SDMA_TRIGOUT_B 18     = SDMA_TRIGOUT_C 19 =     SDMA_TRIGOUT_D
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(4,0),Register::ReadWriteAccess,unsigned> inpN{}; 
         ///Reserved.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(31,5),Register::ReadWriteAccess,unsigned> reserved{}; 

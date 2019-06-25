@@ -86,7 +86,7 @@ namespace Kvasir {
         using Addr = Register::Address<0x50000018,0xffffff10,0x00000000,unsigned>;
         ///Brown Out Detector EnableThe default value is set by flash controller user configuration register config0 bit[23].1 = Brown Out Detector function is enabled0 = Brown Out Detector function is disabledThis bit is the protected bit. It means programming this needs to write "59h", "16h", "88h" to address 0x5000_0100 to disable register protection. Reference the register REGWRPROT at address GCR_BA+0x100.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(0,0),Register::ReadWriteAccess,unsigned> bodEn{}; 
-        ///Brown Out Detector Threshold Voltage SelectionThe default value is set by flash controller user configuration register config0 bit[22:21].This bit is the protected bit. It means programming this needs to write "59h", "16h", "88h" to address 0x5000_0100 to disable register protection. Reference the register REGWRPROT at address GCR_BA+0x100.BOV_VL[1]	BOV_VL[0]	Brown out voltage	1	1	4.5V	1	0	3.8V	0	1	2.7V	0	0	2.2V	
+        ///Brown Out Detector Threshold Voltage SelectionThe default value is set by flash controller user configuration register config0 bit[22:21].This bit is the protected bit. It means programming this needs to write "59h", "16h", "88h" to address 0x5000_0100 to disable register protection. Reference the register REGWRPROT at address GCR_BA+0x100.BOV_VL[1]    BOV_VL[0]    Brown out voltage    1    1    4.5V    1    0    3.8V    0    1    2.7V    0    0    2.2V    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(2,1),Register::ReadWriteAccess,unsigned> bodVl{}; 
         ///Brown Out Reset 1 = Enable the Brown Out "RESET" function.While the Brown Out Detector function is enabled (BOD_EN high) and BOD reset function is enabled (BOD_RSTEN high), BOD will assert a signal to reset chip when the detected voltage is lower than the threshold (BOD_OUT high).0 = Enable the Brown Out "INTERRUPT" functionWhile the BOD function is enabled (BOD_EN high) and BOD interrupt function is enabled (BOD_RSTEN low), BOD will assert an interrupt if BOD_OUT is high. BOD interrupt will keep till to the BOD_EN set to 0. BOD interrupt can be blocked by disabling the NVIC BOD interrupt or disabling BOD function (set BOD_EN low).The default value is set by flash controller user configuration register config0 bit[20].This bit is the protected bit. It means programming this needs to write "59h", "16h", "88h" to address 0x5000_0100 to disable register protection. Reference the register REGWRPROT at address GCR_BA+0x100.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(3,3),Register::ReadWriteAccess,unsigned> bodRsten{}; 
@@ -113,35 +113,35 @@ namespace Kvasir {
         using Addr = Register::Address<0x50000030,0x00000000,0x00000000,unsigned>;
         ///PA.0 Pin Function Selection1 = The ADC0 (Analog-to-Digital converter channel 0) function is selected to the pin PA.00 = The GPIOA[0] is selected to the pin PA.0
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(0,0),Register::ReadWriteAccess,unsigned> gpaMfp0{}; 
-        ///PA.1 Pin Function SelectionThe pin function depends on GPA_MFP1 and EBI_HB_EN[4] (ALT_MFP[20]) and EBI_EN (ALT_MFP[11]).EBI_HB_EN[4]	EBI_EN 	GPA_MFP[1]	PA.1 function 	x 	x 	0 	GPIO 	x 	0 	1 	ADC1 (ADC)	0 	1 	1 	ADC1 (ADC)	1 	1 	1 	AD12 (EBI AD bus bit 12)	
+        ///PA.1 Pin Function SelectionThe pin function depends on GPA_MFP1 and EBI_HB_EN[4] (ALT_MFP[20]) and EBI_EN (ALT_MFP[11]).EBI_HB_EN[4]    EBI_EN     GPA_MFP[1]    PA.1 function     x     x     0     GPIO     x     0     1     ADC1 (ADC)    0     1     1     ADC1 (ADC)    1     1     1     AD12 (EBI AD bus bit 12)    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(1,1),Register::ReadWriteAccess,unsigned> gpaMfp1{}; 
-        ///PA.2 Pin Function SelectionThe pin function depends on GPA_MFP2 and EBI_HB_EN[3] (ALT_MFP[19]) and EBI_EN (ALT_MFP[11]).EBI_HB_EN[3]	EBI_EN 	GPA_MFP[2]	PA.2 function 	x 	x 	0 	GPIO 	x 	0 	1 	ADC2 (ADC)	0 	1 	1 	ADC2 (ADC)	1 	1 	1 	AD11 (EBI AD bus bit 11)	
+        ///PA.2 Pin Function SelectionThe pin function depends on GPA_MFP2 and EBI_HB_EN[3] (ALT_MFP[19]) and EBI_EN (ALT_MFP[11]).EBI_HB_EN[3]    EBI_EN     GPA_MFP[2]    PA.2 function     x     x     0     GPIO     x     0     1     ADC2 (ADC)    0     1     1     ADC2 (ADC)    1     1     1     AD11 (EBI AD bus bit 11)    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(2,2),Register::ReadWriteAccess,unsigned> gpaMfp2{}; 
-        ///PA.3 Pin Function SelectionThe pin function depends on GPA_MFP3 and EBI_HB_EN[2] (ALT_MFP[18]) and EBI_EN (ALT_MFP[11]).EBI_HB_EN[2]	EBI_EN 	GPA_MFP[3]	PA.3 function 	x 	x 	0 	GPIO 	x 	0 	1 	ADC3 (ADC)	0 	1 	1 	ADC3 (ADC)	1 	1 	1 	AD10 (EBI AD bus bit 10)	
+        ///PA.3 Pin Function SelectionThe pin function depends on GPA_MFP3 and EBI_HB_EN[2] (ALT_MFP[18]) and EBI_EN (ALT_MFP[11]).EBI_HB_EN[2]    EBI_EN     GPA_MFP[3]    PA.3 function     x     x     0     GPIO     x     0     1     ADC3 (ADC)    0     1     1     ADC3 (ADC)    1     1     1     AD10 (EBI AD bus bit 10)    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(3,3),Register::ReadWriteAccess,unsigned> gpaMfp3{}; 
-        ///PA.4 Pin Function SelectionThe pin function depends on GPA_MFP4 and EBI_HB_EN[1] (ALT_MFP[17]) and EBI_EN (ALT_MFP[11]).EBI_HB_EN[1]	EBI_EN 	GPA_MFP[4]	PA.4 function 	x 	x 	0 	GPIO 	x 	0 	1 	ADC4 (ADC)	0 	1 	1 	ADC4 (ADC)	1 	1 	1 	AD9 (EBI AD bus bit 9)	
+        ///PA.4 Pin Function SelectionThe pin function depends on GPA_MFP4 and EBI_HB_EN[1] (ALT_MFP[17]) and EBI_EN (ALT_MFP[11]).EBI_HB_EN[1]    EBI_EN     GPA_MFP[4]    PA.4 function     x     x     0     GPIO     x     0     1     ADC4 (ADC)    0     1     1     ADC4 (ADC)    1     1     1     AD9 (EBI AD bus bit 9)    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(4,4),Register::ReadWriteAccess,unsigned> gpaMfp4{}; 
-        ///PA.5 Pin Function SelectionThe pin function depends on GPA_MFP5 and EBI_HB_EN[0] (ALT_MFP[16]) and EBI_EN (ALT_MFP[11]).EBI_HB_EN[0]	EBI_EN 	GPA_MFP[5]	PA.5 function 	x 	x 	0 	GPIO 	x 	0 	1 	ADC5 (ADC)	0 	1 	1 	ADC5 (ADC)	1 	1 	1 	AD8 (EBI AD bus bit 8)	
+        ///PA.5 Pin Function SelectionThe pin function depends on GPA_MFP5 and EBI_HB_EN[0] (ALT_MFP[16]) and EBI_EN (ALT_MFP[11]).EBI_HB_EN[0]    EBI_EN     GPA_MFP[5]    PA.5 function     x     x     0     GPIO     x     0     1     ADC5 (ADC)    0     1     1     ADC5 (ADC)    1     1     1     AD8 (EBI AD bus bit 8)    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(5,5),Register::ReadWriteAccess,unsigned> gpaMfp5{}; 
-        ///PA.6 Pin Function SelectionThe pin function depends on GPA_MFP6 and EBI_EN (ALT_MFP[11]).EBI_EN 	GPA_MFP[6]	PA.6 function 	x 	0 	GPIO 	0 	1 	ADC6 (ADC)	1 	1 	AD7 (EBI AD bus bit 7)	
+        ///PA.6 Pin Function SelectionThe pin function depends on GPA_MFP6 and EBI_EN (ALT_MFP[11]).EBI_EN     GPA_MFP[6]    PA.6 function     x     0     GPIO     0     1     ADC6 (ADC)    1     1     AD7 (EBI AD bus bit 7)    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(6,6),Register::ReadWriteAccess,unsigned> gpaMfp6{}; 
-        ///PA.7 Pin Function SelectionThe pin function depends on GPA_MFP7 and PA7_S21 (ALT_MFP[2]) and EBI_EN (ALT_MFP[11]).EBI_EN	PA7_S21	GPA_MFP[7]	PA.7 function 	x 	x 	0 	GPIO 	0 	0 	1 	ADC7 (ADC)	0 	1 	1 	SPISS21 (SPI2)	1 	x 	1 	AD6 (EBI AD bus bit 6)	
+        ///PA.7 Pin Function SelectionThe pin function depends on GPA_MFP7 and PA7_S21 (ALT_MFP[2]) and EBI_EN (ALT_MFP[11]).EBI_EN    PA7_S21    GPA_MFP[7]    PA.7 function     x     x     0     GPIO     0     0     1     ADC7 (ADC)    0     1     1     SPISS21 (SPI2)    1     x     1     AD6 (EBI AD bus bit 6)    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(7,7),Register::ReadWriteAccess,unsigned> gpaMfp7{}; 
         ///PA.8 Pin Function Selection1 = The I2C0 SDA function is selected to the pin PA.80 = The GPIOA[8] is selected to the pin PA.8
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(8,8),Register::ReadWriteAccess,unsigned> gpaMfp8{}; 
         ///PA.9 Pin Function Selection1 = The I2C0 SCL function is selected to the pin PA.90 = The GPIOA[9] is selected to the pin PA.9
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(9,9),Register::ReadWriteAccess,unsigned> gpaMfp9{}; 
-        ///PA.10 Pin Function SelectionThe pin function depends on GPA_MFP10 and EBI_EN (ALT_MFP[11]).EBI_EN 	GPA_MFP[10]	PA.10 function 	x 	0 	GPIO 	0 	1 	SDA1 (I2C)	1 	1 	nWR (EBI)	
+        ///PA.10 Pin Function SelectionThe pin function depends on GPA_MFP10 and EBI_EN (ALT_MFP[11]).EBI_EN     GPA_MFP[10]    PA.10 function     x     0     GPIO     0     1     SDA1 (I2C)    1     1     nWR (EBI)    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(10,10),Register::ReadWriteAccess,unsigned> gpaMfp10{}; 
-        ///PA.11 Pin Function SelectionThe pin function depends on GPA_MFP11 and EBI_EN (ALT_MFP[11]).EBI_EN 	GPA_MFP[11]	PA.11 function 	x 	0 	GPIO 	0 	1 	SCL1 (I2C)	1 	1 	nRD (EBI)	
+        ///PA.11 Pin Function SelectionThe pin function depends on GPA_MFP11 and EBI_EN (ALT_MFP[11]).EBI_EN     GPA_MFP[11]    PA.11 function     x     0     GPIO     0     1     SCL1 (I2C)    1     1     nRD (EBI)    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(11,11),Register::ReadWriteAccess,unsigned> gpaMfp11{}; 
-        ///PA.12 Pin Function SelectionThe pin function depends on GPA_MFP12 and EBI_HB_EN[5] (ALT_MFP[21]) and EBI_EN (ALT_MFP[11]).EBI_HB_EN[5]	EBI_EN 	GPA_MFP[12]	PA.12 function 	x 	x 	0 	GPIO 	x 	0 	1 	PWM0 (PWM)	0 	1 	1 	PWM0 (PWM)	1 	1 	1 	AD13 (EBI AD bus bit 13)	
+        ///PA.12 Pin Function SelectionThe pin function depends on GPA_MFP12 and EBI_HB_EN[5] (ALT_MFP[21]) and EBI_EN (ALT_MFP[11]).EBI_HB_EN[5]    EBI_EN     GPA_MFP[12]    PA.12 function     x     x     0     GPIO     x     0     1     PWM0 (PWM)    0     1     1     PWM0 (PWM)    1     1     1     AD13 (EBI AD bus bit 13)    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(12,12),Register::ReadWriteAccess,unsigned> gpaMfp12{}; 
-        ///PA.13 Pin Function SelectionThe pin function depends on GPA_MFP13 and EBI_HB_EN[6] (ALT_MFP[22]) and EBI_EN (ALT_MFP[11]).EBI_HB_EN[6]	EBI_EN 	GPA_MFP[13]	PA.13 function 	x 	x 	0 	GPIO 	x 	0 	1 	PWM1 (PWM)	0 	1 	1 	PWM1 (PWM)	1 	1 	1 	AD14 (EBI AD bus bit 14)	
+        ///PA.13 Pin Function SelectionThe pin function depends on GPA_MFP13 and EBI_HB_EN[6] (ALT_MFP[22]) and EBI_EN (ALT_MFP[11]).EBI_HB_EN[6]    EBI_EN     GPA_MFP[13]    PA.13 function     x     x     0     GPIO     x     0     1     PWM1 (PWM)    0     1     1     PWM1 (PWM)    1     1     1     AD14 (EBI AD bus bit 14)    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(13,13),Register::ReadWriteAccess,unsigned> gpaMfp13{}; 
-        ///PA.14 Pin Function SelectionThe pin function depends on GPA_MFP14 and EBI_HB_EN[7] (ALT_MFP[23]) and EBI_EN (ALT_MFP[11]).EBI_HB_EN[7]	EBI_EN 	GPA_MFP[14]	PA.14 function 	x 	x 	0 	GPIO 	x 	0 	1 	PWM2 (PWM)	0 	1 	1 	PWM2 (PWM)	1 	1 	1 	AD15 (EBI AD bus bit 15)	
+        ///PA.14 Pin Function SelectionThe pin function depends on GPA_MFP14 and EBI_HB_EN[7] (ALT_MFP[23]) and EBI_EN (ALT_MFP[11]).EBI_HB_EN[7]    EBI_EN     GPA_MFP[14]    PA.14 function     x     x     0     GPIO     x     0     1     PWM2 (PWM)    0     1     1     PWM2 (PWM)    1     1     1     AD15 (EBI AD bus bit 15)    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(14,14),Register::ReadWriteAccess,unsigned> gpaMfp14{}; 
-        ///PA.14 Pin Function SelectionThe pin function depends on GPA_MFP15 and PA15_I2SMCLK (ALT_MFP[9]).PA15_I2SMCLK	GPA_MFP[15]	PA.15 function 	x 	0 	GPIO 	0 	1 	PWM3 (PWM) 	1 	1 	I2SMCLK (I2S)	
+        ///PA.14 Pin Function SelectionThe pin function depends on GPA_MFP15 and PA15_I2SMCLK (ALT_MFP[9]).PA15_I2SMCLK    GPA_MFP[15]    PA.15 function     x     0     GPIO     0     1     PWM3 (PWM)     1     1     I2SMCLK (I2S)    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(15,15),Register::ReadWriteAccess,unsigned> gpaMfp15{}; 
         ///1 = Enable GPIOA[15:0] I/O input Schmitt Trigger function0 = Disable GPIOA[15:0] I/O input Schmitt Trigger function
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(31,16),Register::ReadWriteAccess,unsigned> gpaTypen{}; 
@@ -152,31 +152,31 @@ namespace Kvasir {
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(0,0),Register::ReadWriteAccess,unsigned> gpbMfp0{}; 
         ///PB.1 Pin Function Selection1 = The UART0 TXD function is selected to the pin PB.10 = The GPIOB[1] is selected to the pin PB.1
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(1,1),Register::ReadWriteAccess,unsigned> gpbMfp1{}; 
-        ///PB.2 Pin Function SelectionThe pin function depends on GPB_MFP2 and EBI_nWRL_EN (ALT_MFP[13]) and EBI_EN (ALT_MFP[11]).EBI_nWRL_EN 	EBI_EN 	GPB_MFP[2]	PB.2 function 	x 	x 	0 	GPIO 	x 	0 	1 	RTS0 (UART0)	0 	1 	1 	RTS0 (UART0)	1 	1 	1 	nWRL (EBI write low byte enable)	
+        ///PB.2 Pin Function SelectionThe pin function depends on GPB_MFP2 and EBI_nWRL_EN (ALT_MFP[13]) and EBI_EN (ALT_MFP[11]).EBI_nWRL_EN     EBI_EN     GPB_MFP[2]    PB.2 function     x     x     0     GPIO     x     0     1     RTS0 (UART0)    0     1     1     RTS0 (UART0)    1     1     1     nWRL (EBI write low byte enable)    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(2,2),Register::ReadWriteAccess,unsigned> gpbMfp2{}; 
-        ///PB.3 Pin Function SelectionThe pin function depends on GPB_MFP3 and EBI_nWRH_EN (ALT_MFP[14]) and EBI_EN (ALT_MFP[11]).EBI_nWRH_EN 	EBI_EN 	GPB_MFP[3]	PB.3 function 	x 	x 	0 	GPIO 	x 	0 	1 	CTS0 (UART0)	0 	1 	1 	CTS0 (UART0)	1 	1 	1 	nWRH (EBI write high byte enable)	
+        ///PB.3 Pin Function SelectionThe pin function depends on GPB_MFP3 and EBI_nWRH_EN (ALT_MFP[14]) and EBI_EN (ALT_MFP[11]).EBI_nWRH_EN     EBI_EN     GPB_MFP[3]    PB.3 function     x     x     0     GPIO     x     0     1     CTS0 (UART0)    0     1     1     CTS0 (UART0)    1     1     1     nWRH (EBI write high byte enable)    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(3,3),Register::ReadWriteAccess,unsigned> gpbMfp3{}; 
         ///PB.4 Pin Function Selection1 = The UART1 RXD function is selected to the pin PB.40 = The GPIOB[4] is selected to the pin PB.4
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(4,4),Register::ReadWriteAccess,unsigned> gpbMfp4{}; 
         ///PB.5 Pin Function Selection1 = The UART1 TXD function is selected to the pin PB.50 = The GPIOB[5] is selected to the pin PB.5
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(5,5),Register::ReadWriteAccess,unsigned> gpbMfp5{}; 
-        ///PB.6 Pin Function SelectionThe pin function depends on GPB_MFP6 and EBI_EN (ALT_MFP[11]).EBI_EN 	GPB_MFP[6]	PB.6 function 	x 	0 	GPIO 	0 	1 	TRS1 (UART1)	1 	1 	ALE (EBI)	
+        ///PB.6 Pin Function SelectionThe pin function depends on GPB_MFP6 and EBI_EN (ALT_MFP[11]).EBI_EN     GPB_MFP[6]    PB.6 function     x     0     GPIO     0     1     TRS1 (UART1)    1     1     ALE (EBI)    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(6,6),Register::ReadWriteAccess,unsigned> gpbMfp6{}; 
-        ///PB.7 Pin Function SelectionThe pin function depends on GPB_MFP7 and EBI_EN (ALT_MFP[11]).EBI_EN 	GPB_MFP[7]	PB.7 function 	x 	0 	GPIO 	0 	1 	CTS1 (UART1)	1 	1 	nCS (EBI)	
+        ///PB.7 Pin Function SelectionThe pin function depends on GPB_MFP7 and EBI_EN (ALT_MFP[11]).EBI_EN     GPB_MFP[7]    PB.7 function     x     0     GPIO     0     1     CTS1 (UART1)    1     1     nCS (EBI)    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(7,7),Register::ReadWriteAccess,unsigned> gpbMfp7{}; 
         ///PB.8 Pin Function Selection1 = The TM0 (Timer/Counter external trigger clock input) function is selected to the pin PB.80 = The GPIOB[8] is selected to the pin PB.8
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(8,8),Register::ReadWriteAccess,unsigned> gpbMfp8{}; 
-        ///PB.9 Pin Function SelectionThe pin function depends on GPB_MFP9 and PB9_S11 (ALT_MFP[1]).PB9_S11	GPB_MFP[9]	PB.9 function 	x 	0 	GPIO 	0 	1 	TM1 	1 	1 	SPISS11 (SPI1)	
+        ///PB.9 Pin Function SelectionThe pin function depends on GPB_MFP9 and PB9_S11 (ALT_MFP[1]).PB9_S11    GPB_MFP[9]    PB.9 function     x     0     GPIO     0     1     TM1     1     1     SPISS11 (SPI1)    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(9,9),Register::ReadWriteAccess,unsigned> gpbMfp9{}; 
-        ///PB.10 Pin Function SelectionThe pin function depends on GPB_MFP10 and PB10_S01 (ALT_MFP[0]).PB10_S01	GPB_MFP[10]	PB.10 function 	x 	0 	GPIO 	0 	1 	TM2 	1 	1 	SPISS01 (SPI0)	
+        ///PB.10 Pin Function SelectionThe pin function depends on GPB_MFP10 and PB10_S01 (ALT_MFP[0]).PB10_S01    GPB_MFP[10]    PB.10 function     x     0     GPIO     0     1     TM2     1     1     SPISS01 (SPI0)    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(10,10),Register::ReadWriteAccess,unsigned> gpbMfp10{}; 
-        ///PB.11 Pin Function SelectionThe pin function depends on GPB_MFP11 and PB11_PWM4 (ALT_MFP[4]).PB11_PWM4	GPB_MFP[11]	PB.11 function 	x 	0 	GPIO 	0 	1 	TM3 	1 	1 	PWM4 (PWM)	
+        ///PB.11 Pin Function SelectionThe pin function depends on GPB_MFP11 and PB11_PWM4 (ALT_MFP[4]).PB11_PWM4    GPB_MFP[11]    PB.11 function     x     0     GPIO     0     1     TM3     1     1     PWM4 (PWM)    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(11,11),Register::ReadWriteAccess,unsigned> gpbMfp11{}; 
-        ///PB.12 Pin Function SelectionThe pin function depends on GPB_MFP12 and PB12_CLKO (ALT_MFP[10]) and EBI_EN (ALT_MFP[11]).EBI_EN	PB12_CLKO	GPB_MFP[12]	PB.12 function 	x 	x 	0 	GPIO 	0 	0 	1 	CPO0(CMP) 	0 	1 	1 	CLKO (Clock Driver output)	1 	x 	1 	AD0(EBI AD bus bit 0) 	
+        ///PB.12 Pin Function SelectionThe pin function depends on GPB_MFP12 and PB12_CLKO (ALT_MFP[10]) and EBI_EN (ALT_MFP[11]).EBI_EN    PB12_CLKO    GPB_MFP[12]    PB.12 function     x     x     0     GPIO     0     0     1     CPO0(CMP)     0     1     1     CLKO (Clock Driver output)    1     x     1     AD0(EBI AD bus bit 0)     
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(12,12),Register::ReadWriteAccess,unsigned> gpbMfp12{}; 
-        ///PB.13 Pin Function SelectionThe pin function depends on GPB_MFP13 and EBI_EN (ALT_MFP[11]).EBI_EN 	GPB_MFP[13]	PB.13 function 	x 	0 	GPIO 	0 	1 	CPO1 (CMP)	1 	1 	AD1 (EBI AD bus bit 1)	
+        ///PB.13 Pin Function SelectionThe pin function depends on GPB_MFP13 and EBI_EN (ALT_MFP[11]).EBI_EN     GPB_MFP[13]    PB.13 function     x     0     GPIO     0     1     CPO1 (CMP)    1     1     AD1 (EBI AD bus bit 1)    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(13,13),Register::ReadWriteAccess,unsigned> gpbMfp13{}; 
-        ///PB.14 Pin Function SelectionThe pin function depends on GPB_MFP14 and PB14_S31 (ALT_MFP[3]).PB14_S31	GPB_MFP[14]	PB.14 function 	x 	0 	GPIO 	0 	1 	/INT0 	1 	1 	SPISS31 (SPI3)	
+        ///PB.14 Pin Function SelectionThe pin function depends on GPB_MFP14 and PB14_S31 (ALT_MFP[3]).PB14_S31    GPB_MFP[14]    PB.14 function     x     0     GPIO     0     1     /INT0     1     1     SPISS31 (SPI3)    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(14,14),Register::ReadWriteAccess,unsigned> gpbMfp14{}; 
         ///PB.15 Pin Function Selection1 = The External Interrupt INT1 function is selected to the pin PB.150 = The GPIOB[15] is selected to the pin PB.15
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(15,15),Register::ReadWriteAccess,unsigned> gpbMfp15{}; 
@@ -185,23 +185,23 @@ namespace Kvasir {
     }
     namespace GcrGpcMfp{    ///<GPIOC multiple function and input type control register
         using Addr = Register::Address<0x50000038,0x00000000,0x00000000,unsigned>;
-        ///PC.0 Pin Function SelectionBits PC0_I2SLRCLK (ALT_MFP[5]) and GPC_MFP[0] determine the PC.0 function.PC0_I2SLRCLK	GPC_MFP[0]	PC.0 function 	x 	0 	GPIO 	0 	1 	SPISS00(SPI0) 	1 	1 	I2SLRCLK (I2S)	
+        ///PC.0 Pin Function SelectionBits PC0_I2SLRCLK (ALT_MFP[5]) and GPC_MFP[0] determine the PC.0 function.PC0_I2SLRCLK    GPC_MFP[0]    PC.0 function     x     0     GPIO     0     1     SPISS00(SPI0)     1     1     I2SLRCLK (I2S)    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(0,0),Register::ReadWriteAccess,unsigned> spi0Ss0I2slrclk{}; 
-        ///PC.1 Pin Function SelectionBits PC1_I2SBCLK (ALT_MFP[6]) and GPC_MFP[1] determine the PC.1 function.PC1_I2SBCLK	GPC_MFP[1]	PC.1 function 	x 	0 	GPIO 	0 	1 	SPICLK0 (SPI0) 	1 	1 	I2SBLK (I2S)	
+        ///PC.1 Pin Function SelectionBits PC1_I2SBCLK (ALT_MFP[6]) and GPC_MFP[1] determine the PC.1 function.PC1_I2SBCLK    GPC_MFP[1]    PC.1 function     x     0     GPIO     0     1     SPICLK0 (SPI0)     1     1     I2SBLK (I2S)    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(1,1),Register::ReadWriteAccess,unsigned> spi0ClkI2sbclk{}; 
-        ///PC.2 Pin Function SelectionBits PC2_I2SDI (ALT_MFP[7]) and GPC_MFP[2] determine the PC.2 function.PC2_I2SDI	GPC_MFP[2]	PC.2 function 	x 	0 	GPIO 	0 	1 	MISO00 (SPI0) 	1 	1 	I2SDI (I2S)	
+        ///PC.2 Pin Function SelectionBits PC2_I2SDI (ALT_MFP[7]) and GPC_MFP[2] determine the PC.2 function.PC2_I2SDI    GPC_MFP[2]    PC.2 function     x     0     GPIO     0     1     MISO00 (SPI0)     1     1     I2SDI (I2S)    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(2,2),Register::ReadWriteAccess,unsigned> spi0Miso0I2sdi{}; 
-        ///PC.3 Pin Function SelectionBits PC3_I2SDO (ALT_MFP[8]) and GPC_MFP[3] determine the PC.3 function.PC3_I2SDO	GPC_MFP[3]	PC.3 function 	x 	0 	GPIO 	0 	1 	MOSI00 (SPI0) 	1 	1 	I2SDO (I2S)	
+        ///PC.3 Pin Function SelectionBits PC3_I2SDO (ALT_MFP[8]) and GPC_MFP[3] determine the PC.3 function.PC3_I2SDO    GPC_MFP[3]    PC.3 function     x     0     GPIO     0     1     MOSI00 (SPI0)     1     1     I2SDO (I2S)    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(3,3),Register::ReadWriteAccess,unsigned> spi0Mosi0I2sdo{}; 
         ///PC.4 Pin Function Selection1 = The SPI0 MISO1 (master input, slave output pin-1) function is selected to the pin PC.40 = The GPIOC[4] is selected to the pin PC.4
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(4,4),Register::ReadWriteAccess,unsigned> spi0Miso1{}; 
         ///PC.5 Pin Function Selection1 = The SPI0 MOSI1 (master output, slave input pin-1) function is selected to the pin PC.50 = The GPIOC[5] is selected to the pin PC.5
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(5,5),Register::ReadWriteAccess,unsigned> spi0Mosi1{}; 
-        ///PC.6 Pin Function SelectionThe pin function depends on GPC_MFP6 and EBI_EN (ALT_MFP[11]).EBI_EN	GPC_MFP[6]	PC.6 function 	x 	0 	GPIO 	0 	1 	CPP0 (CMP) 	1 	1 	AD4 (EBI AD bus bit 4)	
+        ///PC.6 Pin Function SelectionThe pin function depends on GPC_MFP6 and EBI_EN (ALT_MFP[11]).EBI_EN    GPC_MFP[6]    PC.6 function     x     0     GPIO     0     1     CPP0 (CMP)     1     1     AD4 (EBI AD bus bit 4)    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(6,6),Register::ReadWriteAccess,unsigned> cpp0Ad4{}; 
-        ///PC.7 Pin Function SelectionThe pin function depends on GPC_MFP7 and EBI_EN (ALT_MFP[11]).EBI_EN	GPC_MFP[7]	PC.7 function 	x 	0 	GPIO 	0 	1 	CPN0 (CMP) 	1 	1 	AD5 (EBI AD bus bit 5)	
+        ///PC.7 Pin Function SelectionThe pin function depends on GPC_MFP7 and EBI_EN (ALT_MFP[11]).EBI_EN    GPC_MFP[7]    PC.7 function     x     0     GPIO     0     1     CPN0 (CMP)     1     1     AD5 (EBI AD bus bit 5)    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(7,7),Register::ReadWriteAccess,unsigned> cpn0Ad5{}; 
-        ///PC.8 Pin Function SelectionThe pin function depends on GPC_MFP8 and EBI_MCLK_EN (ALT_MFP[12]) and EBI_EN (ALT_MFP[11]).EBI_MCLK_EN 	EBI_EN 	GPC_MFP[8]	PC.8 function 	x 	x 	0 	GPIO 	x 	0 	1 	SPISS10 (SPI1) 	0 	1 	1 	SPISS10 (SPI1) 	1 	1 	1 	MCLK (EBI Clock output)	
+        ///PC.8 Pin Function SelectionThe pin function depends on GPC_MFP8 and EBI_MCLK_EN (ALT_MFP[12]) and EBI_EN (ALT_MFP[11]).EBI_MCLK_EN     EBI_EN     GPC_MFP[8]    PC.8 function     x     x     0     GPIO     x     0     1     SPISS10 (SPI1)     0     1     1     SPISS10 (SPI1)     1     1     1     MCLK (EBI Clock output)    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(8,8),Register::ReadWriteAccess,unsigned> spi1Ss0Mclk{}; 
         ///PC.9 Pin Function Selection1 = The SPI1 SPICLK function is selected to the pin PC.90 = The GPIOC[9] is selected to the pin PC.9
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(9,9),Register::ReadWriteAccess,unsigned> spi1Clk{}; 
@@ -213,9 +213,9 @@ namespace Kvasir {
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(12,12),Register::ReadWriteAccess,unsigned> spi1Miso1{}; 
         ///PC.13 Pin Function Selection1 = The SPI1 MOSI1 (master output, slave input pin-1) function is selected to the pin PC.130 = The GPIOC[13] is selected to the pin PC.13
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(13,13),Register::ReadWriteAccess,unsigned> spi1Mosi1{}; 
-        ///PC.14 Pin Function SelectionThe pin function depends on GPC_MFP14 and EBI_EN (ALT_MFP[11]).EBI_EN 	GPC_MFP[14]	PC.14 function 	x 	0 	GPIO 	0 	1 	CPP1 (CMP)	1 	1 	AD2 (EBI AD bus bit 2)	
+        ///PC.14 Pin Function SelectionThe pin function depends on GPC_MFP14 and EBI_EN (ALT_MFP[11]).EBI_EN     GPC_MFP[14]    PC.14 function     x     0     GPIO     0     1     CPP1 (CMP)    1     1     AD2 (EBI AD bus bit 2)    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(14,14),Register::ReadWriteAccess,unsigned> cpp1Ad2{}; 
-        ///PC.15 Pin Function SelectionThe pin function depends on GPC_MFP15 and EBI_EN (ALT_MFP[11]).EBI_EN 	GPC_MFP[15]	PC.15 function 	x 	0 	GPIO 	0 	1 	CPN1 (CMP)	1 	1 	AD3 (EBI AD bus bit 3)	
+        ///PC.15 Pin Function SelectionThe pin function depends on GPC_MFP15 and EBI_EN (ALT_MFP[11]).EBI_EN     GPC_MFP[15]    PC.15 function     x     0     GPIO     0     1     CPN1 (CMP)    1     1     AD3 (EBI AD bus bit 3)    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(15,15),Register::ReadWriteAccess,unsigned> cpp1Ad3{}; 
         ///1 = Enable GPIOC[15:0] I/O input Schmitt Trigger function0 = Disable GPIOC[15:0] I/O input Schmitt Trigger function
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(31,16),Register::ReadWriteAccess,unsigned> schmitt{}; 
@@ -270,35 +270,35 @@ namespace Kvasir {
     }
     namespace GcrAltMfp{    ///<Alternative Multiple Function Pin Control Register
         using Addr = Register::Address<0x50000050,0xff008000,0x00000000,unsigned>;
-        ///Bits PB10_S01 and GPB_MFP10 determine the PB.10 function.PB10_S01	GPB_MFP[10]	PB.10 function 	x 	0 	GPIO 	0 	1 	TM2 	1 	1 	SPISS01 (SPI0)	
+        ///Bits PB10_S01 and GPB_MFP10 determine the PB.10 function.PB10_S01    GPB_MFP[10]    PB.10 function     x     0     GPIO     0     1     TM2     1     1     SPISS01 (SPI0)    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(0,0),Register::ReadWriteAccess,unsigned> pb10S01{}; 
-        ///Bits PB9_S11 and GPB_MFP9 determine the PB.9 function.PB9_S11	GPB_MFP[9]	PB.9 function 	x 	0 	GPIO 	0 	1 	TM1 	1 	1 	SPISS11 (SPI1)	
+        ///Bits PB9_S11 and GPB_MFP9 determine the PB.9 function.PB9_S11    GPB_MFP[9]    PB.9 function     x     0     GPIO     0     1     TM1     1     1     SPISS11 (SPI1)    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(1,1),Register::ReadWriteAccess,unsigned> pb9S11{}; 
-        ///Bits PA7_S21, PA_MFP7 and EBI_EN (ALT_MFP[11])determine the PA.7 function.EBI_EN	PA7_S21	GPA_MFP[7]	PA.7 function 	x 	x 	0 	GPIO 	0 	0 	1 	ADC7 (ADC)	0 	1 	1 	SPISS21 (SPI2)	1 	x 	1 	AD6 (EBI AD bus bit 6)	
+        ///Bits PA7_S21, PA_MFP7 and EBI_EN (ALT_MFP[11])determine the PA.7 function.EBI_EN    PA7_S21    GPA_MFP[7]    PA.7 function     x     x     0     GPIO     0     0     1     ADC7 (ADC)    0     1     1     SPISS21 (SPI2)    1     x     1     AD6 (EBI AD bus bit 6)    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(2,2),Register::ReadWriteAccess,unsigned> pa7S21{}; 
-        ///Bits PB14_S31 and GPB_MFP14 determine the GPB14 function.PB14_S31	GPB_MFP[14]	PB.14 function 	x 	0 	GPIO 	0 	1 	/INT0 	1 	1 	SPISS31 (SPI3)	
+        ///Bits PB14_S31 and GPB_MFP14 determine the GPB14 function.PB14_S31    GPB_MFP[14]    PB.14 function     x     0     GPIO     0     1     /INT0     1     1     SPISS31 (SPI3)    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(3,3),Register::ReadWriteAccess,unsigned> pb14S31{}; 
-        ///Bits PB11_PWM4 and GPB_MFP[11] determine the PB.11 function.PB11_PWM4	GPB_MFP[11]	PB.11 function 	x 	0 	GPIO 	0 	1 	TM3 	1 	1 	PWM4 (PWM)	
+        ///Bits PB11_PWM4 and GPB_MFP[11] determine the PB.11 function.PB11_PWM4    GPB_MFP[11]    PB.11 function     x     0     GPIO     0     1     TM3     1     1     PWM4 (PWM)    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(4,4),Register::ReadWriteAccess,unsigned> pb11Pwm4{}; 
-        ///Bits PC0_I2SLRCLK and GPC_MFP[0] determine the PC.0 function.PC0_I2SLRCLK	GPC_MFP[0]	PC.0 function 	x 	0 	GPIO 	0 	1 	SPISS00(SPI0) 	1 	1 	I2SLRCLK (I2S)	
+        ///Bits PC0_I2SLRCLK and GPC_MFP[0] determine the PC.0 function.PC0_I2SLRCLK    GPC_MFP[0]    PC.0 function     x     0     GPIO     0     1     SPISS00(SPI0)     1     1     I2SLRCLK (I2S)    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(5,5),Register::ReadWriteAccess,unsigned> pc0I2slrclk{}; 
-        ///Bits PC1_I2SBCLK and GPC_MFP[1] determine the PC.1 function.PC1_I2SBCLK	GPC_MFP[1]	PC.1 function 	x 	0 	GPIO 	0 	1 	SPICLK0 (SPI0) 	1 	1 	I2SBLK (I2S)	
+        ///Bits PC1_I2SBCLK and GPC_MFP[1] determine the PC.1 function.PC1_I2SBCLK    GPC_MFP[1]    PC.1 function     x     0     GPIO     0     1     SPICLK0 (SPI0)     1     1     I2SBLK (I2S)    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(6,6),Register::ReadWriteAccess,unsigned> pc1I2sbclk{}; 
-        ///Bits PC2_I2SDI and GPC_MFP[2] determine the PC.2 function.PC2_I2SDI	GPC_MFP[2]	PC.2 function 	x 	0 	GPIO 	0 	1 	MISO00 (SPI0) 	1 	1 	I2SDI (I2S)	
+        ///Bits PC2_I2SDI and GPC_MFP[2] determine the PC.2 function.PC2_I2SDI    GPC_MFP[2]    PC.2 function     x     0     GPIO     0     1     MISO00 (SPI0)     1     1     I2SDI (I2S)    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(7,7),Register::ReadWriteAccess,unsigned> pc2I2sdi{}; 
-        ///Bits PC3_I2SDO and GPC_MFP[3] determine the PC.3 function.PC3_I2SDO	GPC_MFP[3]	PC.3 function 	x 	0 	GPIO 	0 	1 	MOSI00 (SPI0) 	1 	1 	I2SDO (I2S)	
+        ///Bits PC3_I2SDO and GPC_MFP[3] determine the PC.3 function.PC3_I2SDO    GPC_MFP[3]    PC.3 function     x     0     GPIO     0     1     MOSI00 (SPI0)     1     1     I2SDO (I2S)    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(8,8),Register::ReadWriteAccess,unsigned> pc3I2sdo{}; 
-        ///Bits PA15_I2SMCLK and GPA_MFP[15] determine the PA.15 function.PA15_I2SMCLK	GPA_MFP[15]	PA.15 function 	x 	0 	GPIO 	0 	1 	PWM3 (PWM) 	1 	1 	I2SMCLK (I2S)	
+        ///Bits PA15_I2SMCLK and GPA_MFP[15] determine the PA.15 function.PA15_I2SMCLK    GPA_MFP[15]    PA.15 function     x     0     GPIO     0     1     PWM3 (PWM)     1     1     I2SMCLK (I2S)    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(9,9),Register::ReadWriteAccess,unsigned> pa15I2smclk{}; 
-        ///Bits PB12_CLKO and GPB_MFP[12] determine the PB.12 function.EBI_EN 	PB12_CLKO 	GPB_MFP[12]	PB.12 function 	x 	x 	0 	GPIO 	x 	0 	1 	CPO0 (CMP)	0 	1 	1 	CLKO (Clock Driver output)	1 	1 	1 	AD0 (EBI AD bus bit 0)	
+        ///Bits PB12_CLKO and GPB_MFP[12] determine the PB.12 function.EBI_EN     PB12_CLKO     GPB_MFP[12]    PB.12 function     x     x     0     GPIO     x     0     1     CPO0 (CMP)    0     1     1     CLKO (Clock Driver output)    1     1     1     AD0 (EBI AD bus bit 0)    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(10,10),Register::ReadWriteAccess,unsigned> pb12Clko{}; 
         ///EBI_EN is use to switch GPIO function to EBI function (AD[15:0], ALE, RE, WE, CS, MCLK), it need additional registers EBI_EN[7:0] and EBI_MCLK_EN for some GPIO to switch to EBI function(AD[15:8], MCLK)
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(11,11),Register::ReadWriteAccess,unsigned> ebiEn{}; 
-        ///Bits EBI_MCLK_EN, EBI_EN and GPC_MFP[8] determine the PC.8 function.EBI_MCLK_EN 	EBI_EN 	GPC_MFP[8]	PC.8 function 	x 	x 	0 	GPIO 	x 	0 	1 	SPISS10 (SPI1) 	0 	1 	1 	SPISS10 (SPI1) 	1 	1 	1 	MCLK (EBI Clock output)	
+        ///Bits EBI_MCLK_EN, EBI_EN and GPC_MFP[8] determine the PC.8 function.EBI_MCLK_EN     EBI_EN     GPC_MFP[8]    PC.8 function     x     x     0     GPIO     x     0     1     SPISS10 (SPI1)     0     1     1     SPISS10 (SPI1)     1     1     1     MCLK (EBI Clock output)    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(12,12),Register::ReadWriteAccess,unsigned> ebiMclkEn{}; 
-        ///Bits EBI_nWRL_EN, EBI_EN and GPB_MFP[2] determine the PB.2 function.EBI_nWRL_EN 	EBI_EN 	GPB_MFP[2]	PB.2 function 	x 	x 	0 	GPIO 	x 	0 	1 	RTS0 (UART0)	0 	1 	1 	RTS0 (UART0)	1 	1 	1 	nWRL (EBI write low byte enable)	
+        ///Bits EBI_nWRL_EN, EBI_EN and GPB_MFP[2] determine the PB.2 function.EBI_nWRL_EN     EBI_EN     GPB_MFP[2]    PB.2 function     x     x     0     GPIO     x     0     1     RTS0 (UART0)    0     1     1     RTS0 (UART0)    1     1     1     nWRL (EBI write low byte enable)    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(13,13),Register::ReadWriteAccess,unsigned> ebiNwrlEn{}; 
-        ///Bits EBI_nWRH_EN, EBI_EN and GPB_MFP[3] determine the PB.3 functionEBI_nWRH_EN 	EBI_EN 	GPB_MFP[3]	PB.3 function 	x 	x 	0 	GPIO 	x 	0 	1 	CTS0 (UART0)	0 	1 	1 	CTS0 (UART0)	1 	1 	1 	nWRH (EBI write high byte enable)	
+        ///Bits EBI_nWRH_EN, EBI_EN and GPB_MFP[3] determine the PB.3 functionEBI_nWRH_EN     EBI_EN     GPB_MFP[3]    PB.3 function     x     x     0     GPIO     x     0     1     CTS0 (UART0)    0     1     1     CTS0 (UART0)    1     1     1     nWRH (EBI write high byte enable)    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(14,14),Register::ReadWriteAccess,unsigned> ebiNwrhEn{}; 
         ///EBI_HB_EN is use to switch GPIO function to EBI address/data bus high byte (AD[15:8]), EBI_HB_EN, EBI_EN and corresponding GPx_MFP[y] determine the Px.y function.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(23,16),Register::ReadWriteAccess,unsigned> ebiHbEn{}; 

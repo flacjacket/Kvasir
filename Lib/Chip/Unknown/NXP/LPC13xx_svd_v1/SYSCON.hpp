@@ -1443,7 +1443,7 @@ namespace Kvasir {
     }
     namespace SysconDeviceId{    ///<Device ID
         using Addr = Register::Address<0x400483f4,0x00000000,0x00000000,unsigned>;
-        ///Device ID for LPC13xx parts: 0x2C42 502B = LPC1311FHN33 								0x2C40 102B = LPC1313FHN33 								0x2C40 102B = LPC1313FBD48 								0x3D01 402B = LPC1342FHN33 								0x3D00 002B = LPC1343FHN33 								0x3D00 002B = LPC1343FBD48 								0x1816 902B = LPC1311FHN33/01 								0x1830 102B = LPC1313FHN33/01 								0x1830 102B = LPC1313FBD48/01
+        ///Device ID for LPC13xx parts: 0x2C42 502B = LPC1311FHN33                                 0x2C40 102B = LPC1313FHN33                                 0x2C40 102B = LPC1313FBD48                                 0x3D01 402B = LPC1342FHN33                                 0x3D00 002B = LPC1343FHN33                                 0x3D00 002B = LPC1343FBD48                                 0x1816 902B = LPC1311FHN33/01                                 0x1830 102B = LPC1313FHN33/01                                 0x1830 102B = LPC1313FBD48/01
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(31,0),Register::ReadWriteAccess,unsigned> deviceid{}; 
     }
 }

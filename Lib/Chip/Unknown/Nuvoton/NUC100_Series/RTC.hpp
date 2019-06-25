@@ -13,14 +13,14 @@ namespace Kvasir {
         using Addr = Register::Address<0x40008004,0xfffe0000,0x00000000,unsigned>;
         ///RTC Register Access Enable Password (Write only)0xA965 = Enable RTC access Others = Disable RTC access 
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(15,0),Register::Access<Register::AccessType::writeOnly,Register::ReadActionType::normal,Register::ModifiedWriteValueType::normal>,unsigned> aer{}; 
-        ///RTC Register Access Enable Flag (Read only)1 = RTC register read/write enable0 = RTC register read/write disableThis bit will be set after AER[15:0] register is load a 0xA965, and be clear automatically 512 RTC clock or AER[15:0] is not 0xA965.Register\AER.ENF	1	0	INIR	R/W	R/W	AER	R/W	R/W	FCR	R/W	-	TLR	R/W	R	CLR	R/W	R	TSSR	R/W	R/W	DWR	R/W	R	TAR	R/W	-	CAR	R/W	-	LIR	R	R	RIER	R/W	R/W	RIIR	R/C	R/C	TTR	R/W	-	
+        ///RTC Register Access Enable Flag (Read only)1 = RTC register read/write enable0 = RTC register read/write disableThis bit will be set after AER[15:0] register is load a 0xA965, and be clear automatically 512 RTC clock or AER[15:0] is not 0xA965.Register\AER.ENF    1    0    INIR    R/W    R/W    AER    R/W    R/W    FCR    R/W    -    TLR    R/W    R    CLR    R/W    R    TSSR    R/W    R/W    DWR    R/W    R    TAR    R/W    -    CAR    R/W    -    LIR    R    R    RIER    R/W    R/W    RIIR    R/C    R/C    TTR    R/W    -    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(16,16),Register::Access<Register::AccessType::readOnly,Register::ReadActionType::normal,Register::ModifiedWriteValueType::normal>,unsigned> enf{}; 
     }
     namespace RtcFcr{    ///<RTC Frequency Compensation Register
         using Addr = Register::Address<0x40008008,0xfffff0c0,0x00000000,unsigned>;
         ///Fraction PartFormula = (fraction part of detected value) x 60Note: Digit in FCR must be expressed as hexadecimal number. Refer to 5.8.4.4 for the examples.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(5,0),Register::ReadWriteAccess,unsigned> fraction{}; 
-        ///Integer PartInteger part of detected value	FCR[11:8]	Integer part of detected value	FCR[11:8]	32776	1111	32768	0111	32775	1110	32767	0110	32774	1101	32766	0101	32773	1100	32765	0100	32772	1011	32764	0011	32771	1010	32763	0010	32770	1001	32762	0001	32769	1000	32761	0000	
+        ///Integer PartInteger part of detected value    FCR[11:8]    Integer part of detected value    FCR[11:8]    32776    1111    32768    0111    32775    1110    32767    0110    32774    1101    32766    0101    32773    1100    32765    0100    32772    1011    32764    0011    32771    1010    32763    0010    32770    1001    32762    0001    32769    1000    32761    0000    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(11,8),Register::ReadWriteAccess,unsigned> integer{}; 
     }
     namespace RtcTlr{    ///<Time Loading Register
@@ -55,12 +55,12 @@ namespace Kvasir {
     }
     namespace RtcTssr{    ///<Time Scale Selection Register
         using Addr = Register::Address<0x40008014,0xfffffffe,0x00000000,unsigned>;
-        ///24-Hour / 12-Hour Time Scale SelectionIt indicate that TLR and TAR are in 24-hour time mode or 12-hour time mode1 = select 24-hour time scale0 = select 12-hour time scale with AM and PM indication24-hour time scale	12-hour time scale	24-hour time scale	12-hour time scale(PM time + 20)	00	12(AM12)	12	32(PM12)	01	01(AM01)	13	21(PM01)	02	02(AM02)	14	22(PM02)	03	03(AM03)	15	23(PM03)	04	04(AM04)	16	24(PM04)	05	05(AM05)	17	25(PM05)	06	06(AM06)	18	26(PM06)	07	07(AM07)	19	27(PM07)	08	08(AM08)	20	28(PM08)	09	09(AM09)	21	29(PM09)	10	10(AM10)	22	30(PM10)	11	11(AM11)	23	31(PM11)	
+        ///24-Hour / 12-Hour Time Scale SelectionIt indicate that TLR and TAR are in 24-hour time mode or 12-hour time mode1 = select 24-hour time scale0 = select 12-hour time scale with AM and PM indication24-hour time scale    12-hour time scale    24-hour time scale    12-hour time scale(PM time + 20)    00    12(AM12)    12    32(PM12)    01    01(AM01)    13    21(PM01)    02    02(AM02)    14    22(PM02)    03    03(AM03)    15    23(PM03)    04    04(AM04)    16    24(PM04)    05    05(AM05)    17    25(PM05)    06    06(AM06)    18    26(PM06)    07    07(AM07)    19    27(PM07)    08    08(AM08)    20    28(PM08)    09    09(AM09)    21    29(PM09)    10    10(AM10)    22    30(PM10)    11    11(AM11)    23    31(PM11)    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(0,0),Register::ReadWriteAccess,unsigned> 24h12h{}; 
     }
     namespace RtcDwr{    ///<Day of the Week Register
         using Addr = Register::Address<0x40008018,0xfffffff8,0x00000000,unsigned>;
-        ///Day of the Week Register Value	Day of the Week	0	Sunday	1	Monday	2	Tuesday	3	Wednesday	4	Thursday	5	Friday	6	Saturday	
+        ///Day of the Week Register Value    Day of the Week    0    Sunday    1    Monday    2    Tuesday    3    Wednesday    4    Thursday    5    Friday    6    Saturday    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(2,0),Register::ReadWriteAccess,unsigned> dwr{}; 
     }
     namespace RtcTar{    ///<Time Alarm Register
@@ -114,7 +114,7 @@ namespace Kvasir {
     }
     namespace RtcTtr{    ///<RTC Time Tick Register
         using Addr = Register::Address<0x40008030,0xfffffff0,0x00000000,unsigned>;
-        ///Time Tick RegisterThe RTC time tick period for Periodic Time Tick Interrupt request.TTR[2:0]	Time tick (second)	0	1	1	1/2	2	1/4	3	1/8	4	1/16	5	1/32	6	1/64	7	1/128	Note: This register can be read back after the RTC register access enable bit ENF(AER[16]) is active.
+        ///Time Tick RegisterThe RTC time tick period for Periodic Time Tick Interrupt request.TTR[2:0]    Time tick (second)    0    1    1    1/2    2    1/4    3    1/8    4    1/16    5    1/32    6    1/64    7    1/128    Note: This register can be read back after the RTC register access enable bit ENF(AER[16]) is active.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(2,0),Register::ReadWriteAccess,unsigned> ttr{}; 
         ///RTC Timer Wakeup CPU Function Enable BitIf TWKE is set before CPU is in power-down mode, when a RTC Time Tick occurs, CPU will be wakened up by RTC controller.1 = Enable the Wakeup function that CPU can be waken up from power-down mode by Time Tick.0 = Disable Wakeup CPU function by Time Tick.Note: 1. Tick timer setting follows TTR[2:0] description. 2. The CPU can also be wakeup by alarm match occur.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(3,3),Register::ReadWriteAccess,unsigned> twke{}; 

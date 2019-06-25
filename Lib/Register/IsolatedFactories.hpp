@@ -20,9 +20,9 @@
 
 namespace Kvasir{
 namespace Register{
-	template<typename T>
-	constexpr MPL::EnableIfT<Detail::IsWriteLiteral<T>::value> isolated(T){
+    template<typename T>
+    constexpr MPL::EnableIfT<Detail::IsWriteLiteral<T>::value> isolated(T){
 
-	}
+    }
 }
 }

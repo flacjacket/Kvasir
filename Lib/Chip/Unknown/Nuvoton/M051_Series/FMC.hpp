@@ -16,9 +16,9 @@ namespace Kvasir {
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(6,6),Register::Access<Register::AccessType::readWrite,Register::ReadActionType::normal,Register::ModifiedWriteValueType::oneToClear>,unsigned> ispff{}; 
         ///Software ResetWriting 1 to this bit to start software reset. It is cleared by hardware after reset is finished.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(7,7),Register::ReadWriteAccess,unsigned> swrst{}; 
-        ///Flash Program TimePT[2]	PT[1]	PT[0]	Program Time (us)	0	0	0	40	0	0	1	45	0	1	0	50	0	1	1	55	1	0	0	20	1	0	1	25	1	1	0	30	1	1	1	35	
+        ///Flash Program TimePT[2]    PT[1]    PT[0]    Program Time (us)    0    0    0    40    0    0    1    45    0    1    0    50    0    1    1    55    1    0    0    20    1    0    1    25    1    1    0    30    1    1    1    35    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(10,8),Register::ReadWriteAccess,unsigned> pt{}; 
-        ///Flash Erase TimeET[2]	ET[1]	ET[0]	Erase Time (ms)	0	0	0	20 (default)	0	0	1	25	0	1	0	30	0	1	1	35	1	0	0	3	1	0	1	5	1	1	0	10	1	1	1	15	
+        ///Flash Erase TimeET[2]    ET[1]    ET[0]    Erase Time (ms)    0    0    0    20 (default)    0    0    1    25    0    1    0    30    0    1    1    35    1    0    0    3    1    0    1    5    1    1    0    10    1    1    1    15    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(14,12),Register::ReadWriteAccess,unsigned> et{}; 
     }
     namespace FmcIspadr{    ///<ISP Address Register
@@ -33,7 +33,7 @@ namespace Kvasir {
     }
     namespace FmcIspcmd{    ///<ISP Command Register
         using Addr = Register::Address<0x5000c00c,0xffffffc0,0x00000000,unsigned>;
-        ///ISP Command ISP command table is shown below:Operation Mode	FOEN	FCEN	FCTRL[3:0]	Read	0	0	0	0	0	0	Program	1	0	0	0	0	1	Page Erase	1	0	0	0	1	0	
+        ///ISP Command ISP command table is shown below:Operation Mode    FOEN    FCEN    FCTRL[3:0]    Read    0    0    0    0    0    0    Program    1    0    0    0    0    1    Page Erase    1    0    0    0    1    0    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(5,0),Register::ReadWriteAccess,unsigned> foenFcenFctrl{}; 
     }
     namespace FmcIsptrg{    ///<ISP Trigger Control Register
@@ -50,7 +50,7 @@ namespace Kvasir {
         using Addr = Register::Address<0x5000c018,0xffffffe0,0x00000000,unsigned>;
         ///Flash Power Save EnableIf CPU clock is slower than 24 MHz, then s/w can enable flash power saving function.1 = Enable flash power saving0 = Disable flash power saving
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(0,0),Register::ReadWriteAccess,unsigned> fpsen{}; 
-        ///Flash Access Time Window SelectThese bits are used to decide flash sense amplifier active duration.FATS	Access Time window (ns)	000	40	001	50	010	60	011	70	100	80	101	90	110	100	111	Reserved	
+        ///Flash Access Time Window SelectThese bits are used to decide flash sense amplifier active duration.FATS    Access Time window (ns)    000    40    001    50    010    60    011    70    100    80    101    90    110    100    111    Reserved    
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(3,1),Register::ReadWriteAccess,unsigned> fats{}; 
         ///Flash Low Speed Mode Enable1 = Flash access always no wait state (zero wait state)0 = Insert wait state while Flash access discontinued address. Note: Set this bit only when HCLK <= 25MHz. If HCLK > 25MHz, CPU will fetch wrong code and cause fail result.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(4,4),Register::ReadWriteAccess,unsigned> lSpeed{}; 

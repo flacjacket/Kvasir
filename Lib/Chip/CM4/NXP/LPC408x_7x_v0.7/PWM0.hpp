@@ -374,12 +374,12 @@ namespace Kvasir {
         ///Timer counter match value.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(31,0),Register::ReadWriteAccess,unsigned> match{}; 
     }
-    namespace Pwm0Mr5{    ///<Match Register. Match registers				are continuously compared to the PWM counter in order to control PWM				output edges.
+    namespace Pwm0Mr5{    ///<Match Register. Match registers                are continuously compared to the PWM counter in order to control PWM                output edges.
         using Addr = Register::Address<0x40014044,0x00000000,0x00000000,unsigned>;
         ///Timer counter match value.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(31,0),Register::ReadWriteAccess,unsigned> match{}; 
     }
-    namespace Pwm0Mr6{    ///<Match Register. Match registers				are continuously compared to the PWM counter in order to control PWM				output edges.
+    namespace Pwm0Mr6{    ///<Match Register. Match registers                are continuously compared to the PWM counter in order to control PWM                output edges.
         using Addr = Register::Address<0x40014048,0x00000000,0x00000000,unsigned>;
         ///Timer counter match value.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(31,0),Register::ReadWriteAccess,unsigned> match{}; 

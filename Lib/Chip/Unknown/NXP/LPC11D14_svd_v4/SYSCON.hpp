@@ -1084,7 +1084,7 @@ namespace Kvasir {
     }
     namespace SysconDeviceId{    ///<Device ID
         using Addr = Register::Address<0x400483f4,0x00000000,0x00000000,unsigned>;
-        ///Part ID numbers for LPC11D14					0x2540 102B = LPC11D14FBD100/302 					
+        ///Part ID numbers for LPC11D14                    0x2540 102B = LPC11D14FBD100/302                     
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(31,0),Register::ReadWriteAccess,unsigned> deviceid{}; 
     }
 }

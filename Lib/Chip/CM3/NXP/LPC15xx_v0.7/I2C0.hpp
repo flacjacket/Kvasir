@@ -626,7 +626,7 @@ namespace Kvasir {
             constexpr Register::FieldValue<decltype(qualmode0)::Type,Qualmode0Val::theSlvqual0FieldI> theSlvqual0FieldI{};
             constexpr Register::FieldValue<decltype(qualmode0)::Type,Qualmode0Val::theSlvqual0FieldI> theSlvqual0FieldI{};
         }
-        ///Slave address Qualifier for address 0. A value of 0 causes the address in SLVADR0 to be used as-is, assuming that it is enabled. If QUALMODE0 = 0, any bit in this field which is set to 1 will cause an automatic match of the corresponding bit of the received address when it is compared to the SLVADR0 register. If QUALMODE0 = 1, an address range is matched for address 0. This range extends from the value defined by SLVADR0 to the address defined by SLVQUAL0 (address matches when SLVADR0[7:1] <				= received address <= SLVQUAL0[7:1]).
+        ///Slave address Qualifier for address 0. A value of 0 causes the address in SLVADR0 to be used as-is, assuming that it is enabled. If QUALMODE0 = 0, any bit in this field which is set to 1 will cause an automatic match of the corresponding bit of the received address when it is compared to the SLVADR0 register. If QUALMODE0 = 1, an address range is matched for address 0. This range extends from the value defined by SLVADR0 to the address defined by SLVQUAL0 (address matches when SLVADR0[7:1] <                = received address <= SLVQUAL0[7:1]).
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(7,1),Register::ReadWriteAccess,unsigned> slvqual0{}; 
         ///Reserved. Read value is undefined, only zero should be written.
         constexpr Register::FieldLocation<Addr,Register::maskFromRange(31,8),Register::ReadWriteAccess,unsigned> reserved{}; 
