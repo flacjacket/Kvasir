@@ -20,11 +20,11 @@ namespace Detail{
         using type = unsigned;
     };
     template<unsigned Size>
-        struct GetIndexType<Size, EnableIfT<(Size <= 256)>> {
+        struct GetIndexType<Size, std::enable_if_t<(Size <= 256)>> {
             using type = unsigned char;
         };
     template<unsigned Size>
-        struct GetIndexType<Size, EnableIfT<(Size > 256 && Size <= 65536)>> {
+        struct GetIndexType<Size, std::enable_if_t<(Size > 256 && Size <= 65536)>> {
             using type = unsigned short;
         };
     template<unsigned Size>
@@ -63,7 +63,7 @@ public:
         }
     }
     template<typename TRange, typename =
-            MPL::EnableIfT<MPL::IsSame<decltype(*std::declval<TRange>().begin()),TDataType>::value>>
+            std::enable_if_t<MPL::IsSame<decltype(*std::declval<TRange>().begin()),TDataType>::value>>
     void push(TRange &range){
         auto tail = tail_.load();
         auto head = head_.load();
@@ -91,7 +91,7 @@ public:
         return true;
     }
     template<typename TRange, typename =
-            MPL::EnableIfT<MPL::IsSame<decltype(*std::declval<TRange>().begin()),TDataType>::value>>
+            std::enable_if_t<MPL::IsSame<decltype(*std::declval<TRange>().begin()),TDataType>::value>>
     bool pop(TRange &range){
         auto tail = tail_.load();
         auto head = head_.load();

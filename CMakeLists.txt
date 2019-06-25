@@ -8,7 +8,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 
 add_library(Kvasir INTERFACE)
 target_include_directories(Kvasir INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/Lib)
-target_compile_features(Kvasir INTERFACE cxx_std_11)
+target_compile_features(Kvasir INTERFACE cxx_std_17)
 target_compile_options(Kvasir
                        INTERFACE
                        -Wall

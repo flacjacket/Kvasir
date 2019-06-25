@@ -1,6 +1,8 @@
 #pragma once
 #include "Mpl/Utility.hpp"
 
+#include <type_traits>
+
 namespace Kvasir{
 namespace Atomic{
     namespace Detail{
@@ -8,7 +10,7 @@ namespace Atomic{
         template<typename T, typename = void>
         struct Intigral;
         template<typename T>
-        struct Intigral<T,EnableIfT<IsIntegral<T>::value>>{
+        struct Intigral<T, std::enable_if_t<IsIntegral<T>::value>>{
         private:
             volatile T data_{0};
         public:

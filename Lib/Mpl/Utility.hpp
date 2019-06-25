@@ -147,22 +147,6 @@ namespace Kvasir {
         template<typename T>
         using RemoveCVT = typename RemoveCV<T>::type;
 
-        //equivalent to std::enable_if
-        template<bool, typename U = void>
-        struct EnableIf {};
-        template<typename U>
-        struct EnableIf<true, U> {
-            using type = U;
-        };
-
-        template<bool B, typename U = void>
-        struct DisableIf: EnableIf<!B, U> {};
-
-        template<bool B, typename U = void>
-        using EnableIfT = typename EnableIf<B,U>::type;
-        template<bool B, typename U = void>
-        using DisableIfT = typename DisableIf<B,U>::type;
-
         //build a sequence of indices from 0 to N-1
         template<int N, typename... Is>
         struct BuildIndices: BuildIndices<N - 1, Int<N - 1>, Is...> {};

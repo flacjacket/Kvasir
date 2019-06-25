@@ -16,10 +16,13 @@
  * limitations under the License.
 ****************************************************************************/
 #pragma once
+
 #include "Types.hpp"
 #include "AtomicFactories.hpp"
 #include "IsolatedFactories.hpp"
 #include "Utility.hpp"
+
+#include <type_traits>
 
 namespace Kvasir{
 namespace Register{
@@ -126,7 +129,7 @@ namespace Register{
 
 //Action factories which turn a FieldLocation into an Action
     template<typename T>
-    constexpr inline MPL::EnableIfT<Detail::IsFieldLocation<T>::value,Action<T,ReadAction>>
+    constexpr inline std::enable_if_t<Detail::IsFieldLocation<T>::value,Action<T,ReadAction>>
     read(T){
         return {};
     }
@@ -137,7 +140,7 @@ namespace Register{
     }
 
     template<typename T>
-    constexpr MPL::EnableIfT<Detail::IsFieldLocation<T>::value,Detail::SetT<T>>
+    constexpr std::enable_if_t<Detail::IsFieldLocation<T>::value,Detail::SetT<T>>
     set(T){
         return {};
     }
@@ -148,7 +151,7 @@ namespace Register{
     }
 
     template<typename T>
-    constexpr MPL::EnableIfT<Detail::IsFieldLocation<T>::value,Detail::ClearT<T>>
+    constexpr std::enable_if_t<Detail::IsFieldLocation<T>::value,Detail::ClearT<T>>
     clear(T){
         return {};
     }
@@ -159,7 +162,7 @@ namespace Register{
     }
 
     template<typename T>
-    constexpr MPL::EnableIfT<Detail::IsFieldLocation<T>::value,Detail::Reset<T>>
+    constexpr std::enable_if_t<Detail::IsFieldLocation<T>::value,Detail::Reset<T>>
     reset(T){
         static_assert(Detail::IsSetToClear<T>::value,"Access violation: Register::reset only works on set to clear bits");
         return {};
@@ -174,7 +177,7 @@ namespace Register{
     //Write of runtime value
     //T must be bit location or function will be removed from overload set
     template<typename T>
-    constexpr inline MPL::EnableIfT<Detail::IsFieldLocation<T>::value,Action<T,WriteAction>>
+    constexpr inline std::enable_if_t<Detail::IsFieldLocation<T>::value,Action<T,WriteAction>>
     write(T,Detail::GetFieldTypeT<T> in){
         static_assert(Detail::IsWritable<T>::value,"Access violation: The FieldLocation provided is not marked as writable");
         return Action<T, WriteAction>{Detail::GetMask<T>::value & (unsigned(in) << Detail::maskStartsAt(Detail::GetMask<T>::value))};
@@ -184,7 +187,7 @@ namespace Register{
     //T must be bit location or function will be removed from overload set
     //U mst be compile time value or function will be removed from overload set
     template<typename T, typename U>
-    constexpr inline MPL::EnableIfT<
+    constexpr inline std::enable_if_t<
         (Detail::IsFieldLocation<T>::value && MPL::IsValue<U>::value),
         Detail::WriteT<T, Detail::ValueToUnsigned<U>::value>>
     write(T, U) {

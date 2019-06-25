@@ -18,10 +18,12 @@
 #pragma once
 #include "Utility.hpp"
 
+#include <type_traits>
+
 namespace Kvasir{
 namespace Register{
     template<typename T>
-    constexpr MPL::EnableIfT<Detail::IsWriteLiteral<T>::value> isolated(T){
+    constexpr std::enable_if_t<Detail::IsWriteLiteral<T>::value> isolated(T){
 
     }
 }

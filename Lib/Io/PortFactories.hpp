@@ -14,15 +14,17 @@ limitations under the License.
 #include "Mpl/Utility.hpp"
 #include "PinFactories.hpp"
 
+#include <type_traits>
+
 namespace Kvasir {
 namespace Io{
     template<typename T, typename... Ts>
-    constexpr MPL::EnableIfT<Detail::IsPinLoaction<T>::value, Port<PortAccess::defaultMode, T, Ts...>>
+    constexpr std::enable_if_t<Detail::IsPinLoaction<T>::value, Port<PortAccess::defaultMode, T, Ts...>>
     makePort(T,Ts...){
         return {};
     }
     template<typename T, typename... Ts>
-    constexpr MPL::DisableIfT<Detail::IsPinLoaction<T>::value, Port<T::Value,Ts...>>
+    constexpr std::enable_if_t<!Detail::IsPinLoaction<T>::value, Port<T::Value,Ts...>>
     makePort(T,Ts...){
         return {};
     }
@@ -91,17 +93,17 @@ namespace Io{
     }
 
     template<typename TPort>
-    constexpr MPL::EnableIfT<Detail::IsPort<TPort>::value,Detail::PortMakeOutputT<TPort>> makeOutput(TPort){
+    constexpr std::enable_if_t<Detail::IsPort<TPort>::value,Detail::PortMakeOutputT<TPort>> makeOutput(TPort){
         return {};
     }
 
     template<typename TPort>
-    constexpr MPL::EnableIfT<Detail::IsPort<TPort>::value,Detail::PortMakeInputT<TPort>> makeInput(TPort){
+    constexpr std::enable_if_t<Detail::IsPort<TPort>::value,Detail::PortMakeInputT<TPort>> makeInput(TPort){
         return {};
     }
 
     template<typename TPort, typename TValue>
-    constexpr MPL::EnableIfT<
+    constexpr std::enable_if_t<
         Detail::IsPort<TPort>::value,
         Detail::WriteLiteralToPortHelperT<Detail::IsSinglePort<TPort>::value,TPort,TValue>>
     write(TPort,TValue)
@@ -110,7 +112,7 @@ namespace Io{
     }
 
     template<typename TPort>
-    constexpr MPL::EnableIfT<Detail::IsPort<TPort>::value,Detail::WriteRuntimeToPortT<TPort>> write(TPort ,unsigned value){
+    constexpr std::enable_if_t<Detail::IsPort<TPort>::value,Detail::WriteRuntimeToPortT<TPort>> write(TPort ,unsigned value){
         return Detail::WriteRuntimeToPortT<TPort>{value};
     }
 
