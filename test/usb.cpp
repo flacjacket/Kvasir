@@ -175,28 +175,28 @@ constexpr uint8_t MyStringDescriptors::interface[8];
 using MyMemoryPolicy = Kvasir::Usb::CompactPacket::MemoryPolicy<20>;
 struct MyBuffPolicy
 {
-	template<typename T>
-	static T pop(T && p)
-	{
-		return std::move(p);
-	}
-	template<typename T>
-	static void push(T && p)
-	{
-		MyMemoryPolicy::AllocatorType::deallocate(std::move(p));
-	}
-	static bool empty()
-	{
-		return true;
-	}
+    template<typename T>
+    static T pop(T && p)
+    {
+        return std::move(p);
+    }
+    template<typename T>
+    static void push(T && p)
+    {
+        MyMemoryPolicy::AllocatorType::deallocate(std::move(p));
+    }
+    static bool empty()
+    {
+        return true;
+    }
 };
 struct MyCdcSettings : Kvasir::Usb::Cdc::DefaultSettings
 {
-	using BufferPolicy = MyBuffPolicy;
+    using BufferPolicy = MyBuffPolicy;
 };
 struct MyDeviceSettings : ::Kvasir::Usb::DefaultDeviceSettings
 {
-	using MemoryPolicy = MyMemoryPolicy;
+    using MemoryPolicy = MyMemoryPolicy;
     using StringDescriptors = MyStringDescriptors;
     static constexpr uint16_t vid = 0x1F00;
     static constexpr uint16_t pid = 0x2012;
@@ -212,7 +212,7 @@ decltype(Device::AllocatorType::allocate()) makePacket(std::initializer_list<T> 
     {
         packet.pushBack(d);
     }
-	packet.setEndpoint(Kvasir::Usb::Endpoint{ 0 });
+    packet.setEndpoint(Kvasir::Usb::Endpoint{ 0 });
     return packet;
 }
 }
@@ -273,10 +273,10 @@ int usbTest()
                 return 1;
             }
             Device::onInSent(std::move(packet));
-			if (std::get<0>(events_[1]) != Type::setAddress)
-			{
-				return 1;
-			}
+            if (std::get<0>(events_[1]) != Type::setAddress)
+            {
+                return 1;
+            }
             if (std::get<0>(events_[2]) != Type::enableEp0)
             {
                 return 1;
@@ -295,14 +295,14 @@ int usbTest()
                 return 1;
             }
             auto packet = std::move(std::get<1>(events_[0]));
-			if (packet.getSize() != 8)
-			{
-				return 1;
-			}
-			if (!packet.isData1())
-			{
-				return 1;
-			}
+            if (packet.getSize() != 8)
+            {
+                return 1;
+            }
+            if (!packet.isData1())
+            {
+                return 1;
+            }
             Device::onInSent(std::move(packet));
             if (std::get<0>(events_[1]) != Type::enableEp0)
             {
@@ -600,42 +600,42 @@ int usbTest()
             {
                 return 1;
             }
-			auto packet = std::move(std::get<1>(events_[0]));
+            auto packet = std::move(std::get<1>(events_[0]));
             if (packet.getSize() != 0)
             {
                 return 1;
             }
             Device::onInSent(std::move(packet));
-			if (std::get<0>(events_[1]) != Type::enableEp0)
-			{
-				return 1;
-			}
-			events_.clear();
+            if (std::get<0>(events_[1]) != Type::enableEp0)
+            {
+                return 1;
+            }
+            events_.clear();
         }
         {
             // set line coding
             Device::onSetupPacket(
                 makePacket({0x21, 0x20, 0x00, 0x00, 0x00, 0x00, 0x07, 0x00}));
-			if (std::get<0>(events_[0]) != Type::enableEp0)
-			{
-				return 1;
-			}
+            if (std::get<0>(events_[0]) != Type::enableEp0)
+            {
+                return 1;
+            }
             Device::onOutReceived(makePacket({0x80, 0x25, 0x00, 0x00, 0x00, 0x00, 0x08}));
             if (std::get<0>(events_[1]) != Type::sendPacket)
             {
                 return 1;
             }
-			auto packet = std::move(std::get<1>(events_[1]));
+            auto packet = std::move(std::get<1>(events_[1]));
             if (packet.getSize() != 0)
             {
                 return 1;
             }
             Device::onInSent(std::move(packet));
-			if (std::get<0>(events_[2]) != Type::enableEp0)
-			{
-				return 1;
-			}
-			events_.clear();
+            if (std::get<0>(events_[2]) != Type::enableEp0)
+            {
+                return 1;
+            }
+            events_.clear();
         }
     }
     return 0;
