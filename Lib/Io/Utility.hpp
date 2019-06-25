@@ -14,14 +14,15 @@ limitations under the License.
 #include "Mpl/Algorithm.hpp"
 #include "Types.hpp"
 
+#include "kvasir/mpl/mpl.hpp"
+
 namespace Kvasir {
 namespace Io{
     namespace Detail{
-    using namespace MPL;
         template<typename T>
-        struct IsPinLoaction : FalseType {};
+        struct IsPinLoaction : kvasir::mpl::false_ {};
         template<int Port, int Pin>
-        struct IsPinLoaction<Register::PinLocation<Port,Pin>> : TrueType{};
+        struct IsPinLoaction<Register::PinLocation<Port,Pin>> : kvasir::mpl::true_ {};
 
         template<typename T, typename U>
         struct PinLocationLess;
@@ -29,43 +30,43 @@ namespace Io{
         struct PinLocationLess<
             Register::PinLocation<PortL,PinL>,
             Register::PinLocation<PortR,PinR>>
-            : Bool<(PortL==PortR?PinL<PinR:PortL<PortR)>{};
-        using PinLocationLessP = Template<PinLocationLess>;
+            : kvasir::mpl::bool_<(PortL==PortR?PinL<PinR:PortL<PortR)>{};
+        using PinLocationLessP = MPL::Template<PinLocationLess>;
 
         template<typename T>
-        struct IsPort : FalseType {};
+        struct IsPort : kvasir::mpl::false_ {};
         template<PortAccess A, typename... Ts>
-        struct IsPort<Port<A,Ts...>> : TrueType{};
+        struct IsPort<Port<A,Ts...>> : kvasir::mpl::true_ {};
 
         template<typename T>
         struct GetHwPort;
         template<int Port, int Pin>
-        struct GetHwPort<Register::PinLocation<Port,Pin>> : Int<Port>{};
-        using GetHwPortP = Template<GetHwPort>;
+        struct GetHwPort<Register::PinLocation<Port,Pin>> : kvasir::mpl::int_<Port>{};
+        using GetHwPortP = MPL::Template<GetHwPort>;
 
         template<typename T, typename U>
-        struct OnSamePort : FalseType {};
+        struct OnSamePort : kvasir::mpl::false_ {};
         template<int Port, int PinL, int PinR>
-        struct OnSamePort<Register::PinLocation<Port,PinL>, Register::PinLocation<Port,PinR>> : TrueType {};
-        using PortEqualP = Template<OnSamePort>;
+        struct OnSamePort<Register::PinLocation<Port,PinL>, Register::PinLocation<Port,PinR>> : kvasir::mpl::true_  {};
+        using PortEqualP = MPL::Template<OnSamePort>;
 
         template<typename TList>
-        using GetPortNumbersT = brigand::transform<UniqueT<SortT<TList,PinLocationLessP>, PortEqualP>, GetHwPortP>;
+        using GetPortNumbersT = brigand::transform<MPL::UniqueT<MPL::SortT<TList,PinLocationLessP>, PortEqualP>, GetHwPortP>;
 
         template<typename T>
-        struct IsSinglePort : FalseType {};
+        struct IsSinglePort : kvasir::mpl::false_ {};
         template<PortAccess A, typename... Ts>
-        struct IsSinglePort<Port<A,Ts...>> : Bool<(Size<GetPortNumbersT<brigand::list<Ts...>>>::value == 1)>{};
+        struct IsSinglePort<Port<A,Ts...>> : kvasir::mpl::bool_<(MPL::Size<GetPortNumbersT<brigand::list<Ts...>>>::value == 1)>{};
 
         template<typename T>
-        struct IsDistributedPort : FalseType {};
+        struct IsDistributedPort : kvasir::mpl::false_ {};
         template<PortAccess A, typename... Ts>
-        struct IsDistributedPort<Port<A,Ts...>> : Bool<(Size<GetPortNumbersT<brigand::list<Ts...>>>::value > 1)>{};
+        struct IsDistributedPort<Port<A,Ts...>> : kvasir::mpl::bool_<(MPL::Size<GetPortNumbersT<brigand::list<Ts...>>>::value > 1)>{};
 
         template<typename T>
         struct GetAccess;
         template<PortAccess A, typename... Ts>
-        struct GetAccess<Port<A,Ts...>> : Value<PortAccess,A>{};
+        struct GetAccess<Port<A,Ts...>> : MPL::Value<PortAccess, A> {};
 
 
     }

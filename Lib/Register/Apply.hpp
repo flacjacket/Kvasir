@@ -16,6 +16,7 @@
  * limitations under the License.
 ****************************************************************************/
 #pragma once
+
 #include "Common/Tags.hpp"
 #include "Exec.hpp"
 #include "Mpl/Algorithm.hpp"
@@ -24,6 +25,8 @@
 #include "Types.hpp"
 #include "Utility.hpp"
 #include <utility>
+
+#include "kvasir/mpl/mpl.hpp"
 
 namespace Kvasir::Register
 {
@@ -267,13 +270,13 @@ namespace Kvasir::Register
         struct IsAddressPred
         {
             template <typename T>
-            struct apply : MPL::FalseType
+            struct apply : kvasir::mpl::false_
             {
             };
             template <typename TAddress, unsigned Mask, typename TAccess, typename TFieldType,
                       typename Cmd>
             struct apply<Action<FieldLocation<TAddress, Mask, TAccess, TFieldType>, Cmd>>
-                : MPL::Value<bool, (I == GetAddress<TAddress>::value)>
+                : kvasir::mpl::bool_<I == GetAddress<TAddress>::value>
             {
             };
         };
@@ -424,7 +427,7 @@ namespace Kvasir::Register
 
         // no read no runtime write apply
         template <typename... TActions>
-        DEBUG_OPTIMIZE void noReadNoRuntimeWriteApply(brigand::list<TActions...> *)
+        DEBUG_OPTIMIZE void noReadNoRuntimeWriteApply(kvasir::mpl::list<TActions...> *)
         {
             const unsigned a[]{0U, ExecuteSeam<TActions, ::Kvasir::Tag::User>{}(0U)...};
             ignore(a);
@@ -444,16 +447,16 @@ namespace Kvasir::Register
         {
         };
         template <>
-        struct ArgToApplyIsPlausible<SequencePoint> : TrueType
+        struct ArgToApplyIsPlausible<SequencePoint> : kvasir::mpl::true_
         {
         };
         template <typename T, typename... Ts>
         struct ArgsToApplyArePlausible
         {
             using l = brigand::flatten<brigand::list<T, Ts...>>;
-            using type = MPL::Bool<
-                std::is_same<MPL::RepeatC<brigand::size<l>::value, MPL::TrueType>,
-                             brigand::transform<l, brigand::quote<ArgToApplyIsPlausible>>>::value>;
+            using type = kvasir::mpl::bool_<
+                std::is_same_v<MPL::RepeatC<brigand::size<l>::value, MPL::TrueType>,
+                               brigand::transform<l, brigand::quote<ArgToApplyIsPlausible>>>>;
             static constexpr int value = type::value;
         };
     } // namespace Detail
@@ -516,7 +519,7 @@ namespace Kvasir::Register
         using FlattenedActions = brigand::flatten<brigand::list<Args...>>;
         using Steps = brigand::split<FlattenedActions, SequencePoint>;
         using Merged = Detail::MergeActionStepsT<Steps>;
-        using Actions = brigand::flatten<Merged>;
+        using Actions = kvasir::mpl::eager::flatten<Merged>;
         // using Functors = brigand::transform<Actions, brigand::quote<Detail::GetAction>>;
         Detail::noReadNoRuntimeWriteApply(static_cast<Actions *>(nullptr));
     }
