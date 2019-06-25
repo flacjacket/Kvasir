@@ -8,6 +8,13 @@ namespace Kvasir
 {
 namespace Usb
 {
+    namespace Detail
+    {
+        template <typename T>
+        constexpr void ignore(T &&)
+        {}
+    }
+
     template <typename TDeviceSettings, typename... TDeviceClass>
     struct Device
     {
@@ -236,17 +243,14 @@ namespace Usb
             switch (controlTransfer_.getType())
             {
             case Type::classT:
-            {
                 // TODO support more
                 return brigand::at<DeviceClasses, brigand::int8_t<0>>::onSetupReceived(
                     controlTransfer_);
-            }
             case Type::vendor:
-            {
                 break;
-            }
+            case Type::reserved:
+                break;
             case Type::standard:
-            {
                 auto rt = controlTransfer_.getRequest();
                 if (rt == Request::setAddress)
                 {
@@ -262,7 +266,6 @@ namespace Usb
                 }
                 break;
             }
-            };
             return false;
         }
         static bool handleDeviceToHost()
@@ -271,39 +274,29 @@ namespace Usb
             switch (controlTransfer_.getType())
             {
             case Type::classT:
-            {
                 // TODO support more
                 brigand::at<DeviceClasses, brigand::int8_t<0>>::onSetupReceived(controlTransfer_);
                 return true;
-            }
             case Type::vendor:
-            {
+            case Type::reserved:
                 break;
-            }
             case Type::standard:
-            {
                 switch (controlTransfer_.getRequest())
                 {
                 case Request::getStatus:
-                {
                     return Device::requestGetStatus();
-                }
                 case Request::getDescriptor:
-                {
                     return Device::requestGetDescriptor();
-                }
                 case Request::getConfiguration:
-                {
                     return Device::requestGetConfiguration();
-                }
                 case Request::getInterface:
-                {
                     return Device::requestGetInterface();
-                }
+                default:
+                    break;
                 }
                 break;
             }
-            };
+            return true;
         }
 
         static void sendControlAck(PacketType && p)
@@ -319,6 +312,7 @@ namespace Usb
         {
             int i[] = {
                 0, (GetHal<Device, Tag::User>::type::template activateEndpoint<N, D, T>(), 0)...};
+            Detail::ignore(i);
         }
         static void onPacketFromHost(bool data1)
         {
@@ -386,6 +380,8 @@ namespace Usb
                     {
                     case Request::setAddress:
                         GetHal<Device, Tag::User>::type::setAddress(static_cast<uint8_t>(controlTransfer_.getValue()));
+                        break;
+                    default:
                         break;
                     }
                     GetHal<Device, Tag::User>::type::enableEP0Out(false);

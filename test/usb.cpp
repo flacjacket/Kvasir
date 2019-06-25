@@ -231,8 +231,8 @@ namespace Usb
 {
     struct MocHal
     {
-        static void enableEP0Out(bool data1) { events_.emplace_back(::Type::enableEp0, ::Packet{}); }
-        static void setAddress(uint8_t address)
+        static void enableEP0Out(bool) { events_.emplace_back(::Type::enableEp0, ::Packet{}); }
+        static void setAddress(uint8_t)
         {
             events_.emplace_back(::Type::setAddress, ::Packet{});
         }

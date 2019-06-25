@@ -505,7 +505,7 @@ namespace Register
     // if apply does not contain reads or runtime writes we can speed things up
     template <typename... Args>
     DEBUG_OPTIMIZE
-        typename std::enable_if<Detail::AllCompileTime<Args...>::value>::type apply(Args... args)
+        typename std::enable_if<Detail::AllCompileTime<Args...>::value>::type apply(Args...)
     {
         static_assert(Detail::ArgsToApplyArePlausible<Args...>::value,
                       "one of the supplied arguments is not supported");
@@ -516,7 +516,7 @@ namespace Register
         using Merged = Detail::MergeActionStepsT<Steps>;
         using Actions = brigand::flatten<Merged>;
         // using Functors = brigand::transform<Actions, brigand::quote<Detail::GetAction>>;
-        Detail::noReadNoRuntimeWriteApply((Actions *)nullptr);
+        Detail::noReadNoRuntimeWriteApply(static_cast<Actions *>(nullptr));
     }
 
     // no parameters is allowed because it could be used in machine generated code

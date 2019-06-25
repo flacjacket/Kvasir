@@ -32,7 +32,7 @@ namespace Usb
         static Packet unsafeFromBufPointer(uint8_t * p)
         {
             PointerType pp{};
-            pp.me_ = (TPacketImpl *)p;
+            pp.me_ = reinterpret_cast<TPacketImpl *>(p);
             return Packet(pp);
         }
         uint8_t * unsafeToBufPointer() { return packet_->buf_; }

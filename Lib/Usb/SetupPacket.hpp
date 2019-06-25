@@ -82,17 +82,17 @@ namespace Usb
         template <typename Packet>
         uint16_t getWLength(Packet & in)
         {
-            return (in[6] | (uint16_t)in[7] << 8);
+            return (in[6] | static_cast<uint16_t>(in[7]) << 8);
         }
         template <typename Packet>
         uint16_t getIndex(Packet & in)
         {
-            return (in[4] | (uint16_t)in[5] << 8);
+            return (in[4] | static_cast<uint16_t>(in[5]) << 8);
         }
         template <typename Packet>
         uint16_t getValue(Packet & in)
         {
-            return (in[2] | (uint16_t)in[3] << 8);
+            return (in[2] | static_cast<uint16_t>(in[3]) << 8);
         }
         template <typename Packet>
         Request getRequest(Packet & in)

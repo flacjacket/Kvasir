@@ -63,24 +63,24 @@ namespace Kvasir {
                 return ret;
             }
         };
-        
+
         std::vector<RecordedAction> actions_;
         Reads reads_;
 
         template<typename T>
         struct RecordActions {
-            int operator()(int in) {
+            unsigned operator()(unsigned) {
                 actions_.emplace_back(
-                    RecordedAction{ RecordedAction::Type::unknown });
+                    RecordedAction{ RecordedAction::Type::unknown, 0, 0, 0 });
                 return 0;
             }
         };
 
         template<typename Address, unsigned Mask, typename Access, typename FieldType>
         struct RecordActions<Action<FieldLocation<Address, Mask, Access, FieldType>, ReadAction>> {
-            int operator()(int in) {
+            unsigned operator()(unsigned) {
                 actions_.emplace_back(
-                    RecordedAction{ RecordedAction::Type::read, Address::value, Mask });
+                    RecordedAction{ RecordedAction::Type::read, Address::value, Mask, 0 });
                 auto it = std::find_if(reads_.begin(), reads_.end(), [](ReadValue &v) {
                     return v.address_ == Address::value; });
                 if (it != reads_.end()) {
@@ -92,7 +92,7 @@ namespace Kvasir {
 
         template<typename Address, unsigned Mask, typename Access, typename FieldType>
         struct RecordActions<Action<FieldLocation<Address, Mask, Access, FieldType>, WriteAction>> {
-            int operator()(unsigned in) {
+            unsigned operator()(unsigned in) {
                 actions_.emplace_back(
                     RecordedAction{ RecordedAction::Type::write, Address::value, Mask, in });
                 return 0;
@@ -101,7 +101,7 @@ namespace Kvasir {
 
         template<typename Address, unsigned Mask, typename Access, typename FieldType, unsigned I>
         struct RecordActions<Action<FieldLocation<Address, Mask, Access, FieldType>, WriteLiteralAction<I>>> {
-            int operator()(int in) {
+            unsigned operator()(unsigned) {
                 actions_.emplace_back(
                     RecordedAction{ RecordedAction::Type::writeLiteral, Address::value, Mask, I });
                 return 0;

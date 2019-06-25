@@ -165,8 +165,8 @@ namespace Usb
                 }
                 return ret + cp->size_;
             }
-            TransferIterator begin() {}
-            TransferIterator end() {}
+            TransferIterator begin() { return {}; }
+            TransferIterator end() { return {}; }
             bool empty() { return packet_ == nullptr; }
             void pushBack(uint8_t data, uint8_t maxSize = TPacketType::capacity)
             {

@@ -72,10 +72,10 @@ int applyTest()
         }
     }
     {
-        auto status = apply(read(Kvasir::Usb0Istat::usbrst, Kvasir::Usb0Istat::resume,
-                                 Kvasir::Usb0Istat::softok, Kvasir::Usb0Istat::stall,
-                                 Kvasir::Usb0Istat::tokdne, Kvasir::Usb0Istat::sleep,
-                                 Kvasir::Usb0Istat::error));
+        apply(read(Kvasir::Usb0Istat::usbrst, Kvasir::Usb0Istat::resume,
+                   Kvasir::Usb0Istat::softok, Kvasir::Usb0Istat::stall,
+                   Kvasir::Usb0Istat::tokdne, Kvasir::Usb0Istat::sleep,
+                   Kvasir::Usb0Istat::error));
         Kvasir::Register::actions_.clear();
         apply(reset(Kvasir::Usb0Istat::usbrst, Kvasir::Usb0Istat::resume, Kvasir::Usb0Istat::softok,
                     Kvasir::Usb0Istat::stall, Kvasir::Usb0Istat::tokdne, Kvasir::Usb0Istat::sleep,
