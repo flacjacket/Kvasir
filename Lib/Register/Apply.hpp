@@ -41,20 +41,23 @@ namespace Detail
         using type = O;
     };
     template <std::size_t I, typename... O, typename... A, typename... T>
-    struct MakeSeperatorsImpl<I, br::list<O...>, br::list<A...>, br::list<br::size_t<I>, T...>>
-        : MakeSeperatorsImpl<(I + 1), br::list<O..., br::list<A...>>, br::list<>, br::list<T...>>
+    struct MakeSeperatorsImpl<I, kvasir::mpl::list<O...>, kvasir::mpl::list<A...>,
+                              br::list<br::size_t<I>, T...>>
+        : MakeSeperatorsImpl<(I + 1), kvasir::mpl::list<O..., kvasir::mpl::list<A...>>,
+                             kvasir::mpl::list<>, br::list<T...>>
     {
     };
 
     template <std::size_t I, typename... O, typename... A, typename U, typename... T>
-    struct MakeSeperatorsImpl<I, br::list<O...>, brigand::list<A...>, brigand::list<U, T...>>
-        : MakeSeperatorsImpl<I + 1, brigand::list<O...>, brigand::list<A..., unsigned>,
-                             brigand::list<U, T...>>
+    struct MakeSeperatorsImpl<I, kvasir::mpl::list<O...>, kvasir::mpl::list<A...>,
+                              br::list<U, T...>>
+        : MakeSeperatorsImpl<I + 1, kvasir::mpl::list<O...>, kvasir::mpl::list<A..., unsigned>,
+                             br::list<U, T...>>
     {
     };
     template <typename T>
     using MakeSeperators =
-        MakeSeperatorsImpl<0, brigand::list<>, brigand::list<>, brigand::sort<T>>;
+        MakeSeperatorsImpl<0, kvasir::mpl::list<>, kvasir::mpl::list<>, brigand::sort<T>>;
 
     // an index action consists of an action (possibly merged) and
     // the inputs including masks which it needs
@@ -105,12 +108,12 @@ namespace Detail
     {
     };
 
-    template <typename TRegisters, typename TRet = brigand::list<>> // default
+    template <typename TRegisters, typename TRet = kvasir::mpl::list<>> // default
     struct MergeRegisterActions;
 
     template <typename TNext, typename... Ts> // none processed yet
-    struct MergeRegisterActions<brigand::list<TNext, Ts...>, brigand::list<>>
-        : MergeRegisterActions<brigand::list<Ts...>, brigand::list<TNext>>
+    struct MergeRegisterActions<brigand::list<TNext, Ts...>, kvasir::mpl::list<>>
+        : MergeRegisterActions<brigand::list<Ts...>, kvasir::mpl::list<TNext>>
     {
     };
 
@@ -125,24 +128,24 @@ namespace Detail
                                            TActionTemplate<Value1>>,
                                     TInputs1...>,
                       Ts...>,
-        brigand::list<IndexedAction<Action<FieldLocation<TAddress, Mask2, TAccess2, TFieldType2>,
-                                           TActionTemplate<Value2>>,
-                                    TInputs2...>,
-                      Us...>>
+        kvasir::mpl::list<
+            IndexedAction<Action<FieldLocation<TAddress, Mask2, TAccess2, TFieldType2>,
+                                 TActionTemplate<Value2>>,
+                          TInputs2...>,
+            Us...>>
         : MergeRegisterActions<
               brigand::list<Ts...>,
-              brigand::list<IndexedAction<Action<FieldLocation<TAddress,
-                                                               (Mask1 | Mask2), // merge
-                                                               TAccess1>,       // dont care,
-                                                                          // plausibility check
-                                                                          // has already been
-                                                                          // done
-                                                 TActionTemplate<(Value1 | Value2)> // merge
-                                                 // TODO implement register type here
-                                                 >,
-                                          TInputs1..., TInputs2...>, // concatenate
-                            Us...>                                   // pass through rest
-              >
+              // merge masks care, plausibility check has already been done
+              // merge values
+              // concatenate inputs
+              // pass through rest
+              kvasir::mpl::list<
+                  IndexedAction<Action<FieldLocation<TAddress, (Mask1 | Mask2), TAccess1>,
+                                       TActionTemplate<(Value1 | Value2)>
+                                       // TODO implement register type here
+                                       >,
+                                TInputs1..., TInputs2...>,
+                  Us...>>
     {
     };
 
@@ -155,32 +158,32 @@ namespace Detail
         brigand::list<
             Action<FieldLocation<TAddress, Mask1, TAccess1, TFieldType1>, TActionTemplate<Value1>>,
             Ts...>,
-        brigand::list<
+        kvasir::mpl::list<
             Action<FieldLocation<TAddress, Mask2, TAccess2, TFieldType2>, TActionTemplate<Value2>>,
             Us...>>
         : MergeRegisterActions<
               brigand::list<Ts...>,
-              brigand::list<Action<FieldLocation<TAddress,
-                                                 (Mask1 | Mask2), // merge
-                                                 TAccess1>, // dont care, plausibility check has
-                                                            // already been done
-                                   TActionTemplate<(Value1 | Value2)> // merge
-                                   // TODO implement register type here
-                                   >,
-                            Us...> // pass through rest
+              kvasir::mpl::list<Action<FieldLocation<TAddress,
+                                                     (Mask1 | Mask2), // merge
+                                                     TAccess1>, // dont care, plausibility check has
+                                                                // already been done
+                                       TActionTemplate<(Value1 | Value2)> // merge
+                                       // TODO implement register type here
+                                       >,
+                                Us...> // pass through rest
               >
     {
     };
 
     template <typename TNext, typename TLast, typename... Ts,
               typename... Us> // next and last not mergable
-    struct MergeRegisterActions<brigand::list<TNext, Ts...>, brigand::list<TLast, Us...>>
-        : MergeRegisterActions<brigand::list<Ts...>, brigand::list<TNext, TLast, Us...>>
+    struct MergeRegisterActions<brigand::list<TNext, Ts...>, kvasir::mpl::list<TLast, Us...>>
+        : MergeRegisterActions<brigand::list<Ts...>, kvasir::mpl::list<TNext, TLast, Us...>>
     {
     };
 
     template <typename... Ts> // done
-    struct MergeRegisterActions<brigand::list<>, brigand::list<Ts...>>
+    struct MergeRegisterActions<brigand::list<>, kvasir::mpl::list<Ts...>>
     {
         using type = kvasir::mpl::list<Ts...>;
     };
@@ -340,22 +343,8 @@ namespace Detail
     {
         DEBUG_OPTIMIZE unsigned operator()(...) { return 0; }
     };
-    template <>
-    struct Finder<brigand::list<>>
-    {
-        DEBUG_OPTIMIZE unsigned operator()(...) { return 0; }
-    };
     template <typename... A>
-    struct Finder<kvasir::mpl::list<brigand::list<A...>>>
-    {
-        template <typename... T>
-        DEBUG_OPTIMIZE unsigned operator()(A..., unsigned a, T...)
-        {
-            return a;
-        }
-    };
-    template <typename... A>
-    struct Finder<brigand::list<brigand::list<A...>>>
+    struct Finder<kvasir::mpl::list<kvasir::mpl::list<A...>>>
     {
         template <typename... T>
         DEBUG_OPTIMIZE unsigned operator()(A..., unsigned a, T...)
@@ -364,16 +353,7 @@ namespace Detail
         }
     };
     template <typename... A, typename... B>
-    struct Finder<kvasir::mpl::list<brigand::list<A...>, brigand::list<B...>>>
-    {
-        template <typename... T>
-        DEBUG_OPTIMIZE unsigned operator()(A..., unsigned a, B..., unsigned b, T...)
-        {
-            return a | b;
-        }
-    };
-    template <typename... A, typename... B>
-    struct Finder<brigand::list<brigand::list<A...>, brigand::list<B...>>>
+    struct Finder<kvasir::mpl::list<kvasir::mpl::list<A...>, kvasir::mpl::list<B...>>>
     {
         template <typename... T>
         DEBUG_OPTIMIZE unsigned operator()(A..., unsigned a, B..., unsigned b, T...)
@@ -382,22 +362,12 @@ namespace Detail
         }
     };
     template <typename... A, typename... B, typename... Rest>
-    struct Finder<kvasir::mpl::list<brigand::list<A...>, brigand::list<B...>, Rest...>>
+    struct Finder<kvasir::mpl::list<kvasir::mpl::list<A...>, kvasir::mpl::list<B...>, Rest...>>
     {
         template <typename... T>
         DEBUG_OPTIMIZE unsigned operator()(A..., unsigned a, B..., unsigned b, T... t)
         {
             auto r = Finder<kvasir::mpl::list<Rest...>>{};
-            return a | b | r(t...);
-        }
-    };
-    template <typename... A, typename... B, typename... Rest>
-    struct Finder<brigand::list<brigand::list<A...>, brigand::list<B...>, Rest...>>
-    {
-        template <typename... T>
-        DEBUG_OPTIMIZE unsigned operator()(A..., unsigned a, B..., unsigned b, T... t)
-        {
-            auto r = Finder<brigand::list<Rest...>>{};
             return a | b | r(t...);
         }
     };
