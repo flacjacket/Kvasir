@@ -22,100 +22,95 @@
 #include "Types.hpp"
 #include "Utility.hpp"
 
-namespace Kvasir
+namespace Kvasir::Register
 {
 
-namespace Register
+namespace Detail
 {
 
-    namespace Detail
+    template <typename TRegisterAction>
+    struct RegisterExec;
+
+    template <typename TLocation, unsigned ClearMask, unsigned SetMask>
+    struct GenericReadMaskOrWrite
     {
-
-        template <typename TRegisterAction>
-        struct RegisterExec;
-
-        template <typename TLocation, unsigned ClearMask, unsigned SetMask>
-        struct GenericReadMaskOrWrite
+        DEBUG_OPTIMIZE unsigned operator()(unsigned in = 0)
         {
-            DEBUG_OPTIMIZE unsigned operator()(unsigned in = 0)
+            using Address = GetAddress<TLocation>;
+            constexpr auto clearOrZeroIsNoChangeMask = ClearMask | Address::writeIgnoredIfZeroMask;
+            constexpr auto oneIsNoChangeMask =
+                (Address::writeIgnoredIfOneMask & ~ClearMask); // remove the bits we are working on
+            constexpr auto bitsWithFixedValues = oneIsNoChangeMask | clearOrZeroIsNoChangeMask;
+            decltype(Address::read()) i = 0;
+            if (bitsWithFixedValues !=
+                0xFFFFFFFF) // no sense reading if we are going to clear the whole thing any way
             {
-                using Address = GetAddress<TLocation>;
-                constexpr auto clearOrZeroIsNoChangeMask = ClearMask | Address::writeIgnoredIfZeroMask;
-                constexpr auto oneIsNoChangeMask = (Address::writeIgnoredIfOneMask & ~ClearMask); //remove the bits we are working on
-                constexpr auto bitsWithFixedValues = oneIsNoChangeMask | clearOrZeroIsNoChangeMask;
-                decltype(Address::read()) i = 0;
-                if (bitsWithFixedValues != 0xFFFFFFFF) //no sense reading if we are going to clear the whole thing any way
-                {
-                    i = Address::read();
-                    i &= ~(clearOrZeroIsNoChangeMask);
-                }
-                i |= SetMask | oneIsNoChangeMask | in;
-                GetAddress<TLocation>::write(i);
-                return i;
+                i = Address::read();
+                i &= ~(clearOrZeroIsNoChangeMask);
             }
-        };
+            i |= SetMask | oneIsNoChangeMask | in;
+            GetAddress<TLocation>::write(i);
+            return i;
+        }
+    };
 
-        template <typename TLocation, unsigned ClearMask, unsigned XorMask>
-        struct GenericReadMaskXorWrite
+    template <typename TLocation, unsigned ClearMask, unsigned XorMask>
+    struct GenericReadMaskXorWrite
+    {
+        DEBUG_OPTIMIZE unsigned operator()(unsigned in = 0)
         {
-            DEBUG_OPTIMIZE unsigned operator()(unsigned in = 0)
+            using Address = GetAddress<TLocation>;
+            constexpr auto clearOrZeroIsNoChangeMask = ClearMask | Address::writeIgnoredIfZeroMask;
+            constexpr auto oneIsNoChangeMask =
+                (Address::writeIgnoredIfOneMask & ~ClearMask); // remove the bits we are working on
+            constexpr auto bitsWithFixedValues = oneIsNoChangeMask | clearOrZeroIsNoChangeMask;
+            decltype(Address::read()) i = 0;
+            if (bitsWithFixedValues !=
+                0xFFFFFFFF) // no sense reading if we are going to clear the whole thing any way
             {
-                using Address = GetAddress<TLocation>;
-                constexpr auto clearOrZeroIsNoChangeMask = ClearMask | Address::writeIgnoredIfZeroMask;
-                constexpr auto oneIsNoChangeMask = (Address::writeIgnoredIfOneMask & ~ClearMask); //remove the bits we are working on
-                constexpr auto bitsWithFixedValues = oneIsNoChangeMask | clearOrZeroIsNoChangeMask;
-                decltype(Address::read()) i = 0;
-                if (bitsWithFixedValues != 0xFFFFFFFF) //no sense reading if we are going to clear the whole thing any way
-                {
-                    i = Address::read();
-                    i &= ~(clearOrZeroIsNoChangeMask);
-                }
-                i |= oneIsNoChangeMask;
-                i ^= XorMask | in;
-                GetAddress<TLocation>::write(i);
-                return i;
+                i = Address::read();
+                i &= ~(clearOrZeroIsNoChangeMask);
             }
-        };
+            i |= oneIsNoChangeMask;
+            i ^= XorMask | in;
+            GetAddress<TLocation>::write(i);
+            return i;
+        }
+    };
 
-        // write literal with read modify write
-        template <typename TAddress, unsigned Mask, typename Access, typename FieldType,
-                  unsigned Data>
-        struct RegisterExec<Register::Action<FieldLocation<TAddress, Mask, Access, FieldType>,
-                                             WriteLiteralAction<Data>>>
-            : GenericReadMaskOrWrite<FieldLocation<TAddress, Mask, Access, FieldType>, Mask, Data>
-        {
-            static_assert((Data & (~Mask)) == 0, "bad mask");
-        };
+    // write literal with read modify write
+    template <typename TAddress, unsigned Mask, typename Access, typename FieldType, unsigned Data>
+    struct RegisterExec<Register::Action<FieldLocation<TAddress, Mask, Access, FieldType>,
+                                         WriteLiteralAction<Data>>>
+        : GenericReadMaskOrWrite<FieldLocation<TAddress, Mask, Access, FieldType>, Mask, Data>
+    {
+        static_assert((Data & (~Mask)) == 0, "bad mask");
+    };
 
-        template <typename TAddress, unsigned Mask, typename Access, typename FieldType>
-        struct RegisterExec<
-            Register::Action<FieldLocation<TAddress, Mask, Access, FieldType>, WriteAction>>
-            : GenericReadMaskOrWrite<FieldLocation<TAddress, Mask, Access, FieldType>, Mask, 0>
-        {
-        };
-
-        template <typename TAddress, unsigned Mask, typename Access, typename FieldType>
-        struct RegisterExec<
-            Register::Action<FieldLocation<TAddress, Mask, Access, FieldType>, ReadAction>>
-        {
-            DEBUG_OPTIMIZE unsigned operator()(unsigned in = 0)
-            {
-                return GetAddress<TAddress>::read();
-            }
-        };
-        template <typename TAddress, unsigned Mask, typename Access, typename FieldType,
-                  unsigned Data>
-        struct RegisterExec<Register::Action<FieldLocation<TAddress, Mask, Access, FieldType>,
-                                             XorLiteralAction<Data>>>
-            : GenericReadMaskXorWrite<FieldLocation<TAddress, Mask, Access, FieldType>, Mask, Data>
-        {
-            static_assert((Data & (~Mask)) == 0, "bad mask");
-        };
-    } // namespace Detail
-
-    template <typename T, typename U>
-    struct ExecuteSeam : Detail::RegisterExec<T>
+    template <typename TAddress, unsigned Mask, typename Access, typename FieldType>
+    struct RegisterExec<
+        Register::Action<FieldLocation<TAddress, Mask, Access, FieldType>, WriteAction>>
+        : GenericReadMaskOrWrite<FieldLocation<TAddress, Mask, Access, FieldType>, Mask, 0>
     {
     };
-} // namespace Register
-} // namespace Kvasir
+
+    template <typename TAddress, unsigned Mask, typename Access, typename FieldType>
+    struct RegisterExec<
+        Register::Action<FieldLocation<TAddress, Mask, Access, FieldType>, ReadAction>>
+    {
+        DEBUG_OPTIMIZE unsigned operator()(unsigned in = 0) { return GetAddress<TAddress>::read(); }
+    };
+    template <typename TAddress, unsigned Mask, typename Access, typename FieldType, unsigned Data>
+    struct RegisterExec<
+        Register::Action<FieldLocation<TAddress, Mask, Access, FieldType>, XorLiteralAction<Data>>>
+        : GenericReadMaskXorWrite<FieldLocation<TAddress, Mask, Access, FieldType>, Mask, Data>
+    {
+        static_assert((Data & (~Mask)) == 0, "bad mask");
+    };
+} // namespace Detail
+
+template <typename T, typename U>
+struct ExecuteSeam : Detail::RegisterExec<T>
+{
+};
+} // namespace Kvasir::Register
