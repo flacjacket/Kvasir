@@ -28,21 +28,21 @@ namespace Register
     {
         return (0xFFFFFFFFULL >> (31 - (high - low))) << low;
     }
-    template<typename... Is>
-    constexpr unsigned maskFromRange(unsigned high, unsigned low, Is...args){
-        return maskFromRange(high,low) | maskFromRange(args...);
+    template <typename... Is>
+    constexpr unsigned maskFromRange(unsigned high, unsigned low, Is... args)
+    {
+        return maskFromRange(high, low) | maskFromRange(args...);
     }
     namespace Detail
     {
         using namespace MPL;
 
-        constexpr int maskStartsAt(unsigned mask, unsigned bitNum = 0U) {
+        constexpr int maskStartsAt(unsigned mask, unsigned bitNum = 0U)
+        {
             return mask & 1U ? bitNum : maskStartsAt(mask >> 1U, bitNum + 1U);
         }
 
-        constexpr bool onlyOneBitSet(unsigned i){
-            return i == (i & -i);
-        }
+        constexpr bool onlyOneBitSet(unsigned i) { return i == (i & -i); }
 
         constexpr unsigned orAllOf() { return 0; }
         constexpr unsigned orAllOf(unsigned l) { return l; }
@@ -76,56 +76,94 @@ namespace Register
         template <typename T>
         using GetFieldTypeT = typename GetFieldType<T>::Type;
 
-        template<typename T>
-        struct IsWriteLiteral : std::false_type{};
+        template <typename T>
+        struct IsWriteLiteral : std::false_type
+        {
+        };
 
-        template<typename T>
-        struct IsWriteRuntime : std::false_type{};
+        template <typename T>
+        struct IsWriteRuntime : std::false_type
+        {
+        };
 
-        template<typename T>
-        struct IsFieldLocation : std::false_type{};
-        template<typename TAddress, unsigned Mask, typename Access, typename TFieldType>
-        struct IsFieldLocation<FieldLocation<TAddress, Mask, Access, TFieldType>> : std::true_type {};
+        template <typename T>
+        struct IsFieldLocation : std::false_type
+        {
+        };
+        template <typename TAddress, unsigned Mask, typename Access, typename TFieldType>
+        struct IsFieldLocation<FieldLocation<TAddress, Mask, Access, TFieldType>> : std::true_type
+        {
+        };
 
-        template<typename T>
-        struct IsWritable : std::false_type{};
-        template<typename TAddress, unsigned Mask, ReadActionType RAction, ModifiedWriteValueType WAction, typename TFieldType>
-        struct IsWritable<FieldLocation<TAddress, Mask, Access<AccessType::readWrite, RAction, WAction>, TFieldType>> : std::true_type {};
-        template<typename TAddress, unsigned Mask, ReadActionType RAction, ModifiedWriteValueType WAction, typename TFieldType>
-        struct IsWritable<FieldLocation<TAddress, Mask, Access<AccessType::writeOnly, RAction, WAction>, TFieldType>> : std::true_type {};
+        template <typename T>
+        struct IsWritable : std::false_type
+        {
+        };
+        template <typename TAddress, unsigned Mask, ReadActionType RAction,
+                  ModifiedWriteValueType WAction, typename TFieldType>
+        struct IsWritable<FieldLocation<
+            TAddress, Mask, Access<AccessType::readWrite, RAction, WAction>, TFieldType>>
+            : std::true_type
+        {
+        };
+        template <typename TAddress, unsigned Mask, ReadActionType RAction,
+                  ModifiedWriteValueType WAction, typename TFieldType>
+        struct IsWritable<FieldLocation<
+            TAddress, Mask, Access<AccessType::writeOnly, RAction, WAction>, TFieldType>>
+            : std::true_type
+        {
+        };
 
-        template<typename T>
-        struct IsSetToClear : std::false_type{};
-        template<typename TAddress, unsigned Mask, AccessType AT, ReadActionType RAction, typename TFieldType>
-        struct IsSetToClear<FieldLocation<TAddress, Mask, Access<AT, RAction, ModifiedWriteValueType::oneToClear>, TFieldType>> : std::true_type {};
+        template <typename T>
+        struct IsSetToClear : std::false_type
+        {
+        };
+        template <typename TAddress, unsigned Mask, AccessType AT, ReadActionType RAction,
+                  typename TFieldType>
+        struct IsSetToClear<FieldLocation<
+            TAddress, Mask, Access<AT, RAction, ModifiedWriteValueType::oneToClear>, TFieldType>>
+            : std::true_type
+        {
+        };
 
-        template<typename T, typename U>
-        struct WriteLocationAndCompileTimeValueTypeAreSame : std::false_type {};
-        template<typename AT, unsigned M, typename A, typename FT, FT V>
-        struct WriteLocationAndCompileTimeValueTypeAreSame<FieldLocation<AT, M, A, FT>,MPL::Value<FT,V>> : std::true_type{};
+        template <typename T, typename U>
+        struct WriteLocationAndCompileTimeValueTypeAreSame : std::false_type
+        {
+        };
+        template <typename AT, unsigned M, typename A, typename FT, FT V>
+        struct WriteLocationAndCompileTimeValueTypeAreSame<FieldLocation<AT, M, A, FT>,
+                                                           MPL::Value<FT, V>> : std::true_type
+        {
+        };
 
-        //getters for specific parameters of an Action
-        template<typename T>
-            struct GetAddress;
-        template<unsigned A, unsigned WIIZ, unsigned WIIO, typename TRegType, typename TMode>
-            struct GetAddress<Address<A, WIIZ, WIIO, TRegType, TMode>> {
-                static constexpr unsigned value = A;
-                static constexpr unsigned writeIgnoredIfZeroMask = WIIZ;
-                static constexpr unsigned writeIgnoredIfOneMask = WIIO;
-                static unsigned read() {
-                    volatile TRegType& reg = *reinterpret_cast<volatile TRegType*>(value);
-                    return reg;
-                }
-                static void write(unsigned i) {
-                    volatile TRegType& reg = *reinterpret_cast<volatile TRegType*>(value);
-                    reg = i;
-                }
-                using type = brigand::uint32_t<A>;
-            };
-        template<typename TAddress, unsigned Mask, typename TAccess, typename TFiledType>
-            struct GetAddress<FieldLocation<TAddress, Mask, TAccess, TFiledType>> : GetAddress<TAddress> {};
-        template<typename TReadLoc, typename TWriteLoc>
-        struct GetAddress<FieldLocationPair<TReadLoc,TWriteLoc>> {
+        // getters for specific parameters of an Action
+        template <typename T>
+        struct GetAddress;
+        template <unsigned A, unsigned WIIZ, unsigned WIIO, typename TRegType, typename TMode>
+        struct GetAddress<Address<A, WIIZ, WIIO, TRegType, TMode>>
+        {
+            static constexpr unsigned value = A;
+            static constexpr unsigned writeIgnoredIfZeroMask = WIIZ;
+            static constexpr unsigned writeIgnoredIfOneMask = WIIO;
+            static unsigned read()
+            {
+                volatile TRegType & reg = *reinterpret_cast<volatile TRegType *>(value);
+                return reg;
+            }
+            static void write(unsigned i)
+            {
+                volatile TRegType & reg = *reinterpret_cast<volatile TRegType *>(value);
+                reg = i;
+            }
+            using type = brigand::uint32_t<A>;
+        };
+        template <typename TAddress, unsigned Mask, typename TAccess, typename TFiledType>
+        struct GetAddress<FieldLocation<TAddress, Mask, TAccess, TFiledType>> : GetAddress<TAddress>
+        {
+        };
+        template <typename TReadLoc, typename TWriteLoc>
+        struct GetAddress<FieldLocationPair<TReadLoc, TWriteLoc>>
+        {
             static constexpr unsigned value = TReadLoc::value;
             static unsigned read()
             {
@@ -137,7 +175,7 @@ namespace Register
                 volatile unsigned & reg = *reinterpret_cast<volatile unsigned *>(value);
                 reg = i;
             }
-            using type = brigand::uint32_t<value>;
+            using type = std::integral_constant<std::uint32_t, value>;
         };
         template <typename TFieldLocation, typename TAction>
         struct GetAddress<Action<TFieldLocation, TAction>> : GetAddress<TFieldLocation>
@@ -188,8 +226,7 @@ namespace Register
         };
 
         template <typename T>
-        struct IsNotRuntimeWritePred
-            : kvasir::mpl::bool_<!IsRuntimeWritePred<T>::value>
+        struct IsNotRuntimeWritePred : kvasir::mpl::bool_<!IsRuntimeWritePred<T>::value>
         {
         };
 
