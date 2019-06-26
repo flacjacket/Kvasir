@@ -182,7 +182,7 @@ namespace Detail
     template <typename... Ts> // done
     struct MergeRegisterActions<brigand::list<>, brigand::list<Ts...>>
     {
-        using type = brigand::list<Ts...>;
+        using type = kvasir::mpl::list<Ts...>;
     };
 
     template <typename T>
@@ -193,7 +193,7 @@ namespace Detail
     template <typename... Ts>
     struct MergeActionSteps<brigand::list<Ts...>>
     {
-        using type = brigand::list<MergeRegisterActionsT<
+        using type = kvasir::mpl::list<MergeRegisterActionsT<
             brigand::sort<brigand::flatten<Ts>, Detail::IndexedActionLess<brigand::_1, brigand::_2>>
             // SortT<brigand::flatten<Ts>,
             // MPL::Template<Detail::IndexedActionLess>>
@@ -505,7 +505,7 @@ DEBUG_OPTIMIZE inline
     using FlattenedActions = brigand::flatten<IndexedActions>;
     using Steps = brigand::split<FlattenedActions, SequencePoint>;
     using Merged = Detail::MergeActionStepsT<Steps>;
-    using Actions = brigand::flatten<Merged>;
+    using Actions = kvasir::mpl::eager::flatten<Merged>;
     using Functors = kvasir::mpl::eager::transform<Actions, Detail::GetAction>;
     using Inputs = kvasir::mpl::eager::transform<Actions, Detail::GetInputs>;
     Detail::Apply<Functors, Inputs, Detail::GetReturnType<Args...>> a{};
@@ -525,7 +525,7 @@ apply(Args... args)
     using FlattenedActions = brigand::flatten<IndexedActions>;
     using Steps = brigand::split<FlattenedActions, SequencePoint>;
     using Merged = Detail::MergeActionStepsT<Steps>;
-    using Actions = brigand::flatten<Merged>;
+    using Actions = kvasir::mpl::eager::flatten<Merged>;
     using Functors = kvasir::mpl::eager::transform<Actions, Detail::GetAction>;
     using Inputs = kvasir::mpl::eager::transform<Actions, Detail::GetInputs>;
     Detail::NoReadApply<Functors, Inputs> a{};
