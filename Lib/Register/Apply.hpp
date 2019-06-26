@@ -66,28 +66,29 @@ namespace Kvasir::Register
         };
 
         template <typename T>
-        struct GetAction;
+        struct GetActionImpl;
         template <typename A, typename... T>
-        struct GetAction<IndexedAction<A, T...>>
+        struct GetActionImpl<IndexedAction<A, T...>>
         {
-            using type = A;
+            using f = A;
         };
-
         template <typename F, typename A>
-        struct GetAction<Action<F, A>>
+        struct GetActionImpl<Action<F, A>>
         {
-            using type = Action<F, A>;
+            using f = Action<F, A>;
         };
+        template <typename T>
+        using GetAction = typename GetActionImpl<T>::f;
 
         template <typename T>
         struct GetInputsImpl;
         template <typename A, typename... T>
         struct GetInputsImpl<IndexedAction<A, T...>>
         {
-            using type = MakeSeperators<brigand::list<T...>>;
+            using f = typename MakeSeperators<brigand::list<T...>>::type;
         };
         template <typename T>
-        using GetInputs = typename GetInputsImpl<T>::type;
+        using GetInputs = typename GetInputsImpl<T>::f;
 
         // predicate returning result of left < right for RegisterOptions
         template <typename TLeft, typename TRight>
@@ -288,12 +289,12 @@ namespace Kvasir::Register
                                                   IsNotReadPred<brigand::_1>>,
                                GetFieldLocation<brigand::_1>>;
 
+        template <typename T>
+        using IsNotRuntimeWritePredF = IsNotRuntimeWritePred<T>;
         template <typename... T>
         constexpr bool noneRuntime()
         {
-            return brigand::size<brigand::remove_if<brigand::list<T...>,
-                                                    IsNotRuntimeWritePred<brigand::_1>>>::value ==
-                   0;
+            return kvasir::mpl::eager::size<kvasir::mpl::eager::remove_if<kvasir::mpl::list<T...>, IsNotRuntimeWritePredF>>::value == 0;
         }
 
         template <typename... T>
@@ -303,6 +304,8 @@ namespace Kvasir::Register
                 (brigand::size<Detail::GetReadsT<brigand::list<T...>>>::value == 0) &&
                 noneRuntime<T...>();
         };
+        template <typename... T>
+        inline constexpr bool AllCompileTimeV = AllCompileTime<T...>::value;
 
         template <typename... T>
         struct NoReadsRuntimeWrites
@@ -338,9 +341,23 @@ namespace Kvasir::Register
         template <typename T>
         struct Finder;
         template <>
+        struct Finder<kvasir::mpl::list<>>
+        {
+            DEBUG_OPTIMIZE unsigned operator()(...) { return 0; }
+        };
+        template <>
         struct Finder<brigand::list<>>
         {
             DEBUG_OPTIMIZE unsigned operator()(...) { return 0; }
+        };
+        template <typename... A>
+        struct Finder<kvasir::mpl::list<brigand::list<A...>>>
+        {
+            template <typename... T>
+            DEBUG_OPTIMIZE unsigned operator()(A..., unsigned a, T...)
+            {
+                return a;
+            }
         };
         template <typename... A>
         struct Finder<brigand::list<brigand::list<A...>>>
@@ -352,12 +369,31 @@ namespace Kvasir::Register
             }
         };
         template <typename... A, typename... B>
+        struct Finder<kvasir::mpl::list<brigand::list<A...>, brigand::list<B...>>>
+        {
+            template <typename... T>
+            DEBUG_OPTIMIZE unsigned operator()(A..., unsigned a, B..., unsigned b, T...)
+            {
+                return a | b;
+            }
+        };
+        template <typename... A, typename... B>
         struct Finder<brigand::list<brigand::list<A...>, brigand::list<B...>>>
         {
             template <typename... T>
             DEBUG_OPTIMIZE unsigned operator()(A..., unsigned a, B..., unsigned b, T...)
             {
                 return a | b;
+            }
+        };
+        template <typename... A, typename... B, typename... Rest>
+        struct Finder<kvasir::mpl::list<brigand::list<A...>, brigand::list<B...>, Rest...>>
+        {
+            template <typename... T>
+            DEBUG_OPTIMIZE unsigned operator()(A..., unsigned a, B..., unsigned b, T... t)
+            {
+                auto r = Finder<kvasir::mpl::list<Rest...>>{};
+                return a | b | r(t...);
             }
         };
         template <typename... A, typename... B, typename... Rest>
@@ -375,7 +411,7 @@ namespace Kvasir::Register
         struct Apply;
         template <typename... TActions, typename... TInputIndexes, typename... TRetAddresses,
                   typename TRetLocations>
-        struct Apply<brigand::list<TActions...>, brigand::list<TInputIndexes...>,
+        struct Apply<kvasir::mpl::list<TActions...>, kvasir::mpl::list<TInputIndexes...>,
                      FieldTuple<brigand::list<TRetAddresses...>, TRetLocations>>
         {
             using ReturnType = FieldTuple<brigand::list<TRetAddresses...>, TRetLocations>;
@@ -413,7 +449,7 @@ namespace Kvasir::Register
         template <typename TActionList, typename TInputIndexList>
         struct NoReadApply;
         template <typename... TActions, typename... TInputIndexes>
-        struct NoReadApply<brigand::list<TActions...>, brigand::list<TInputIndexes...>>
+        struct NoReadApply<kvasir::mpl::list<TActions...>, kvasir::mpl::list<TInputIndexes...>>
         {
             template <typename... T>
             DEBUG_OPTIMIZE void operator()(T... args)
@@ -478,11 +514,8 @@ namespace Kvasir::Register
         using Steps = brigand::split<FlattenedActions, SequencePoint>;
         using Merged = Detail::MergeActionStepsT<Steps>;
         using Actions = brigand::flatten<Merged>;
-        using Functors = brigand::transform<Actions, brigand::quote<Detail::GetAction>>;
-        using Inputs =
-            brigand::transform<Actions, brigand::quote<Detail::GetInputs>>; // list of lists of lits
-                                                                            // of unsigned
-                                                                            // seperators
+        using Functors = kvasir::mpl::eager::transform<Actions, Detail::GetAction>;
+        using Inputs = kvasir::mpl::eager::transform<Actions, Detail::GetInputs>;
         Detail::Apply<Functors, Inputs, Detail::GetReturnType<Args...>> a{};
         return a(Detail::argToUnsigned(args)...);
     }
@@ -501,15 +534,15 @@ namespace Kvasir::Register
         using Steps = brigand::split<FlattenedActions, SequencePoint>;
         using Merged = Detail::MergeActionStepsT<Steps>;
         using Actions = brigand::flatten<Merged>;
-        using Functors = brigand::transform<Actions, brigand::quote<Detail::GetAction>>;
-        using Inputs = brigand::transform<Actions, brigand::quote<Detail::GetInputs>>;
+        using Functors = kvasir::mpl::eager::transform<Actions, Detail::GetAction>;
+        using Inputs = kvasir::mpl::eager::transform<Actions, Detail::GetInputs>;
         Detail::NoReadApply<Functors, Inputs> a{};
         a(Detail::argToUnsigned(args)...);
     }
 
     // if apply does not contain reads or runtime writes we can speed things up
     template <typename... Args>
-    DEBUG_OPTIMIZE typename std::enable_if<Detail::AllCompileTime<Args...>::value>::type
+    DEBUG_OPTIMIZE typename std::enable_if_t<Detail::AllCompileTimeV<Args...>>
     apply(Args...)
     {
         static_assert(Detail::ArgsToApplyArePlausible<Args...>::value,
@@ -520,7 +553,6 @@ namespace Kvasir::Register
         using Steps = brigand::split<FlattenedActions, SequencePoint>;
         using Merged = Detail::MergeActionStepsT<Steps>;
         using Actions = kvasir::mpl::eager::flatten<Merged>;
-        // using Functors = brigand::transform<Actions, brigand::quote<Detail::GetAction>>;
         Detail::noReadNoRuntimeWriteApply(static_cast<Actions *>(nullptr));
     }
 

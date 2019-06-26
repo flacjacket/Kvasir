@@ -18,10 +18,15 @@
 #pragma once
 #include "Types.hpp"
 
-namespace Kvasir{
-namespace Register{
-    constexpr unsigned maskFromRange(unsigned high, unsigned low){
-        return (0xFFFFFFFFULL >> (31U-(high-low)))<<low;
+#include "kvasir/mpl/mpl.hpp"
+
+namespace Kvasir
+{
+namespace Register
+{
+    constexpr unsigned maskFromRange(int high, int low)
+    {
+        return (0xFFFFFFFFULL >> (31 - (high - low))) << low;
     }
     template<typename... Is>
     constexpr unsigned maskFromRange(unsigned high, unsigned low, Is...args){
@@ -172,19 +177,19 @@ namespace Register{
         {
         };
 
-        // predicate returns true if action is a read
+        // predicate returns true if action is a runtime determined write
         template <typename T>
-        struct IsRuntimeWritePred : std::false_type
+        struct IsRuntimeWritePred : kvasir::mpl::false_
         {
         };
         template <typename A>
-        struct IsRuntimeWritePred<Register::Action<A, WriteAction>> : std::true_type
+        struct IsRuntimeWritePred<Register::Action<A, WriteAction>> : kvasir::mpl::true_
         {
         };
 
         template <typename T>
         struct IsNotRuntimeWritePred
-            : std::integral_constant<bool, (!IsRuntimeWritePred<T>::type::value)>
+            : kvasir::mpl::bool_<!IsRuntimeWritePred<T>::value>
         {
         };
 
