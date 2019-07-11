@@ -8,10 +8,12 @@ doc/html
 Demos/Blinky/.settings/*
 Demos/KvasirUnitTest/.settings/*
 build/*
+*.swp
 *.pyproj
 *.suo
 *.sln
 *.pyc
+.mypy_cache
 CMakeLists.txt.user
 CMakeLists.txt.autosave
 
