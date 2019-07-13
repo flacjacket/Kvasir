@@ -1,0 +1,7 @@
+---
+Checks:          '*,-fuchsia-*'
+WarningsAsErrors: '*'
+HeaderFilterRegex: '^*'
+FormatStyle:     none
+...
+
