@@ -17,12 +17,14 @@ namespace detail
     {
         static TRegType read()
         {
+            // NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)
             volatile TRegType & reg = *reinterpret_cast<volatile TRegType *>(A);
             return reg;
         }
 
         static void write(TRegType i)
         {
+            // NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)
             volatile TRegType & reg = *reinterpret_cast<volatile TRegType *>(A);
             reg = i;
         }
@@ -38,8 +40,9 @@ namespace detail
             constexpr auto bits_to_set = ~WriteMask & TAddress::write_one_ignored;
             constexpr auto bits_fixed = bits_to_clear | bits_to_set;
 
+            constexpr uint32_t full_mask = 0xffffffffU;
             decltype(accessor::read()) i = 0;
-            if (bits_fixed != 0xffffffff)
+            if (bits_fixed != full_mask)
             {
                 i = accessor::read();
                 i &= ~bits_to_clear;

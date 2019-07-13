@@ -5,6 +5,7 @@
 #include "kvasir/mpl/types/integral_constant.hpp"
 
 #include <cstdint>
+#include <type_traits>
 
 namespace kvasir::sfr
 {
@@ -14,10 +15,10 @@ namespace detail
     constexpr int position_of_first_set_bit(uint32_t in)
     {
         int pos = 0;
-        while ((in & 1) == 0)
+        while ((in & 1U) == 0)
         {
             ++pos;
-            in >>= 1;
+            in >>= 1U;
         }
 
         return pos;

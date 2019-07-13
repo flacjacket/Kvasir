@@ -89,7 +89,7 @@ template <typename TAddress, typename TActionType>
 struct action : TActionType
 {
     template <typename... Ts>
-    constexpr action(Ts... args) : TActionType{args...}
+    constexpr explicit action(Ts... args) : TActionType{args...}
     {
     }
 };
