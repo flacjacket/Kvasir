@@ -40,9 +40,8 @@ namespace detail
             constexpr auto bits_to_set = ~WriteMask & TAddress::write_one_ignored;
             constexpr auto bits_fixed = bits_to_clear | bits_to_set;
 
-            constexpr uint32_t full_mask = 0xffffffffU;
             decltype(accessor::read()) i = 0;
-            if (bits_fixed != full_mask)
+            if (bits_fixed != 0xffffffffU)
             {
                 i = accessor::read();
                 i &= ~bits_to_clear;

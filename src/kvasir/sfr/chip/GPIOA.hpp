@@ -39,7 +39,7 @@ namespace kvasir {
         constexpr sfr::field_location<addr, sfr::mask_from_range(3,2), sfr::read_write_access, unsigned> moder1{};
         ///Port x configuration bits (y =              0..15)
         constexpr sfr::field_location<addr, sfr::mask_from_range(1,0), sfr::read_write_access, unsigned> moder0{};
-    }
+    } // namespace gpioa_moder
 
     namespace gpioa_otyper{    ///<GPIO port output type register
         using addr = sfr::address<0x40020004, 0xffff0000, 0x00000000, unsigned>;
@@ -75,5 +75,5 @@ namespace kvasir {
         constexpr sfr::field_location<addr, sfr::mask_from_range(1,1), sfr::read_write_access, unsigned> ot1{};
         ///Port x configuration bits (y =              0..15)
         constexpr sfr::field_location<addr, sfr::mask_from_range(0,0), sfr::read_write_access, unsigned> ot0{};
-    }
-}
+    } // namespace gpioa_otyper
+} // namespace kvasir

@@ -12,12 +12,9 @@ set(COMPILE_OPTIONS
     -Wsign-conversion
     -Werror)
 
-set(TEST_FILES
-    main.cpp)
-
 set(MY_INCS ${GTEST_INCLUDE_DIRS} CACHE STRING "gtest includes")
 
-add_executable(kvasir_test ${TEST_FILES})
+add_executable(kvasir_test register_tests.cpp)
 target_link_libraries(kvasir_test PRIVATE kvasir_sfr)
 target_link_libraries(kvasir_test PRIVATE GTest::GTest GTest::Main)
 target_compile_options(kvasir_test PRIVATE ${COMPILE_OPTIONS})

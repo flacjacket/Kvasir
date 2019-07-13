@@ -1,5 +1,9 @@
 #pragma once
 
+#include <kvasir/sfr/types.hpp>
+
+#include <cstdint>
+#include <ostream>
 #include <vector>
 
 namespace kvasir::sfr
@@ -29,9 +33,26 @@ struct action_recorder<action<TAddress, write_literal_action<Mask, Value>>>
 {
     uint32_t operator()(uint32_t = 0)
     {
-        recorded_actions.push_back(recorded_action{TAddress::value, Value, Mask, recorded_action::action_type::write_literal});
+        recorded_actions.push_back(recorded_action{TAddress::value, Value, Mask,
+                                                   recorded_action::action_type::write_literal});
         return 0;
     }
 };
 
-} // kvasir::sfr
+inline bool operator==(const recorded_action & lhs, const recorded_action & rhs)
+{
+    return (lhs.address_ == rhs.address_) && (lhs.value_ == rhs.value_) &&
+           (lhs.mask_ == rhs.mask_) && (lhs.action_type_ == rhs.action_type_);
+}
+
+inline std::ostream & operator<<(std::ostream & stream, const kvasir::sfr::recorded_action & action)
+{
+    stream << "recorded_action(";
+    stream << action.address_ << ", ";
+    stream << action.value_ << ", ";
+    stream << action.mask_ << ", ";
+    stream << static_cast<uint32_t>(action.action_type_) << ")";
+    return stream;
+}
+
+} // namespace kvasir::sfr

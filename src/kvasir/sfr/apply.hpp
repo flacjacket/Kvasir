@@ -201,7 +201,10 @@ namespace detail
         return arg.value_;
     }
     template <typename... Ts>
-    inline uint32_t arg_to_unsigned(Ts...) { return 0; }
+    inline uint32_t arg_to_unsigned(Ts...)
+    {
+        return 0;
+    }
 
 } // namespace detail
 

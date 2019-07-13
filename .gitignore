@@ -16,4 +16,4 @@ build/*
 .mypy_cache
 CMakeLists.txt.user
 CMakeLists.txt.autosave
-
+compile_commands.json
