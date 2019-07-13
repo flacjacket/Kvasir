@@ -1,18 +1,24 @@
 find_package(GTest REQUIRED)
-include_directories(${GTEST_INCLUDE_DIRS})
 
 set(COMPILE_OPTIONS
     -Wall
     -Wextra
-    -Werror
-    -pedantic
-    -Wold-style-cast)
+    -Wpedantic
+    -Wshadow
+    -Wold-style-cast
+    -Wcast-align
+    -Wunused
+    # -Wconversion
+    -Wsign-conversion
+    -Werror)
 
 set(TEST_FILES
     main.cpp)
 
+set(MY_INCS ${GTEST_INCLUDE_DIRS} CACHE STRING "gtest includes")
+
 add_executable(kvasir_test ${TEST_FILES})
 target_link_libraries(kvasir_test PRIVATE kvasir_sfr)
-target_link_libraries(kvasir_test PRIVATE ${GTEST_BOTH_LIBRARIES})
+target_link_libraries(kvasir_test PRIVATE GTest::GTest GTest::Main)
 target_compile_options(kvasir_test PRIVATE ${COMPILE_OPTIONS})
 add_test(kvasir_test kvasir_test)

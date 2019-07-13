@@ -184,7 +184,7 @@ namespace detail
         void operator()(Ts... args)
         {
             (execute_seam<TAction>{}(finder<TIndex>{}(args...)), ...);
-        };
+        }
     };
 
     template <typename T>
