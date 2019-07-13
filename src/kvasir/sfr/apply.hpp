@@ -183,7 +183,7 @@ namespace detail
         template <typename... Ts>
         void operator()(Ts... args)
         {
-            (execute_seam<TAction>{}(finder<TIndex>{}(args...)), ...);
+            (execute_seam<TAction, user_tag>{}(finder<TIndex>{}(args...)), ...);
         }
     };
 
@@ -192,7 +192,7 @@ namespace detail
     template <typename... TAction>
     struct all_compile_time_writes_apply<mpl::list<TAction...>>
     {
-        void operator()() { (execute_seam<TAction>{}(), ...); }
+        void operator()() { (execute_seam<TAction, user_tag>{}(), ...); }
     };
 
     template <typename T, typename = decltype(T::value_)>

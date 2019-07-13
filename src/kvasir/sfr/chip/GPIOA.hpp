@@ -1,7 +1,6 @@
 #pragma once
 
-#include <kvasir/sfr/types.hpp>
-#include <kvasir/sfr/utility.hpp>
+#include <kvasir/sfr/sfr.hpp>
 
 //General-purpose I/Os
 namespace kvasir {

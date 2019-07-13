@@ -67,7 +67,11 @@ namespace detail
 
 } // namespace detail
 
-template <typename T>
+struct user_tag
+{
+};
+
+template <typename T, typename U>
 struct execute_seam : detail::register_exec<T>
 {
 };

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "kvasir/sfr/types.hpp"
+
 #include <type_traits>
 
 namespace kvasir::sfr
