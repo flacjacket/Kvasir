@@ -26,10 +26,12 @@ namespace detail
     template <typename TopLevel, typename... Ts, typename TIndex>
     struct make_indexed_action_impl<TopLevel, mpl::list<Ts...>, TIndex>
     {
-        using type = mpl::list<typename make_indexed_action_impl<std::false_type, Ts, TIndex>::type...>;
+        using type =
+            mpl::list<typename make_indexed_action_impl<std::false_type, Ts, TIndex>::type...>;
     };
     template <typename TopLevel, typename TAddress, uint32_t Mask, uint32_t Data, typename TIndex>
-    struct make_indexed_action_impl<TopLevel, action<TAddress, write_literal_action<Mask, Data>>, TIndex>
+    struct make_indexed_action_impl<TopLevel, action<TAddress, write_literal_action<Mask, Data>>,
+                                    TIndex>
     {
         using TAction = action<TAddress, write_literal_action<Mask, Data>>;
         using type = indexed_action<TAction>;
@@ -48,7 +50,8 @@ namespace detail
         using type = sequence_point_t;
     };
     template <typename TAction, typename TIndex>
-    using make_indexed_action = typename make_indexed_action_impl<std::true_type, TAction, TIndex>::type;
+    using make_indexed_action =
+        typename make_indexed_action_impl<std::true_type, TAction, TIndex>::type;
 
     // each of the actions is sorted by the corresponding register address,
     // which serves as a precursor to merging and allows for more efficient
