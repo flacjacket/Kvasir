@@ -3,6 +3,7 @@
 #include <kvasir/sfr/types.hpp>
 
 #include <cstdint>
+#include <iomanip>
 #include <ostream>
 #include <vector>
 
@@ -29,11 +30,21 @@ inline std::vector<recorded_action> recorded_actions;
 template <typename T>
 struct action_recorder;
 template <typename TAddress, uint32_t Mask, uint32_t Value>
+struct action_recorder<action<TAddress, write_action<Mask, Value>>>
+{
+    uint32_t operator()(uint32_t in = 0)
+    {
+        recorded_actions.push_back(recorded_action{TAddress::value, in | Value, Mask,
+                                                   recorded_action::action_type::write});
+        return 0;
+    }
+};
+template <typename TAddress, uint32_t Mask, uint32_t Value>
 struct action_recorder<action<TAddress, write_literal_action<Mask, Value>>>
 {
-    uint32_t operator()(uint32_t = 0)
+    uint32_t operator()(uint32_t in = 0)
     {
-        recorded_actions.push_back(recorded_action{TAddress::value, Value, Mask,
+        recorded_actions.push_back(recorded_action{TAddress::value, in | Value, Mask,
                                                    recorded_action::action_type::write_literal});
         return 0;
     }
@@ -48,9 +59,12 @@ inline bool operator==(const recorded_action & lhs, const recorded_action & rhs)
 inline std::ostream & operator<<(std::ostream & stream, const kvasir::sfr::recorded_action & action)
 {
     stream << "recorded_action(";
-    stream << action.address_ << ", ";
-    stream << action.value_ << ", ";
-    stream << action.mask_ << ", ";
+    std::ios_base::fmtflags flags(stream.flags());
+    stream << std::showbase << std::internal << std::setfill('0') << std::hex;
+    stream << std::setw(10) << action.address_ << ", ";
+    stream << std::setw(10) << action.value_ << ", ";
+    stream << std::setw(10) << action.mask_ << ", ";
+    stream.flags(flags);
     stream << static_cast<uint32_t>(action.action_type_) << ")";
     return stream;
 }

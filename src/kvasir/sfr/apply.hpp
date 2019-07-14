@@ -85,6 +85,18 @@ namespace detail
                   TIndex1..., TIndex2...>>>
     {
     };
+    // merge indexed, run-time
+    template <typename TAddress, uint32_t Mask1, uint32_t Value1, typename... TIndex1,
+              uint32_t Mask2, uint32_t Value2, typename... TIndex2, typename... Ts, typename... Us>
+    struct merge_actions_impl<
+        mpl::list<indexed_action<action<TAddress, write_action<Mask1, Value1>>, TIndex1...>, Ts...>,
+        mpl::list<indexed_action<action<TAddress, write_action<Mask2, Value2>>, TIndex2...>, Us...>>
+        : merge_actions_impl<mpl::list<Ts...>,
+                             mpl::list<indexed_action<
+                                 action<TAddress, write_action<Mask1 | Mask2, Value1 | Value2>>,
+                                 TIndex1..., TIndex2...>>>
+    {
+    };
     // non-mergable
     template <typename TNext, typename TLast, typename... Ts, typename... Us>
     struct merge_actions_impl<mpl::list<TNext, Ts...>, mpl::list<TLast, Us...>>
@@ -125,10 +137,13 @@ namespace detail
     template <typename A, typename... T>
     struct build_inputs_impl<indexed_action<A, T...>>
     {
+        using sorted_indices = mpl::eager::sort<mpl::list<T...>>;
         // get number of elements between each index
-        using index0 = mpl::list<T...>;
-        using index1 = mpl::eager::take<mpl::list<mpl::int_<-1>, T...>, sizeof...(T)>;
-        using index_delta = mpl::eager::zip_with<index_difference, index0, index1>;
+        using index0 = mpl::eager::drop<sorted_indices, 1>;
+        using index1 = mpl::eager::take<sorted_indices, sizeof...(T) - 1>;
+        using index_delta =
+            mpl::eager::push_front<mpl::eager::at<sorted_indices, 0>,
+                                   mpl::eager::zip_with<index_difference, index0, index1>>;
         // create lists of `unsigned` elements with size given by delta
         using type = mpl::eager::transform<index_delta, build_index_sequence>;
     };

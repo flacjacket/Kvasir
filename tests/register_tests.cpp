@@ -1,6 +1,7 @@
 #include "kvasir/sfr/chip/GPIOA.hpp"
 #include "kvasir/sfr/seam.hpp"
 
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace kvasir::sfr
@@ -24,28 +25,94 @@ protected:
 
     void check_expected_actions(const std::vector<recorded_action> & expected_actions)
     {
-        ASSERT_EQ(expected_actions.size(), kvasir::sfr::recorded_actions.size());
-
-        const auto action_count = expected_actions.size();
-
-        for (size_t i = 0; i < action_count; ++i)
-        {
-            EXPECT_EQ(expected_actions.at(i), kvasir::sfr::recorded_actions.at(i));
-        }
+        EXPECT_THAT(kvasir::sfr::recorded_actions, ::testing::ContainerEq(expected_actions));
 
         kvasir::sfr::recorded_actions.clear();
     }
+
+    static constexpr auto const1 = kvasir::mpl::integral_constant<uint32_t, 1>{};
+    static constexpr auto const2 = kvasir::mpl::integral_constant<uint32_t, 2>{};
 };
 
 // NOLINTNEXTLINE
-TEST_F(sfr_action_test, write_single_constant_value)
+TEST_F(sfr_action_test, write_constant_single)
 {
-    constexpr auto v = kvasir::mpl::integral_constant<uint32_t, 2>{};
-    constexpr auto w = write(kvasir::gpioa_moder::moder13, v);
+    constexpr auto w = write(kvasir::gpioa_moder::moder13, const2);
     apply(w);
 
     const std::vector<recorded_action> expected_actions = {
-        {0x40020000, 0x8000000, 0xc000000, recorded_action::action_type::write_literal},
+        {0x40020000U, 0x08000000U, 0x0c000000U, recorded_action::action_type::write_literal},
+    };
+
+    check_expected_actions(expected_actions);
+}
+
+// NOLINTNEXTLINE
+TEST_F(sfr_action_test, write_runtime_single)
+{
+    constexpr auto w = write(kvasir::gpioa_moder::moder13, 2);
+    apply(w);
+
+    const std::vector<recorded_action> expected_actions = {
+        {0x40020000U, 0x08000000U, 0x0c000000U, recorded_action::action_type::write},
+    };
+
+    check_expected_actions(expected_actions);
+}
+
+// NOLINTNEXTLINE
+TEST_F(sfr_action_test, write_constant_merge)
+{
+    constexpr auto w1 = write(kvasir::gpioa_moder::moder13, const1);
+    constexpr auto w2 = write(kvasir::gpioa_moder::moder4, const2);
+
+    const std::vector<recorded_action> expected_actions = {
+        {0x40020000U, 0x04000200U, 0x0c000300U, recorded_action::action_type::write_literal},
+    };
+
+    apply(w1, w2);
+    check_expected_actions(expected_actions);
+}
+
+// NOLINTNEXTLINE
+TEST_F(sfr_action_test, write_runtime_merge)
+{
+    constexpr auto w1 = write(kvasir::gpioa_moder::moder13, 1);
+    constexpr auto w2 = write(kvasir::gpioa_moder::moder4, 2);
+
+    const std::vector<recorded_action> expected_actions = {
+        {0x40020000U, 0x04000200U, 0x0c000300U, recorded_action::action_type::write},
+    };
+
+    apply(w1, w2);
+    check_expected_actions(expected_actions);
+}
+
+// NOLINTNEXTLINE
+TEST_F(sfr_action_test, write_constant_no_merge_different_address)
+{
+    constexpr auto w1 = write(kvasir::gpioa_moder::moder13, const2);
+    constexpr auto w2 = write(kvasir::gpioa_otyper::ot2, const1);
+    apply(w1, w2);
+
+    const std::vector<recorded_action> expected_actions = {
+        {0x40020000U, 0x08000000U, 0x0c000000U, recorded_action::action_type::write_literal},
+        {0x40020004U, 0x00000004U, 0x00000004U, recorded_action::action_type::write_literal},
+    };
+
+    check_expected_actions(expected_actions);
+}
+
+// NOLINTNEXTLINE
+TEST_F(sfr_action_test, write_runtime_no_merge_different_address)
+{
+    constexpr auto w1 = write(kvasir::gpioa_moder::moder13, 2);
+    constexpr auto w2 = write(kvasir::gpioa_otyper::ot2, 1);
+    apply(w1, w2);
+
+    const std::vector<recorded_action> expected_actions = {
+        {0x40020000U, 0x08000000U, 0x0c000000U, recorded_action::action_type::write},
+        {0x40020004U, 0x00000004U, 0x00000004U, recorded_action::action_type::write},
     };
 
     check_expected_actions(expected_actions);
