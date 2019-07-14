@@ -72,12 +72,12 @@ protected:
 TEST_F(sfr_action_test, write_constant)
 {
     constexpr auto w = write(kvasir::register1::field1, constant<2>{});
-    apply(w);
 
     const std::vector<recorded_action> expected_actions = {
         {0x40020000U, 0x80000000U, 0xc0000000U, recorded_action::action_type::write_literal},
     };
 
+    apply(w);
     check_expected_actions(expected_actions);
 }
 
@@ -85,12 +85,12 @@ TEST_F(sfr_action_test, write_constant)
 TEST_F(sfr_action_test, write_runtime)
 {
     constexpr auto w = write(kvasir::register1::field1, 2);
-    apply(w);
 
     const std::vector<recorded_action> expected_actions = {
         {0x40020000U, 0x80000000U, 0xc0000000U, recorded_action::action_type::write},
     };
 
+    apply(w);
     check_expected_actions(expected_actions);
 }
 
@@ -147,8 +147,7 @@ TEST_F(sfr_action_test, write_runtime_merge_with_sort)
         {0x40020004U, 0x00000800U, 0x0000f800U, recorded_action::action_type::write},
     };
 
-    apply(w1, w2, w3);
-    check_expected_actions(expected_actions);
+    check_permutations(expected_actions, w1, w2, w3);
 }
 
 // NOLINTNEXTLINE
@@ -164,8 +163,7 @@ TEST_F(sfr_action_test, write_mixed_merge_with_sort)
             {0x40020004U, 0x00000800U, 0x0000f800U, recorded_action::action_type::write_literal},
         };
 
-        apply(w1, w2, w3);
-        check_expected_actions(expected_actions);
+        check_permutations(expected_actions, w1, w2, w3);
     }
     {
         constexpr auto w1 = write(kvasir::register1::field1, constant<1>{});
@@ -177,8 +175,7 @@ TEST_F(sfr_action_test, write_mixed_merge_with_sort)
             {0x40020004U, 0x00000800U, 0x0000f800U, recorded_action::action_type::write_literal},
         };
 
-        apply(w1, w2, w3);
-        check_expected_actions(expected_actions);
+        check_permutations(expected_actions, w1, w2, w3);
     }
     {
         constexpr auto w1 = write(kvasir::register1::field1, constant<1>{});
@@ -190,8 +187,7 @@ TEST_F(sfr_action_test, write_mixed_merge_with_sort)
             {0x40020004U, 0x00000800U, 0x0000f800U, recorded_action::action_type::write},
         };
 
-        apply(w1, w2, w3);
-        check_expected_actions(expected_actions);
+        check_permutations(expected_actions, w1, w2, w3);
     }
     {
         constexpr auto w1 = write(kvasir::register1::field1, constant<1>{});
@@ -203,8 +199,7 @@ TEST_F(sfr_action_test, write_mixed_merge_with_sort)
             {0x40020004U, 0x00000800U, 0x0000f800U, recorded_action::action_type::write},
         };
 
-        apply(w1, w2, w3);
-        check_expected_actions(expected_actions);
+        check_permutations(expected_actions, w1, w2, w3);
     }
     {
         constexpr auto w1 = write(kvasir::register1::field1, 1);
@@ -216,8 +211,7 @@ TEST_F(sfr_action_test, write_mixed_merge_with_sort)
             {0x40020004U, 0x00000800U, 0x0000f800U, recorded_action::action_type::write},
         };
 
-        apply(w1, w2, w3);
-        check_expected_actions(expected_actions);
+        check_permutations(expected_actions, w1, w2, w3);
     }
     {
         constexpr auto w1 = write(kvasir::register1::field1, 1);
@@ -229,8 +223,7 @@ TEST_F(sfr_action_test, write_mixed_merge_with_sort)
             {0x40020004U, 0x00000800U, 0x0000f800U, recorded_action::action_type::write_literal},
         };
 
-        apply(w1, w2, w3);
-        check_expected_actions(expected_actions);
+        check_permutations(expected_actions, w1, w2, w3);
     }
 }
 
@@ -333,14 +326,13 @@ TEST_F(sfr_action_test, write_constant_no_merge_different_address)
 {
     constexpr auto w1 = write(kvasir::register1::field1, constant<2>{});
     constexpr auto w2 = write(kvasir::register2::field1, constant<1>{});
-    apply(w1, w2);
 
     const std::vector<recorded_action> expected_actions = {
         {0x40020000U, 0x80000000U, 0xc0000000U, recorded_action::action_type::write_literal},
         {0x40020004U, 0x00000800U, 0x0000f800U, recorded_action::action_type::write_literal},
     };
 
-    check_expected_actions(expected_actions);
+    check_permutations(expected_actions, w1, w2);
 }
 
 // NOLINTNEXTLINE
@@ -348,13 +340,13 @@ TEST_F(sfr_action_test, write_constant_no_merge_sequenced)
 {
     constexpr auto w1 = write(kvasir::register1::field1, constant<1>{});
     constexpr auto w2 = write(kvasir::register1::field3, constant<2>{});
-    apply(w1, kvasir::sfr::sequence_point, w2);
 
     const std::vector<recorded_action> expected_actions = {
         {0x40020000U, 0x40000000U, 0xc0000000U, recorded_action::action_type::write_literal},
         {0x40020000U, 0x00000008U, 0x0000000cU, recorded_action::action_type::write_literal},
     };
 
+    apply(w1, kvasir::sfr::sequence_point, w2);
     check_expected_actions(expected_actions);
 }
 
@@ -363,12 +355,12 @@ TEST_F(sfr_action_test, write_constant_merge_unsequenced)
 {
     constexpr auto w1 = write(kvasir::register1::field1, constant<1>{});
     constexpr auto w2 = write(kvasir::register1::field3, constant<2>{});
-    apply(kvasir::sfr::sequence_point, w1, w2, kvasir::sfr::sequence_point);
 
     const std::vector<recorded_action> expected_actions = {
         {0x40020000U, 0x40000008U, 0xc000000cU, recorded_action::action_type::write_literal},
     };
 
+    apply(kvasir::sfr::sequence_point, w1, w2, kvasir::sfr::sequence_point);
     check_expected_actions(expected_actions);
 }
 
@@ -377,14 +369,13 @@ TEST_F(sfr_action_test, write_runtime_no_merge_different_address)
 {
     constexpr auto w1 = write(kvasir::register1::field1, 2);
     constexpr auto w2 = write(kvasir::register2::field1, 1);
-    apply(w1, w2);
 
     const std::vector<recorded_action> expected_actions = {
         {0x40020000U, 0x80000000U, 0xc0000000U, recorded_action::action_type::write},
         {0x40020004U, 0x00000800U, 0x0000f800U, recorded_action::action_type::write},
     };
 
-    check_expected_actions(expected_actions);
+    check_permutations(expected_actions, w1, w2);
 }
 
 // NOLINTNEXTLINE
@@ -392,13 +383,13 @@ TEST_F(sfr_action_test, write_runtime_no_merge_sequenced)
 {
     constexpr auto w1 = write(kvasir::register1::field1, 1);
     constexpr auto w2 = write(kvasir::register1::field3, 2);
-    apply(w1, kvasir::sfr::sequence_point, w2);
 
     const std::vector<recorded_action> expected_actions = {
         {0x40020000U, 0x40000000U, 0xc0000000U, recorded_action::action_type::write},
         {0x40020000U, 0x00000008U, 0x0000000cU, recorded_action::action_type::write},
     };
 
+    apply(w1, kvasir::sfr::sequence_point, w2);
     check_expected_actions(expected_actions);
 }
 
@@ -407,11 +398,11 @@ TEST_F(sfr_action_test, write_runtime_merge_unsequenced)
 {
     constexpr auto w1 = write(kvasir::register1::field1, 1);
     constexpr auto w2 = write(kvasir::register1::field3, 2);
-    apply(kvasir::sfr::sequence_point, w1, w2, kvasir::sfr::sequence_point);
 
     const std::vector<recorded_action> expected_actions = {
         {0x40020000U, 0x40000008U, 0xc000000cU, recorded_action::action_type::write},
     };
 
+    apply(kvasir::sfr::sequence_point, w1, w2, kvasir::sfr::sequence_point);
     check_expected_actions(expected_actions);
 }
