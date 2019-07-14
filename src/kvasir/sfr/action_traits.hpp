@@ -2,6 +2,8 @@
 
 #include "kvasir/sfr/types.hpp"
 
+#include "kvasir/mpl/types/list.hpp"
+
 #include <type_traits>
 
 namespace kvasir::sfr
@@ -33,6 +35,11 @@ namespace detail
     template <>
     struct is_compile_time_action<sequence_point_t> : std::true_type
     {
+    };
+    template <typename... Ts>
+    struct is_compile_time_action<mpl::list<Ts...>>
+    {
+        static constexpr bool value = (is_compile_time_action<Ts>::value && ...);
     };
     template <typename T>
     inline constexpr bool is_compile_time_action_v = is_compile_time_action<T>::value;

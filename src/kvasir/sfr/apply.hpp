@@ -21,27 +21,34 @@ namespace detail
         using action = TAction;
     };
 
-    template <typename TAction, typename TIndex>
+    template <typename TopLevel, typename TAction, typename TIndex>
     struct make_indexed_action_impl;
-    template <typename TAddress, typename TActionType, typename TIndex>
-    struct make_indexed_action_impl<action<TAddress, TActionType>, TIndex>
+    template <typename TopLevel, typename... Ts, typename TIndex>
+    struct make_indexed_action_impl<TopLevel, mpl::list<Ts...>, TIndex>
     {
-        using TAction = action<TAddress, TActionType>;
+        using type = mpl::list<typename make_indexed_action_impl<std::false_type, Ts, TIndex>::type...>;
+    };
+    template <typename TopLevel, typename TAddress, uint32_t Mask, uint32_t Data, typename TIndex>
+    struct make_indexed_action_impl<TopLevel, action<TAddress, write_literal_action<Mask, Data>>, TIndex>
+    {
+        using TAction = action<TAddress, write_literal_action<Mask, Data>>;
         using type = indexed_action<TAction>;
     };
-    template <typename TAddress, uint32_t Mask, uint32_t Data, typename TIndex>
-    struct make_indexed_action_impl<action<TAddress, write_action<Mask, Data>>, TIndex>
+    template <typename TopLevel, typename TAddress, uint32_t Mask, uint32_t Data, typename TIndex>
+    struct make_indexed_action_impl<TopLevel, action<TAddress, write_action<Mask, Data>>, TIndex>
     {
+        static_assert(TopLevel::value, "runtime writes only allowed at top level");
         using TAction = action<TAddress, write_action<Mask, Data>>;
         using type = indexed_action<TAction, TIndex>;
     };
-    template <typename TIndex>
-    struct make_indexed_action_impl<sequence_point_t, TIndex>
+    template <typename TopLevel, typename TIndex>
+    struct make_indexed_action_impl<TopLevel, sequence_point_t, TIndex>
     {
+        static_assert(TopLevel::value, "sequence points only allowed at top level");
         using type = sequence_point_t;
     };
     template <typename TAction, typename TIndex>
-    using make_indexed_action = typename make_indexed_action_impl<TAction, TIndex>::type;
+    using make_indexed_action = typename make_indexed_action_impl<std::true_type, TAction, TIndex>::type;
 
     // each of the actions is sorted by the corresponding register address,
     // which serves as a precursor to merging and allows for more efficient
@@ -302,8 +309,9 @@ apply(Arg... args)
     using indexed_actions =
         mpl::eager::zip_with<detail::make_indexed_action, actions,
                              mpl::eager::make_int_sequence<mpl::eager::size<actions>>>;
+    using flattened_actions = mpl::eager::flatten<indexed_actions>;
     // split the actions along the sequence points
-    using sequenced_actions = mpl::eager::split_if<indexed_actions, is_sequence_point>;
+    using sequenced_actions = mpl::eager::split_if<flattened_actions, is_sequence_point>;
     // perform the optimizations on each sequenced group and flatten into final list
     using optimized_actions = mpl::eager::transform<sequenced_actions, detail::optimize_actions>;
     using final_actions = mpl::eager::flatten<optimized_actions>;
@@ -319,7 +327,7 @@ apply(Arg... args)
 template <typename... Arg>
 std::enable_if_t<all_compile_time_actions_v<Arg...>> apply(Arg...)
 {
-    using actions = mpl::list<Arg...>;
+    using actions = mpl::eager::flatten<mpl::list<Arg...>>;
     // split the actions along the sequence points
     using sequenced_actions = mpl::eager::split_if<actions, is_sequence_point>;
     // perform the optimizations on each sequenced group and flatten into final list
