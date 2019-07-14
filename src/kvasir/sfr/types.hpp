@@ -94,6 +94,11 @@ struct action : TActionType
     }
 };
 
+struct sequence_point_t
+{
+};
+constexpr inline sequence_point_t sequence_point{};
+
 // the various action types
 
 template <uint32_t Mask, uint32_t Value>

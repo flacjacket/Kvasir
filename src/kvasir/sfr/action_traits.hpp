@@ -19,37 +19,45 @@ namespace detail
     {
     };
     template <typename T>
-    constexpr bool is_read_v = is_read<T>::value;
+    inline constexpr bool is_read_v = is_read<T>::value;
 
     template <typename T>
-    struct is_compile_time_write : std::false_type
+    struct is_compile_time_action : std::false_type
     {
     };
     template <typename TFieldLocation, uint32_t M, uint32_t V>
-    struct is_compile_time_write<action<TFieldLocation, write_literal_action<M, V>>>
+    struct is_compile_time_action<action<TFieldLocation, write_literal_action<M, V>>>
         : std::true_type
     {
     };
+    template <>
+    struct is_compile_time_action<sequence_point_t> : std::true_type
+    {
+    };
     template <typename T>
-    constexpr bool is_compile_time_write_v = is_compile_time_write<T>::value;
+    inline constexpr bool is_compile_time_action_v = is_compile_time_action<T>::value;
 
 } // namespace detail
 
-template <typename... Ts>
-struct all_compile_time_writes
+template <typename T>
+struct is_sequence_point : std::is_same<T, sequence_point_t>
 {
-    static constexpr bool value = (detail::is_compile_time_write_v<Ts> && ...);
 };
-template <typename... Ts>
-constexpr bool all_compile_time_writes_v = all_compile_time_writes<Ts...>::value;
 
 template <typename... Ts>
-struct all_no_read_with_runtime_writes
+struct all_compile_time_actions
 {
-    static constexpr bool value =
-        (!detail::is_read_v<Ts> && ...) && (!detail::is_compile_time_write_v<Ts> || ...);
+    static constexpr bool value = (detail::is_compile_time_action_v<Ts> && ...);
 };
 template <typename... Ts>
-constexpr bool all_no_read_with_runtime_writes_v = all_no_read_with_runtime_writes<Ts...>::value;
+inline constexpr bool all_compile_time_actions_v = all_compile_time_actions<Ts...>::value;
+
+template <typename... Ts>
+struct no_read_actions
+{
+    static constexpr bool value = (!detail::is_read_v<Ts> && ...);
+};
+template <typename... Ts>
+inline constexpr bool no_read_actions_v = no_read_actions<Ts...>::value;
 
 } // namespace kvasir::sfr

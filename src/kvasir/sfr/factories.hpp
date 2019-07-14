@@ -25,7 +25,8 @@ namespace detail
     }
 
     template <typename T>
-    constexpr bool is_integral_constant_v = mpl::eager::is_integral<T>::value;
+    inline constexpr bool is_integral_constant_v = mpl::eager::is_integral<T>::value;
+
 } // namespace detail
 
 // run-time write

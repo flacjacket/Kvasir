@@ -148,6 +148,18 @@ namespace detail
     template <typename T>
     using merge_actions = typename merge_actions_impl<T>::type;
 
+    // perform the full set of optimizations on a list of actions
+    template <typename TActions>
+    struct optimize_actions_impl
+    {
+        // sort and merge the actions
+        using sorted_actions = mpl::eager::sort<TActions, detail::address_less_than>;
+        using merged_actions = detail::merge_actions<sorted_actions>;
+        using type = merged_actions;
+    };
+    template <typename T>
+    using optimize_actions = typename optimize_actions_impl<T>::type;
+
     // once the actions have been optimized, we have to trace back the args to
     // the corresponding action. for each action, we want to create a list of
     // lists of args to ignore, that is, if an action has indices 2, 3, and 5,
@@ -276,8 +288,10 @@ namespace detail
 
 } // namespace detail
 
+// only writes are performed and some are runtime defined
 template <typename... Arg>
-std::enable_if_t<all_no_read_with_runtime_writes_v<Arg...>> apply(Arg... args)
+std::enable_if_t<no_read_actions_v<Arg...> && !all_compile_time_actions_v<Arg...>>
+apply(Arg... args)
 {
     using actions = mpl::list<Arg...>;
     using indexed_actions =
@@ -294,15 +308,19 @@ std::enable_if_t<all_no_read_with_runtime_writes_v<Arg...>> apply(Arg... args)
     applicator(detail::arg_to_unsigned(args)...);
 }
 
+// only compile time writes are performed
 template <typename... Arg>
-std::enable_if_t<all_compile_time_writes_v<Arg...>> apply(Arg...)
+std::enable_if_t<all_compile_time_actions_v<Arg...>> apply(Arg...)
 {
     using actions = mpl::list<Arg...>;
-    // sort and merge the actions
-    using sorted_actions = mpl::eager::sort<actions, detail::address_less_than>;
-    using merged_actions = detail::merge_actions<sorted_actions>;
+    // split the actions along the sequence points
+    using sequenced_actions = mpl::eager::split_if<actions, is_sequence_point>;
+    // perform the optimizations on each sequenced group
+    using optimized_actions = mpl::eager::transform<sequenced_actions, detail::optimize_actions>;
+    // flatten optimized actions out into single list
+    using final_actions = mpl::eager::flatten<optimized_actions>;
     // apply the actions
-    detail::all_compile_time_writes_apply<merged_actions>{}();
+    detail::all_compile_time_writes_apply<final_actions>{}();
 }
 
 } // namespace kvasir::sfr
