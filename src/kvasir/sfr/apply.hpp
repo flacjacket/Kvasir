@@ -71,18 +71,38 @@ namespace detail
     {
     };
     // merge indexed, compile-time
-    template <typename TAddress, uint32_t Mask1, uint32_t Value1, typename... TIndex1,
-              uint32_t Mask2, uint32_t Value2, typename... TIndex2, typename... Ts, typename... Us>
+    template <typename TAddress, uint32_t Mask1, uint32_t Value1, uint32_t Mask2, uint32_t Value2,
+              typename... Ts, typename... Us>
     struct merge_actions_impl<
-        mpl::list<indexed_action<action<TAddress, write_literal_action<Mask1, Value1>>, TIndex1...>,
-                  Ts...>,
-        mpl::list<indexed_action<action<TAddress, write_literal_action<Mask2, Value2>>, TIndex2...>,
-                  Us...>>
+        mpl::list<indexed_action<action<TAddress, write_literal_action<Mask1, Value1>>>, Ts...>,
+        mpl::list<indexed_action<action<TAddress, write_literal_action<Mask2, Value2>>>, Us...>>
+        : merge_actions_impl<mpl::list<Ts...>,
+                             mpl::list<indexed_action<action<
+                                 TAddress, write_literal_action<Mask1 | Mask2, Value1 | Value2>>>>>
+    {
+    };
+    // merge indexed, run-time/compile-time
+    template <typename TAddress, uint32_t Mask1, uint32_t Value1, typename... TIndex1,
+              uint32_t Mask2, uint32_t Value2, typename... Ts, typename... Us>
+    struct merge_actions_impl<
+        mpl::list<indexed_action<action<TAddress, write_action<Mask1, Value1>>, TIndex1...>, Ts...>,
+        mpl::list<indexed_action<action<TAddress, write_literal_action<Mask2, Value2>>>, Us...>>
         : merge_actions_impl<
               mpl::list<Ts...>,
               mpl::list<indexed_action<
-                  action<TAddress, write_literal_action<Mask1 | Mask2, Value1 | Value2>>,
-                  TIndex1..., TIndex2...>>>
+                  action<TAddress, write_action<Mask1 | Mask2, Value1 | Value2>>, TIndex1...>>>
+    {
+    };
+    // merge indexed, compile-time/run-time
+    template <typename TAddress, uint32_t Mask1, uint32_t Value1, uint32_t Mask2, uint32_t Value2,
+              typename... TIndex2, typename... Ts, typename... Us>
+    struct merge_actions_impl<
+        mpl::list<indexed_action<action<TAddress, write_literal_action<Mask1, Value1>>>, Ts...>,
+        mpl::list<indexed_action<action<TAddress, write_action<Mask2, Value2>>, TIndex2...>, Us...>>
+        : merge_actions_impl<
+              mpl::list<Ts...>,
+              mpl::list<indexed_action<
+                  action<TAddress, write_action<Mask1 | Mask2, Value1 | Value2>>, TIndex2...>>>
     {
     };
     // merge indexed, run-time
