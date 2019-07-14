@@ -1,8 +1,12 @@
 #include "test_chip.hpp"
 #include "write_fixture.hpp"
 
+struct write_runtime_test : sfr_action_test
+{
+};
+
 // NOLINTNEXTLINE
-TEST_F(sfr_action_test, write_runtime)
+TEST_F(write_runtime_test, write_runtime)
 {
     constexpr auto w = write(kvasir::register1::field1, 2);
 
@@ -15,7 +19,7 @@ TEST_F(sfr_action_test, write_runtime)
 }
 
 // NOLINTNEXTLINE
-TEST_F(sfr_action_test, write_runtime_merge)
+TEST_F(write_runtime_test, write_runtime_merge)
 {
     constexpr auto w1 = write(kvasir::register1::field1, 1);
     constexpr auto w2 = write(kvasir::register1::field3, 2);
@@ -28,7 +32,7 @@ TEST_F(sfr_action_test, write_runtime_merge)
 }
 
 // NOLINTNEXTLINE
-TEST_F(sfr_action_test, write_runtime_merge_with_sort)
+TEST_F(write_runtime_test, write_runtime_merge_with_sort)
 {
     constexpr auto w1 = write(kvasir::register1::field1, 1);
     constexpr auto w2 = write(kvasir::register1::field3, 2);
@@ -43,7 +47,7 @@ TEST_F(sfr_action_test, write_runtime_merge_with_sort)
 }
 
 // NOLINTNEXTLINE
-TEST_F(sfr_action_test, write_runtime_no_merge_different_address)
+TEST_F(write_runtime_test, write_runtime_no_merge_different_address)
 {
     constexpr auto w1 = write(kvasir::register1::field1, 2);
     constexpr auto w2 = write(kvasir::register2::field1, 1);
@@ -57,7 +61,7 @@ TEST_F(sfr_action_test, write_runtime_no_merge_different_address)
 }
 
 // NOLINTNEXTLINE
-TEST_F(sfr_action_test, write_runtime_no_merge_sequenced)
+TEST_F(write_runtime_test, write_runtime_no_merge_sequenced)
 {
     constexpr auto w1 = write(kvasir::register1::field1, 1);
     constexpr auto w2 = write(kvasir::register1::field3, 2);
@@ -72,7 +76,7 @@ TEST_F(sfr_action_test, write_runtime_no_merge_sequenced)
 }
 
 // NOLINTNEXTLINE
-TEST_F(sfr_action_test, write_runtime_merge_unsequenced)
+TEST_F(write_runtime_test, write_runtime_merge_unsequenced)
 {
     constexpr auto w1 = write(kvasir::register1::field1, 1);
     constexpr auto w2 = write(kvasir::register1::field3, 2);

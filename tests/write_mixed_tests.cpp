@@ -1,8 +1,12 @@
 #include "test_chip.hpp"
 #include "write_fixture.hpp"
 
+struct write_mixed_test : sfr_action_test
+{
+};
+
 // NOLINTNEXTLINE
-TEST_F(sfr_action_test, write_mixed_merge)
+TEST_F(write_mixed_test, write_mixed_merge)
 {
     constexpr auto w1 = write(kvasir::register1::field1, constant<1>{});
     constexpr auto w2 = write(kvasir::register1::field3, 2);
@@ -15,7 +19,7 @@ TEST_F(sfr_action_test, write_mixed_merge)
 }
 
 // NOLINTNEXTLINE
-TEST_F(sfr_action_test, write_mixed_merge_with_sort)
+TEST_F(write_mixed_test, write_mixed_merge_with_sort)
 {
     {
         constexpr auto w1 = write(kvasir::register1::field1, 1);
@@ -92,7 +96,7 @@ TEST_F(sfr_action_test, write_mixed_merge_with_sort)
 }
 
 // NOLINTNEXTLINE
-TEST_F(sfr_action_test, write_mixed_merge_with_flatten)
+TEST_F(write_mixed_test, write_mixed_merge_with_flatten)
 {
     {
         auto w1 = write(kvasir::register1::field1, constant<1>{});
@@ -139,7 +143,7 @@ TEST_F(sfr_action_test, write_mixed_merge_with_flatten)
 }
 
 // NOLINTNEXTLINE
-TEST_F(sfr_action_test, write_mixed_no_merge_different_address)
+TEST_F(write_mixed_test, write_mixed_no_merge_different_address)
 {
     {
         constexpr auto w1 = write(kvasir::register1::field1, 2);
@@ -166,7 +170,7 @@ TEST_F(sfr_action_test, write_mixed_no_merge_different_address)
 }
 
 // NOLINTNEXTLINE
-TEST_F(sfr_action_test, write_mixed_no_merge_sequenced)
+TEST_F(write_mixed_test, write_mixed_no_merge_sequenced)
 {
     {
         constexpr auto w1 = write(kvasir::register1::field1, 1);
@@ -195,7 +199,7 @@ TEST_F(sfr_action_test, write_mixed_no_merge_sequenced)
 }
 
 // NOLINTNEXTLINE
-TEST_F(sfr_action_test, write_mixed_merge_unsequenced)
+TEST_F(write_mixed_test, write_mixed_merge_unsequenced)
 {
     {
         constexpr auto w1 = write(kvasir::register1::field1, 1);

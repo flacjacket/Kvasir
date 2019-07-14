@@ -1,6 +1,6 @@
 #pragma once
 
-#include <kvasir/sfr/sfr.hpp>
+#include "kvasir/sfr/sfr.hpp"
 
 namespace kvasir
 {
@@ -14,6 +14,21 @@ namespace register1
     constexpr sfr::field_location<addr, sfr::mask_from_range(13, 12), sfr::read_write_access,
                                   unsigned>
         field2{};
+    enum class enum_field_val
+    {
+        val0 = 0x0,
+        val1 = 0x1,
+        val2 = 0x2,
+    };
+    constexpr sfr::field_location<addr, sfr::mask_from_range(8, 7), sfr::read_write_access,
+                                  enum_field_val>
+        enum_field{};
+    namespace enum_field_c
+    {
+        constexpr sfr::field_value<decltype(enum_field), enum_field_val::val0> val0{};
+        constexpr sfr::field_value<decltype(enum_field), enum_field_val::val1> val1{};
+        constexpr sfr::field_value<decltype(enum_field), enum_field_val::val2> val2{};
+    } // namespace enum_field_c
     constexpr sfr::field_location<addr, sfr::mask_from_range(3, 2), sfr::read_write_access,
                                   unsigned>
         field3{};

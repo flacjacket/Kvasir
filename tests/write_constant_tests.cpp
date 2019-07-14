@@ -1,8 +1,12 @@
 #include "test_chip.hpp"
 #include "write_fixture.hpp"
 
+struct write_constant_test : sfr_action_test
+{
+};
+
 // NOLINTNEXTLINE
-TEST_F(sfr_action_test, write_constant)
+TEST_F(write_constant_test, write_constant)
 {
     constexpr auto w = write(kvasir::register1::field1, constant<2>{});
 
@@ -15,7 +19,7 @@ TEST_F(sfr_action_test, write_constant)
 }
 
 // NOLINTNEXTLINE
-TEST_F(sfr_action_test, write_constant_merge)
+TEST_F(write_constant_test, write_constant_merge)
 {
     constexpr auto w1 = write(kvasir::register1::field1, constant<1>{});
     constexpr auto w2 = write(kvasir::register1::field3, constant<2>{});
@@ -28,7 +32,7 @@ TEST_F(sfr_action_test, write_constant_merge)
 }
 
 // NOLINTNEXTLINE
-TEST_F(sfr_action_test, write_constant_merge_with_sort)
+TEST_F(write_constant_test, write_constant_merge_with_sort)
 {
     constexpr auto w1 = write(kvasir::register1::field1, constant<1>{});
     constexpr auto w2 = write(kvasir::register1::field3, constant<2>{});
@@ -43,7 +47,7 @@ TEST_F(sfr_action_test, write_constant_merge_with_sort)
 }
 
 // NOLINTNEXTLINE
-TEST_F(sfr_action_test, write_constant_merge_with_flatten)
+TEST_F(write_constant_test, write_constant_merge_with_flatten)
 {
     {
         auto w1 = write(kvasir::register1::field1, constant<1>{});
@@ -90,7 +94,7 @@ TEST_F(sfr_action_test, write_constant_merge_with_flatten)
 }
 
 // NOLINTNEXTLINE
-TEST_F(sfr_action_test, write_constant_no_merge_different_address)
+TEST_F(write_constant_test, write_constant_no_merge_different_address)
 {
     constexpr auto w1 = write(kvasir::register1::field1, constant<2>{});
     constexpr auto w2 = write(kvasir::register2::field1, constant<1>{});
@@ -104,7 +108,7 @@ TEST_F(sfr_action_test, write_constant_no_merge_different_address)
 }
 
 // NOLINTNEXTLINE
-TEST_F(sfr_action_test, write_constant_no_merge_sequenced)
+TEST_F(write_constant_test, write_constant_no_merge_sequenced)
 {
     constexpr auto w1 = write(kvasir::register1::field1, constant<1>{});
     constexpr auto w2 = write(kvasir::register1::field3, constant<2>{});
@@ -119,7 +123,7 @@ TEST_F(sfr_action_test, write_constant_no_merge_sequenced)
 }
 
 // NOLINTNEXTLINE
-TEST_F(sfr_action_test, write_constant_merge_unsequenced)
+TEST_F(write_constant_test, write_constant_merge_unsequenced)
 {
     constexpr auto w1 = write(kvasir::register1::field1, constant<1>{});
     constexpr auto w2 = write(kvasir::register1::field3, constant<2>{});

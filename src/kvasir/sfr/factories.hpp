@@ -35,7 +35,7 @@ constexpr auto write(TFieldLocation, typename TFieldLocation::data_type in)
 {
     using TAddress = typename TFieldLocation::address;
     constexpr uint32_t shift = detail::position_of_first_set_bit(TFieldLocation::mask);
-    return action<TAddress, write_action<TFieldLocation::mask>>{in << shift};
+    return action<TAddress, write_action<TFieldLocation::mask>>{uint32_t(in) << shift};
 }
 
 // compile-time known write
@@ -45,8 +45,15 @@ constexpr auto write(TFieldLocation, U)
 {
     using TAddress = typename TFieldLocation::address;
     constexpr uint32_t shift = detail::position_of_first_set_bit(TFieldLocation::mask);
-    constexpr uint32_t value = U::value << shift;
+    constexpr uint32_t value = uint32_t(U::value) << shift;
     return action<TAddress, write_literal_action<TFieldLocation::mask, value>>{};
+}
+
+// compile-time known field value
+template <typename T, typename T::data_type V>
+constexpr auto write(field_value<T, V>)
+{
+    return write(T{}, mpl::integral_constant<typename T::data_type, V>{});
 }
 
 } // namespace kvasir::sfr

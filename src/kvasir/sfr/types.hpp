@@ -83,6 +83,11 @@ struct field_location
     static constexpr uint32_t mask = Mask;
 };
 
+template <typename TFieldLocation, typename TFieldLocation::data_type Value>
+struct field_value
+{
+};
+
 // the actions that may be performed on a given register
 
 template <typename TAddress, typename TActionType>
