@@ -38,7 +38,8 @@ protected:
     }
 
     template <typename T1, typename T2, typename T3>
-    void check_permutations(const std::vector<recorded_action> & expected_actions, T1 t1, T2 t2, T3 t3)
+    void check_permutations(const std::vector<recorded_action> & expected_actions, T1 t1, T2 t2,
+                            T3 t3)
     {
         apply(t1, t2, t3);
         check_expected_actions(expected_actions);
