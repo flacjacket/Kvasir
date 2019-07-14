@@ -121,6 +121,19 @@ TEST_F(sfr_action_test, write_runtime_merge)
 }
 
 // NOLINTNEXTLINE
+TEST_F(sfr_action_test, write_mixed_merge)
+{
+    constexpr auto w1 = write(kvasir::register1::field1, constant<1>{});
+    constexpr auto w2 = write(kvasir::register1::field3, 2);
+
+    const std::vector<recorded_action> expected_actions = {
+        {0x40020000U, 0x40000008U, 0xc000000cU, recorded_action::action_type::write},
+    };
+
+    check_permutations(expected_actions, w1, w2);
+}
+
+// NOLINTNEXTLINE
 TEST_F(sfr_action_test, write_constant_merge_with_sort)
 {
     constexpr auto w1 = write(kvasir::register1::field1, constant<1>{});
