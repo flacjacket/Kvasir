@@ -35,6 +35,11 @@ namespace detail
         using TAction = action<TAddress, write_action<Mask, Data>>;
         using type = indexed_action<TAction, TIndex>;
     };
+    template <typename TIndex>
+    struct make_indexed_action_impl<sequence_point_t, TIndex>
+    {
+        using type = sequence_point_t;
+    };
     template <typename TAction, typename TIndex>
     using make_indexed_action = typename make_indexed_action_impl<TAction, TIndex>::type;
 
@@ -297,12 +302,14 @@ apply(Arg... args)
     using indexed_actions =
         mpl::eager::zip_with<detail::make_indexed_action, actions,
                              mpl::eager::make_int_sequence<mpl::eager::size<actions>>>;
-    // sort and merge the actions
-    using sorted_actions = mpl::eager::sort<indexed_actions, detail::address_less_than>;
-    using merged_actions = detail::merge_actions<sorted_actions>;
+    // split the actions along the sequence points
+    using sequenced_actions = mpl::eager::split_if<indexed_actions, is_sequence_point>;
+    // perform the optimizations on each sequenced group and flatten into final list
+    using optimized_actions = mpl::eager::transform<sequenced_actions, detail::optimize_actions>;
+    using final_actions = mpl::eager::flatten<optimized_actions>;
     // pull out the actions and the corresponding inputs
-    using input_actions = mpl::eager::transform<merged_actions, detail::build_actions>;
-    using inputs = mpl::eager::transform<merged_actions, detail::build_inputs>;
+    using input_actions = mpl::eager::transform<final_actions, detail::build_actions>;
+    using inputs = mpl::eager::transform<final_actions, detail::build_inputs>;
     // apply the actions
     detail::all_no_read_with_runtime_writes_apply<input_actions, inputs> applicator{};
     applicator(detail::arg_to_unsigned(args)...);
@@ -315,9 +322,8 @@ std::enable_if_t<all_compile_time_actions_v<Arg...>> apply(Arg...)
     using actions = mpl::list<Arg...>;
     // split the actions along the sequence points
     using sequenced_actions = mpl::eager::split_if<actions, is_sequence_point>;
-    // perform the optimizations on each sequenced group
+    // perform the optimizations on each sequenced group and flatten into final list
     using optimized_actions = mpl::eager::transform<sequenced_actions, detail::optimize_actions>;
-    // flatten optimized actions out into single list
     using final_actions = mpl::eager::flatten<optimized_actions>;
     // apply the actions
     detail::all_compile_time_writes_apply<final_actions>{}();
