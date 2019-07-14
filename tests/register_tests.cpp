@@ -1,4 +1,5 @@
-#include "kvasir/sfr/chip/GPIOA.hpp"
+#include "test_chip.hpp"
+
 #include "kvasir/sfr/seam.hpp"
 
 #include "gmock/gmock.h"
@@ -16,6 +17,9 @@ struct execute_seam<T, kvasir::sfr::user_tag> : action_recorder<T>
 
 using recorded_action = kvasir::sfr::recorded_action;
 
+template <uint32_t N>
+using constant = kvasir::mpl::integral_constant<uint32_t, N>;
+
 class sfr_action_test : public ::testing::Test
 {
 protected:
@@ -29,19 +33,16 @@ protected:
 
         kvasir::sfr::recorded_actions.clear();
     }
-
-    static constexpr auto const1 = kvasir::mpl::integral_constant<uint32_t, 1>{};
-    static constexpr auto const2 = kvasir::mpl::integral_constant<uint32_t, 2>{};
 };
 
 // NOLINTNEXTLINE
 TEST_F(sfr_action_test, write_constant_single)
 {
-    constexpr auto w = write(kvasir::gpioa_moder::moder13, const2);
+    constexpr auto w = write(kvasir::register1::field1, constant<2>{});
     apply(w);
 
     const std::vector<recorded_action> expected_actions = {
-        {0x40020000U, 0x08000000U, 0x0c000000U, recorded_action::action_type::write_literal},
+        {0x40020000U, 0x80000000U, 0xc0000000U, recorded_action::action_type::write_literal},
     };
 
     check_expected_actions(expected_actions);
@@ -50,11 +51,11 @@ TEST_F(sfr_action_test, write_constant_single)
 // NOLINTNEXTLINE
 TEST_F(sfr_action_test, write_runtime_single)
 {
-    constexpr auto w = write(kvasir::gpioa_moder::moder13, 2);
+    constexpr auto w = write(kvasir::register1::field1, 2);
     apply(w);
 
     const std::vector<recorded_action> expected_actions = {
-        {0x40020000U, 0x08000000U, 0x0c000000U, recorded_action::action_type::write},
+        {0x40020000U, 0x80000000U, 0xc0000000U, recorded_action::action_type::write},
     };
 
     check_expected_actions(expected_actions);
@@ -63,11 +64,11 @@ TEST_F(sfr_action_test, write_runtime_single)
 // NOLINTNEXTLINE
 TEST_F(sfr_action_test, write_constant_merge)
 {
-    constexpr auto w1 = write(kvasir::gpioa_moder::moder13, const1);
-    constexpr auto w2 = write(kvasir::gpioa_moder::moder4, const2);
+    constexpr auto w1 = write(kvasir::register1::field1, constant<1>{});
+    constexpr auto w2 = write(kvasir::register1::field3, constant<2>{});
 
     const std::vector<recorded_action> expected_actions = {
-        {0x40020000U, 0x04000200U, 0x0c000300U, recorded_action::action_type::write_literal},
+        {0x40020000U, 0x40000008U, 0xc000000cU, recorded_action::action_type::write_literal},
     };
 
     apply(w1, w2);
@@ -77,11 +78,11 @@ TEST_F(sfr_action_test, write_constant_merge)
 // NOLINTNEXTLINE
 TEST_F(sfr_action_test, write_runtime_merge)
 {
-    constexpr auto w1 = write(kvasir::gpioa_moder::moder13, 1);
-    constexpr auto w2 = write(kvasir::gpioa_moder::moder4, 2);
+    constexpr auto w1 = write(kvasir::register1::field1, 1);
+    constexpr auto w2 = write(kvasir::register1::field3, 2);
 
     const std::vector<recorded_action> expected_actions = {
-        {0x40020000U, 0x04000200U, 0x0c000300U, recorded_action::action_type::write},
+        {0x40020000U, 0x40000008U, 0xc000000cU, recorded_action::action_type::write},
     };
 
     apply(w1, w2);
@@ -91,13 +92,13 @@ TEST_F(sfr_action_test, write_runtime_merge)
 // NOLINTNEXTLINE
 TEST_F(sfr_action_test, write_constant_no_merge_different_address)
 {
-    constexpr auto w1 = write(kvasir::gpioa_moder::moder13, const2);
-    constexpr auto w2 = write(kvasir::gpioa_otyper::ot2, const1);
+    constexpr auto w1 = write(kvasir::register1::field1, constant<2>{});
+    constexpr auto w2 = write(kvasir::register2::field1, constant<1>{});
     apply(w1, w2);
 
     const std::vector<recorded_action> expected_actions = {
-        {0x40020000U, 0x08000000U, 0x0c000000U, recorded_action::action_type::write_literal},
-        {0x40020004U, 0x00000004U, 0x00000004U, recorded_action::action_type::write_literal},
+        {0x40020000U, 0x80000000U, 0xc0000000U, recorded_action::action_type::write_literal},
+        {0x40020004U, 0x00000800U, 0x0000f800U, recorded_action::action_type::write_literal},
     };
 
     check_expected_actions(expected_actions);
@@ -106,13 +107,13 @@ TEST_F(sfr_action_test, write_constant_no_merge_different_address)
 // NOLINTNEXTLINE
 TEST_F(sfr_action_test, write_runtime_no_merge_different_address)
 {
-    constexpr auto w1 = write(kvasir::gpioa_moder::moder13, 2);
-    constexpr auto w2 = write(kvasir::gpioa_otyper::ot2, 1);
+    constexpr auto w1 = write(kvasir::register1::field1, 2);
+    constexpr auto w2 = write(kvasir::register2::field1, 1);
     apply(w1, w2);
 
     const std::vector<recorded_action> expected_actions = {
-        {0x40020000U, 0x08000000U, 0x0c000000U, recorded_action::action_type::write},
-        {0x40020004U, 0x00000004U, 0x00000004U, recorded_action::action_type::write},
+        {0x40020000U, 0x80000000U, 0xc0000000U, recorded_action::action_type::write},
+        {0x40020004U, 0x00000800U, 0x0000f800U, recorded_action::action_type::write},
     };
 
     check_expected_actions(expected_actions);
